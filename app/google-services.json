@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "182633418394",
+    "project_id": "prueba-59143",
+    "storage_bucket": "prueba-59143.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:182633418394:android:d6d8f136865dbedadb9923",
+        "android_client_info": {
+          "package_name": "com.example.accesoconcorreo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "182633418394-kpds6eg9dd73oetktqbld98k0ll2btvm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCfcO1dp8ticksSn_YfTudrlL0zJ4eSBkA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "182633418394-kpds6eg9dd73oetktqbld98k0ll2btvm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

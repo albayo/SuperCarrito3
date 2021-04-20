@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Supercarrito</string>
+    <string name="opciones">Opciones</string>
+    <string name="aniadir_productos">Añadir productos</string>
+    <string name="comprado">Comprado</string>
+    <string name="aniadir_text">Añadir</string>
+    <string name="usuario">Usuario</string>
+    <string name="mis_listas">Mis listas</string>
+    <string name="super_carrito">SuperCarrito</string>
+    <string name="fab_text">Añadir listas de la compra</string>
+    <string name="acceder">Acceder</string>
+    <string name="email_logueo">Introduzca un email</string>
+    <string name="contrasenia_logueo">Introduzca la contraseña</string>
+    <string name="supercarrito_logueo">SuperCarrito: Listas de la compra</string>
+    <string name="lista_personal">Lista personal</string>
+    <string name="grupo_de_compra">Grupo de compra</string>
+    <string name="aniadir">Añadir</string>
+    <string name="nombreproducto">nombreproducto</string>
+    <string name="nombresuper">nombresuper</string>
+    <string name="registrar">Registrar</string>
+</resources>
