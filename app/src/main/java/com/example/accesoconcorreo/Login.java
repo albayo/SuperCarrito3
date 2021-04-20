@@ -3,7 +3,6 @@ package com.example.accesoconcorreo;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,8 +18,6 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
-import ModeloDominio.Usuario;
-
 
 /**
  * Esta clase define la actividad (llamada "activity_login") que servirá para el logueo del Usuario
@@ -29,11 +26,13 @@ import ModeloDominio.Usuario;
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
  * @version: 13/04/2021
  */
+//      USUARIO: 16alvaro1bac@gmail.com
+//      Contraseña: alvarobayo
 
-public class MainActivity extends AppCompatActivity {
+public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
     //Representa el TAG que sirve para distinguir la actividad
-    private static final String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String LOG_TAG = Login.class.getSimpleName();
 
     //Representa la clase de Lógica de Negocio la cuál será necesaria para comprobar información con la BD
     //private SuperViewModel superViewModel;
@@ -141,7 +140,8 @@ public class MainActivity extends AppCompatActivity {
         homeIntent.putExtra("provider",provider.name());
         startActivity(homeIntent);
     }
-    // 16alvaro1bac@gmail.com
+
+
     /**
      * Método que sirve para lanzar la actividad de carga de datos en la BD de la API
      *

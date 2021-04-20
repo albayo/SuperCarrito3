@@ -10,17 +10,22 @@ import android.view.View;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import ModeloDominio.Lista;
 
 public class Home extends AppCompatActivity {
     private RecyclerView recyclerView;
     private FirebaseUser user;
-    //private FireBase
+    private FirebaseDatabase database;
+    DatabaseReference myRef;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        database=FirebaseDatabase.getInstance();
+        myRef=database.getReference();
         user= FirebaseAuth.getInstance().getCurrentUser();
         recyclerView=findViewById(R.id.recycler_lista_super_prod);
         FloatingActionButton fabAñadirLista=findViewById(R.id.fabAniadir_lista);
