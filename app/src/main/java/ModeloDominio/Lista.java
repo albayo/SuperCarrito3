@@ -5,6 +5,7 @@ package ModeloDominio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Esta clase define objetos que representan al las listas de los usuarios de la aplicación
@@ -23,10 +24,10 @@ public class Lista implements Serializable {
     private String nombre;
 
     //Representa el/los usario/s que participan en la lista (este atributo no podrá ser nulo)
-    private ArrayList<Usuario> usuarios;
+    private List<Usuario> usuarios;
 
 
-    private ArrayList<Producto> productos;
+    private List<Producto> productos;
 
 
     /**
@@ -46,11 +47,11 @@ public class Lista implements Serializable {
      * @param nombre Representa el nombre de la Lista
      * @param u Representa los usuarios que participan en la Lista
      */
-    public Lista(String idLista, String nombre, ArrayList<Usuario> u){
+    public Lista(String idLista, String nombre, List<Usuario> u){
         this.idLista=idLista;
-        // this.usuarios=u;
+        this.usuarios=u;
         this.nombre=nombre;
-        //this.productos=new java.util.ArrayList<Producto>();
+        this.productos=new java.util.ArrayList<Producto>();
     }
 
 
@@ -90,7 +91,7 @@ public class Lista implements Serializable {
      * Método que devuelve los productos de la Lista
      * @return Una lista de los producto de la Lista
      */
-    public ArrayList<Producto> getProductos() {
+    public List<Producto> getProductos() {
         return productos;
     }
 
@@ -106,7 +107,7 @@ public class Lista implements Serializable {
      * Método que devuelve los usuarios que participan en la Lista
      * @return Una lista con los usuarios que participan en la Lista
      */
-    public ArrayList<Usuario> getUsuarios() {
+    public List<Usuario> getUsuarios() {
         return usuarios;
      }
 
@@ -114,7 +115,7 @@ public class Lista implements Serializable {
      * Método que establece como usuarios que participan en la Lista la lista pasada por parámetro
      * @param u Representa la nueva lista de usuario de la Lista
      */
-    public void setUsuarios(ArrayList<Usuario> u){
+    public void setUsuarios(List<Usuario> u){
         this.usuarios=u;
     }
 }

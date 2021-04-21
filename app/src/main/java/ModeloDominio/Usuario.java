@@ -2,8 +2,12 @@ package ModeloDominio;
 //Falta arreglar la base de datos ESTA MAL
 
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.IgnoreExtraProperties;
+
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Esta clase define objetos que representan al usuario de la aplicación
@@ -12,14 +16,12 @@ import java.util.ArrayList;
  * @version: 13/04/2021
  */
 
-
+@IgnoreExtraProperties //ESTO LO HE VISTO EN EL EJEMPLO DE FIREBASE, CREO QUE NO HACE FALTA QUE SEA SERIALIZABLE
 public class Usuario implements Serializable {
 
     private String nick;
-
-
     private String contra;
-
+    private List<Lista> listas;
 
     /**
      * Constructor vacío para el Usuario
@@ -28,7 +30,7 @@ public class Usuario implements Serializable {
     public Usuario(){
         this.nick="";
         this.contra="";
-      //  this.listas=new ArrayList<>();
+        this.listas=new ArrayList<>();
     }
 
     /**
@@ -40,7 +42,8 @@ public class Usuario implements Serializable {
     public Usuario(String u, String c, ArrayList<Lista> l) {
         this.nick = u;
         this.contra = c;
-        //this.listas = l;
+        this.listas = l;
+
     }
 
     /**
@@ -51,7 +54,7 @@ public class Usuario implements Serializable {
     public Usuario (String u, String c){
         this.nick = u;
         this.contra = c;
-        //this.listas = new ArrayList<Lista>();
+        this.listas = new ArrayList<Lista>();
     }
 
     /**
@@ -90,15 +93,15 @@ public class Usuario implements Serializable {
      * Método que devuelve la todas las listas del Usuario
      * @return La lista de Listas del Usuario
      */
-   /* public ArrayList<Lista> getListas() {
+    public List<Lista> getListas() {
         return listas;
-    }*/
+    }
 
     /**
      * Método que establece las listas del Usuario a las listas pasadas por parámetro
      * @param l Representa las listas que se le quieren asignar al usuario
      */
-    /*public void setListas(ArrayList<Lista> l) {
+    public void setListas(List<Lista> l) {
         this.listas = l;
-    }*/
+    }
 }
