@@ -40,7 +40,7 @@ public class ListaProductos extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //esta línea sirve para impedir que se pueda girar la pantalla
             super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_lista_productos);
+            setContentView(R.layout.activity_lista_productos2);
 
 
             recyclerViewproductos=(RecyclerView)findViewById(R.id.lista_prod_recycler);
@@ -58,5 +58,4 @@ public class ListaProductos extends AppCompatActivity {
             LiveData<List<Producto>> lproductos=superViewModel.getProductos();
             return lproductos.getValue();
         }*/
-    }
 }

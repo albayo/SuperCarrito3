@@ -126,7 +126,7 @@ public class CrearLista extends AppCompatActivity {
          */
         @Override
         public void onClick(View v) {
-            if(v.equals(btnAceptar)){
+            if(v.equals(R.id.btnAceptar)){
                 String nombre = etNombre.getText().toString();
                 if(nombre != null && nombre.trim().length() > 0) {
                     if (tipoLista.equals("grupal")) {
@@ -137,13 +137,18 @@ public class CrearLista extends AppCompatActivity {
                         Usuario u=new Usuario(user.getEmail());
                          lista.add(u);
                         persistencia.insertarLista("1",nombre,lista);
-
+                        getFragmentManager().beginTransaction().remove(this).commit();
+                        /*Intent intent = new Intent(CrearLista.class, ListaProductos.class);
+                        startActivity(intent);*/
+                        getFragmentManager().beginTransaction().remove(this).commit(); //no funciona, mirar con logger
                         //HACER REMOVE EN EL GRAGMENT E IR A LISTA PRODUCTOS
                     }
                 }else{
                     Toast.makeText(getActivity(),"Error, se debe introducir un nombre para la lista",Toast.LENGTH_SHORT).show();
                 }
 
+            }else{
+                getActivity().onBackPressed(); //no funciona, mirar con logger
             }
         }
     }

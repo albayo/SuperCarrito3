@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="naranja_fondo">#FFF5E6</color>
+    <color name="naranja_tipo2">#FFC285</color>
+    <color name="naranja_items">#FFB35C</color>
+    <color name="naranja_tipo1">#FFAB5F</color>
+    <color name="naranja_tipo3">#F18B16</color>
 </resources>
