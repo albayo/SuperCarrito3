@@ -32,7 +32,11 @@ public class Usuario implements Serializable {
         this.contra="";
         this.listas=new ArrayList<>();
     }
-
+    public Usuario(String email){
+        this.nick=email;
+        this.contra="";
+        this.listas=new ArrayList<>();
+    }
     /**
      * Constructor completo para el Usuario
      * @param u Representa el nombre que tiene el usuario

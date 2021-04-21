@@ -79,9 +79,8 @@
                     android:text="@string/grupo_de_compra"
                     android:textSize="18sp" />
             </LinearLayout>
-
-
         </androidx.cardview.widget.CardView>
+
 
     </RelativeLayout>
 
