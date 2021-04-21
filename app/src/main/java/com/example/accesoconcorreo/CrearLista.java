@@ -137,8 +137,8 @@ public class CrearLista extends AppCompatActivity {
                         Usuario u=new Usuario(user.getEmail());
                          lista.add(u);
                         persistencia.insertarLista("1",nombre,lista);
-                        Intent intent = new Intent(this, R.layout.activity_lista_productos2);
-                        startActivity(intent);
+
+                        //HACER REMOVE EN EL GRAGMENT E IR A LISTA PRODUCTOS
                     }
                 }else{
                     Toast.makeText(getActivity(),"Error, se debe introducir un nombre para la lista",Toast.LENGTH_SHORT).show();
