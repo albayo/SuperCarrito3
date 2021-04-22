@@ -86,9 +86,9 @@ public class ReadAndWriteSnippets {
 
     public void insertarLista(String IDLista,String nombrelista,String email){
 
-        List<String> listusuarios=new ArrayList<>();
+            List<String> listusuarios=new ArrayList<>();
         listusuarios.add(email);
-        Lista list=new Lista(IDLista,nombrelista,listusuarios);
+            Lista list=new Lista(IDLista,nombrelista,listusuarios);
         Map<String,Object> postValues = list.toMap();
 
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
