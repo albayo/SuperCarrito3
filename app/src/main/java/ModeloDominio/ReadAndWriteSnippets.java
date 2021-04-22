@@ -78,6 +78,11 @@ public class ReadAndWriteSnippets {
 
         return u;
     }
+    public Usuario convertirAUsuario(FirebaseUser user){
+        String [] userid=user.getEmail().split("@");
+        Usuario u=(Usuario)mDatabase.child("users").child(userid[0]).get().getResult().getValue();
+        return u;
+    }
 
     public void insertarLista(String IDLista,String nombrelista,String email){
 
@@ -101,10 +106,5 @@ public class ReadAndWriteSnippets {
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         Usuario u=this.convertirAUsuario(user);
         return (List<String>) mDatabase.child("users").child(u.getNick()).child("listas").get().getResult().getValue();
-    }
-    public Usuario convertirAUsuario(FirebaseUser user){
-        String [] userid=user.getEmail().split("@");
-        Usuario u=(Usuario)mDatabase.child("users").child(userid[0]).get().getResult().getValue();
-        return u;
     }
 }
