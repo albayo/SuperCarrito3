@@ -8,50 +8,41 @@
 
     <ImageView
         android:id="@+id/imageView_logosuper"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_width="161dp"
+        android:layout_height="121dp"
+        android:layout_marginTop="76dp"
         android:contentDescription="@string/supercarrito_logueo"
+        android:src="@mipmap/carro"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.464"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:src="@drawable/ic_carrito_negro" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/editText_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="72dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/email_logueo"
         android:inputType="textPersonName|textEmailAddress"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView_logosuper" />
 
-    <EditText
-        android:id="@+id/editText_contrasenia"
+    <ImageView
+        android:id="@+id/imageView_contrasenia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="65dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/contrasenia_logueo"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:contentDescription="@string/contrasenia_logueo"
+        android:src="@drawable/ic_candado_black"
+        app:layout_constraintBottom_toBottomOf="@+id/editText_contrasenia"
+        app:layout_constraintEnd_toStartOf="@+id/editText_contrasenia"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_email" />
-
-    <Button
-        android:id="@+id/btnAcceder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/acceder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editText_contrasenia"
-        app:layout_constraintStart_toStartOf="@+id/editText_contrasenia"
-        app:layout_constraintTop_toBottomOf="@+id/editText_contrasenia" />
+        app:layout_constraintTop_toTopOf="@+id/editText_contrasenia"
+        app:layout_constraintVertical_bias="0.6" />
 
     <ImageView
         android:id="@+id/imageView_email"
@@ -64,15 +55,28 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/editText_email" />
 
-    <ImageView
-        android:id="@+id/imageView_contrasenia"
+    <EditText
+        android:id="@+id/editText_contrasenia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:contentDescription="@string/contrasenia_logueo"
-        android:src="@drawable/ic_candado_black"
-        app:layout_constraintBottom_toBottomOf="@+id/editText_contrasenia"
-        app:layout_constraintEnd_toStartOf="@+id/editText_contrasenia"
+        android:layout_marginTop="64dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:hint="@string/contrasenia_logueo"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/editText_contrasenia" />
+        app:layout_constraintTop_toBottomOf="@+id/editText_email" />
+
+    <Button
+        android:id="@+id/btnAcceder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/acceder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/editText_contrasenia"
+        app:layout_constraintStart_toStartOf="@+id/editText_contrasenia"
+        app:layout_constraintTop_toBottomOf="@+id/editText_contrasenia" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
