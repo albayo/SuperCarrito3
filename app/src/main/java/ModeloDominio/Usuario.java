@@ -7,7 +7,9 @@ import com.google.firebase.database.IgnoreExtraProperties;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Esta clase define objetos que representan al usuario de la aplicación
@@ -22,7 +24,7 @@ public class Usuario {
     private int id;
     private String nick;
     private String email;
-    private List<Lista> listas;
+    private List<String> listas;
 
     public Usuario(String email){
         contUsuario++;
@@ -42,7 +44,7 @@ public class Usuario {
         id=contUsuario;
         this.nick = nick;
         this.email = email;
-        this.listas = new ArrayList<Lista>();
+        this.listas = new ArrayList<String>();
     }
     public int getId(){ return id; }
     /**
@@ -67,7 +69,7 @@ public class Usuario {
      * Método que devuelve la todas las listas del Usuario
      * @return La lista de Listas del Usuario
      */
-    public List<Lista> getListas() {
+    public List<String> getListas() {
         return listas;
     }
 
@@ -75,11 +77,21 @@ public class Usuario {
      * Método que establece las listas del Usuario a las listas pasadas por parámetro
      * @param l Representa las listas que se le quieren asignar al usuario
      */
-    public void setListas(List<Lista> l) {
+    public void setListas(List<String> l) {
         this.listas = l;
     }
 
-    public void insertaLista(Lista l){
+    public void insertaLista(String l){
         listas.add(l);
+    }
+
+    public Map<String,Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("id",id);
+        result.put("nick",nick);
+        result.put("email",email);
+        result.put("listas",listas);
+
+        return result;
     }
 }

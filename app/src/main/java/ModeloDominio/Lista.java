@@ -5,7 +5,9 @@ package ModeloDominio;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Esta clase define objetos que representan al las listas de los usuarios de la aplicación
@@ -24,7 +26,7 @@ public class Lista implements Serializable {
     private String nombre;
 
     //Representa el/los usario/s que participan en la lista (este atributo no podrá ser nulo)
-    private List<Usuario> usuarios;
+    private List<String> usuarios;
 
 
     private List<Producto> productos;
@@ -47,7 +49,7 @@ public class Lista implements Serializable {
      * @param nombre Representa el nombre de la Lista
      * @param u Representa los usuarios que participan en la Lista
      */
-    public Lista(String idLista, String nombre, List<Usuario> u){
+    public Lista(String idLista, String nombre, List<String> u){
         this.idLista=idLista;
         this.usuarios=u;
         this.nombre=nombre;
@@ -107,7 +109,7 @@ public class Lista implements Serializable {
      * Método que devuelve los usuarios que participan en la Lista
      * @return Una lista con los usuarios que participan en la Lista
      */
-    public List<Usuario> getUsuarios() {
+    public List<String> getUsuarios() {
         return usuarios;
      }
 
@@ -115,7 +117,21 @@ public class Lista implements Serializable {
      * Método que establece como usuarios que participan en la Lista la lista pasada por parámetro
      * @param u Representa la nueva lista de usuario de la Lista
      */
-    public void setUsuarios(List<Usuario> u){
+    public void setUsuarios(List<String> u){
         this.usuarios=u;
+    }
+
+    /**
+     * Métodd que devuelve un objeto HashMap que guarda la información de una Lista.
+     * @return
+     */
+    public Map<String,Object> toMap(){
+        HashMap<String, Object> result = new HashMap<>();
+        result.put("idLista",idLista);
+        result.put("nombre",nombre);
+        result.put("usuarios",usuarios);
+        result.put("productos",productos);
+
+        return result;
     }
 }
