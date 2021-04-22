@@ -24,7 +24,7 @@ public class ReadAndWriteSnippets {
     private DatabaseReference mDatabase;
     // [END declare_database_ref]
 
-    public ReadAndWriteSnippets(DatabaseReference database) {
+    public ReadAndWriteSnippets() {
         // [START initialize_database_ref]
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // [END initialize_database_ref]

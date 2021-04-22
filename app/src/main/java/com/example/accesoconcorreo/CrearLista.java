@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -144,6 +145,7 @@ public class CrearLista extends AppCompatActivity {
             etNombre = (EditText) view.findViewById(R.id.etNombre);
             btnAceptar = (Button) view.findViewById(R.id.btnAceptar);
             btnCancelar = (Button) view.findViewById(R.id.btnCancelar);
+            persistencia= new ReadAndWriteSnippets();
             btnAceptar.setOnClickListener(new View.OnClickListener() {
                 /**
                  * Método que sirve para comprobar que lo introducido en los campos de usuario y
