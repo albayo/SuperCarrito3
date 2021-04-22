@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
+import ModeloDominio.Lista;
 import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Usuario;
 
@@ -49,8 +51,7 @@ public class CrearLista extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                ListaDialogFragment listaDialogFragment = new ListaDialogFragment("grupal");
-                listaDialogFragment.show(getSupportFragmentManager(),"tag");
+                abrirFragment("grupal");
             }
         });
 
@@ -63,12 +64,25 @@ public class CrearLista extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                ListaDialogFragment listaDialogFragment = new ListaDialogFragment("sola");
-                listaDialogFragment.show(getSupportFragmentManager(),"tag");
+                abrirFragment("sola");
             }
         });
+
     }
-    public static class ListaDialogFragment extends DialogFragment implements View.OnClickListener
+
+    public void abrirFragment(String tipoLista){
+        ListaDialogFragment listaDialogFragment = new ListaDialogFragment(tipoLista);
+        listaDialogFragment.show(getSupportFragmentManager(),"tag");
+
+        String ultB = listaDialogFragment.getUltBoton();
+        if(ultB.length() > 0){
+            if(ultB.equals("Aceptar")){
+                Intent intent = new Intent(this, ListaProductos.class);
+                startActivity(intent);
+            }
+        }
+    }
+    public static class ListaDialogFragment extends DialogFragment
     {
         //Representa el EditText en el cual habrá que introducir el nombre que se le querra dar a la lista
         private EditText etNombre;
@@ -85,12 +99,22 @@ public class CrearLista extends AppCompatActivity {
         //Representa la clase de Lógica de Negocio la cuál será necesaria para sacar la información de la BD
        // private SuperViewModel superViewModel;
         private ReadAndWriteSnippets persistencia;
+
+        private String ultBoton="";
         /**
          * Constructor base
          * @param tipoLista
          */
         public ListaDialogFragment(String tipoLista){
             this.tipoLista = tipoLista;
+        }
+
+        /**
+         * Devuelve el nombre del último botón que se a clickado o la cadena vacía en caso de que no se haya clickado ninguno
+         * @return ultBoton
+         */
+        public String getUltBoton(){
+            return this.ultBoton;
         }
 
         /**
@@ -105,6 +129,44 @@ public class CrearLista extends AppCompatActivity {
             etNombre = (EditText) view.findViewById(R.id.etNombre);
             btnAceptar = (Button) view.findViewById(R.id.btnAceptar);
             btnCancelar = (Button) view.findViewById(R.id.btnCancelar);
+            btnAceptar.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Método que sirve para comprobar que lo introducido en los campos de usuario y
+                 *  contraseña corresponden a un usuario existente
+                 * @param v Representa al objeto View sobre el cual se ha hecho click
+                 */
+                @Override
+                public void onClick(View v) {
+                    ultBoton = "Aceptar";
+                    String nombre = etNombre.getText().toString();
+                    if(nombre != null && nombre.trim().length() > 0) {
+                        if (tipoLista.equals("grupal")) {
+                            //crear la lista GRUPAL con nombre "nombre"
+                        } else {
+                            FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser(); //no sería mejor ir pasando el Usuario en los intents??
+                            Log.d("CrearLista valor user", String.valueOf(user));
+                            List<Usuario> lista=new ArrayList<>();
+                            Usuario u=new Usuario(user.getEmail());
+                            lista.add(u);
+                            persistencia.insertarLista("1",nombre,lista);
+                        }
+                    }else{
+                        Toast.makeText(getActivity(),"Error, se debe introducir un nombre para la lista",Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            btnCancelar.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Método que sirve para comprobar que lo introducido en los campos de usuario y
+                 *  contraseña corresponden a un usuario existente
+                 * @param v Representa al objeto View sobre el cual se ha hecho click
+                 */
+                @Override
+                public void onClick(View v) {
+                    ultBoton = "Cerrar";
+                    cerrarFragment();
+                }
+            });
         }
 
         /**
@@ -120,36 +182,12 @@ public class CrearLista extends AppCompatActivity {
             return inflater.inflate(R.layout.fragment_introducir_nom_lista, container, false);
         }
 
-        /**
-         *
-         * @param v
-         */
-        @Override
-        public void onClick(View v) {
-            if(v.equals(R.id.btnAceptar)){
-                String nombre = etNombre.getText().toString();
-                if(nombre != null && nombre.trim().length() > 0) {
-                    if (tipoLista.equals("grupal")) {
-                        //crear la lista GRUPAL con nombre "nombre"
-                    } else {
-                        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-                        List<Usuario> lista=new ArrayList<>();
-                        Usuario u=new Usuario(user.getEmail());
-                         lista.add(u);
-                        persistencia.insertarLista("1",nombre,lista);
-                        getFragmentManager().beginTransaction().remove(this).commit();
-                        /*Intent intent = new Intent(CrearLista.class, ListaProductos.class);
-                        startActivity(intent);*/
-                        getFragmentManager().beginTransaction().remove(this).commit(); //no funciona, mirar con logger
-                        //HACER REMOVE EN EL GRAGMENT E IR A LISTA PRODUCTOS
-                    }
-                }else{
-                    Toast.makeText(getActivity(),"Error, se debe introducir un nombre para la lista",Toast.LENGTH_SHORT).show();
-                }
-
-            }else{
-                getActivity().onBackPressed(); //no funciona, mirar con logger
-            }
+        private void cerrarFragment() {
+            getActivity().onBackPressed(); //no funciona, mirar con logger
+            //getFragmentManager().beginTransaction().remove(this).commit();
+            /*Intent intent = new Intent(CrearLista.class, ListaProductos.class);
+            startActivity(intent);*/
+            //getFragmentManager().beginTransaction().remove(this).commit(); //no funciona, mirar con logger
         }
     }
 
