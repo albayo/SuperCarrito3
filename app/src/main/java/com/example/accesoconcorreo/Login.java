@@ -2,10 +2,13 @@ package com.example.accesoconcorreo;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.media.Image;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -17,6 +20,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+
+import ModeloDominio.ReadAndWriteSnippets;
 
 
 /**
@@ -43,8 +48,7 @@ public class Login extends AppCompatActivity {
     //Representa el cuadro de texto (EditText) en el cual se escribirá la contraseña del Usuario
     private EditText contraseniaET;
 
-    //Representa el Usuario que se ha logueado en la aplicación
-    //private Usuario usuario;
+    private ReadAndWriteSnippets persistencia;
 
     /**
      * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
@@ -60,10 +64,11 @@ public class Login extends AppCompatActivity {
        // superViewModel = new ViewModelProvider(this).get(SuperViewModel.class);
         setContentView(R.layout.activity_login);
         Button btnRegistrar = findViewById(R.id.btnRegistrar);
+        persistencia=new ReadAndWriteSnippets();
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             /**
              * Método que sirve para comprobar que lo introducido en los campos de usuario y
-             *  contraseña corresponden a un usuario existente
+             *  contraseña no corresponden a un usuario existente para registrar un usuario
              * @param v Representa al objeto View sobre el cual se ha hecho click
              */
             @Override
@@ -75,6 +80,8 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+                                String[] nick=usuarioET.getText().toString().split("@");
+                                persistencia.insertarUsuario(nick[0],usuarioET.getText().toString());
                                 showHome(usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
                             } else {
 
@@ -90,6 +97,22 @@ public class Login extends AppCompatActivity {
 
             }
 
+        });
+        ImageButton mostrarContrasena = findViewById(R.id.imageButton_mostrarC);
+        mostrarContrasena.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método que sirve para mostrar/ocultar la contraseña (cambiar su modo de visualización)
+             * @param v Representa al objeto View sobre el cual se ha hecho click
+             */
+            @Override
+            public void onClick(View v) {
+
+                if( contraseniaET.getTransformationMethod() == null){
+                    contraseniaET.setTransformationMethod(new PasswordTransformationMethod());;
+                }else{
+                    contraseniaET.setTransformationMethod(null);
+                }
+            }
         });
 
         Button btnAcceder =findViewById(R.id.btnAcceder);

@@ -155,8 +155,8 @@ public class CrearLista extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     ultBoton = "Aceptar";
-                    String nombre = etNombre.getText().toString();
-                    if(nombre != null && nombre.trim().length() > 0) {
+                    String nombreLista = etNombre.getText().toString();
+                    if(nombreLista != null && nombreLista.trim().length() > 0) {
                         if (tipoLista.equals("grupal")) {
                             //crear la lista GRUPAL con nombre "nombre"
                         } else {
@@ -165,7 +165,7 @@ public class CrearLista extends AppCompatActivity {
                             List<Usuario> lista=new ArrayList<>();
                             Usuario u=new Usuario(user.getEmail());
                             lista.add(u);
-                            persistencia.insertarLista("1",nombre,lista);
+                            persistencia.insertarListaUsuario("1",nombreLista,user.getEmail());
                         }
                     }else{
                         Toast.makeText(getActivity(),"Error, se debe introducir un nombre para la lista",Toast.LENGTH_SHORT).show();
