@@ -131,16 +131,17 @@ public class CrearLista extends AppCompatActivity {
                 if(nombre != null && nombre.trim().length() > 0) {
                     if (tipoLista.equals("grupal")) {
                         //crear la lista GRUPAL con nombre "nombre"
-                    } else {
+                    } else {//LISTA PERSONAL
                         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-                        List<Usuario> lista=new ArrayList<>();
+                        List<Usuario> listaUsu=new ArrayList<>();
                         Usuario u=new Usuario(user.getEmail());
-                         lista.add(u);
-                        persistencia.insertarLista("1",nombre,lista);
+                         listaUsu.add(u);
+                        persistencia.insertarLista("1",nombre,listaUsu);
                         getFragmentManager().beginTransaction().remove(this).commit();
-                        /*Intent intent = new Intent(CrearLista.class, ListaProductos.class);
+                        /*Intent intent = new Intent(CrearLista.this, ListaProductos.class);
                         startActivity(intent);*/
                         getFragmentManager().beginTransaction().remove(this).commit(); //no funciona, mirar con logger
+
                         //HACER REMOVE EN EL GRAGMENT E IR A LISTA PRODUCTOS
                     }
                 }else{
