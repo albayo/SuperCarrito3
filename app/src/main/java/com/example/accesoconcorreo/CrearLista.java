@@ -29,9 +29,18 @@ import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Usuario;
 
 public class CrearLista extends AppCompatActivity {
+    //Representa el CardView que implica la creación de una lista compartida
     private CardView cardViewgrupo;
+
+    //Representa el CardView que implica la creación de una lista personal
     private CardView cardViewsola;
 
+    /**
+     * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
+     * "activity_pantalla_listas"
+     *
+     * @param savedInstanceState Representa el objeto donde se guarda la información
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,6 +79,10 @@ public class CrearLista extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param tipoLista Representa
+     */
     public void abrirFragment(String tipoLista){
         ListaDialogFragment listaDialogFragment = new ListaDialogFragment(tipoLista);
         listaDialogFragment.show(getSupportFragmentManager(),"tag");
@@ -100,7 +113,9 @@ public class CrearLista extends AppCompatActivity {
        // private SuperViewModel superViewModel;
         private ReadAndWriteSnippets persistencia;
 
+        //Representa el nombre del último botón en el cual se ha hecho click
         private String ultBoton="";
+
         /**
          * Constructor base
          * @param tipoLista
@@ -182,7 +197,9 @@ public class CrearLista extends AppCompatActivity {
             return inflater.inflate(R.layout.fragment_introducir_nom_lista, container, false);
         }
 
-
+        /**
+         * Método que sirve para cerrar el Fragment
+         */
         private void cerrarFragment() {
             getActivity().onBackPressed();
             //getFragmentManager().beginTransaction().remove(this).commit();
