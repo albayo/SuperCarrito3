@@ -78,10 +78,17 @@ public class ReadAndWriteSnippets {
 
     public void insertarLista(String listaID, String nombre, List<Usuario> usuarios) {
         Lista lista=new Lista(listaID,nombre,usuarios);
-
+        for (Usuario u:usuarios) {
+            u.insertaLista(lista);
+        }
         mDatabase.child("listas").child(listaID).setValue(lista);
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        user.
-        mDatabase.child("users").child(user.getUid()).setValue());
+
+
+
+    }
+    public Usuario convertirAUsuario(FirebaseUser user){
+
+        Usuario u=(Usuario)mDatabase.child("users").child(user.getUid()).get().getResult().getValue();
+        return u;
     }
 }

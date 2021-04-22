@@ -17,50 +17,34 @@ import java.util.List;
  */
 
 @IgnoreExtraProperties //ESTO LO HE VISTO EN EL EJEMPLO DE FIREBASE, CREO QUE NO HACE FALTA QUE SEA SERIALIZABLE
-public class Usuario implements Serializable {
-
+public class Usuario {
+    private static int contUsuario=0;
+    private int id;
     private String nick;
-    private String contra;
+    private String email;
     private List<Lista> listas;
 
-    /**
-     * Constructor vacío para el Usuario
-     * Se inicializan todos los atributos con contenido vacío
-     */
-    public Usuario(){
-        this.nick="";
-        this.contra="";
-        this.listas=new ArrayList<>();
-    }
     public Usuario(String email){
-        this.nick=email;
-        this.contra="";
+        contUsuario++;
+        id=contUsuario;
+        this.nick="";
+        this.email=email;
         this.listas=new ArrayList<>();
-    }
-    /**
-     * Constructor completo para el Usuario
-     * @param u Representa el nombre que tiene el usuario
-     * @param c Representa la constraseña que usará para loguearse
-     * @param l Representa el conjunto de listas que tiene el usuario
-     */
-    public Usuario(String u, String c, ArrayList<Lista> l) {
-        this.nick = u;
-        this.contra = c;
-        this.listas = l;
-
     }
 
     /**
      * Constructor para el Usuario sin listas (Constructor inicial)
-     * @param u Representa el nombre que tiene el usuario
-     * @param c Representa la constraseña que usará para loguearse
+     * @param nick Representa el nombre que tiene el usuario
+     * @param email Representa la constraseña que usará para loguearse
      */
-    public Usuario (String u, String c){
-        this.nick = u;
-        this.contra = c;
+    public Usuario (String nick, String email) {
+        contUsuario++;
+        id=contUsuario;
+        this.nick = nick;
+        this.email = email;
         this.listas = new ArrayList<Lista>();
     }
-
+    public int getId(){ return id; }
     /**
      * Método que devuelve el nombre del Usuario
      * @return El nombre del Usuario
@@ -77,22 +61,8 @@ public class Usuario implements Serializable {
         this.nick = u;
     }
 
-    /**
-     * Método que devuelve la contraseña del Usuario
-     * @return La contraseña del Usuario
-     */
-    public String getContra() {
-        return contra;
-    }
-
-    /**
-     * Método que establece como contraseña del Usuario la cadena pasada por parámetro
-     * @param c Representa la constraseña que se le quiere asignar al usuario
-     */
-    public void setContra(String c) {
-        this.contra = c;
-    }
-
+    public String getEmail(){ return  email;}
+    public void setEmail(String e){this.email=e;}
     /**
      * Método que devuelve la todas las listas del Usuario
      * @return La lista de Listas del Usuario
@@ -107,5 +77,9 @@ public class Usuario implements Serializable {
      */
     public void setListas(List<Lista> l) {
         this.listas = l;
+    }
+
+    public void insertaLista(Lista l){
+        listas.add(l);
     }
 }
