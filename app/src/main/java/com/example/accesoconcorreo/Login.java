@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.Image;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +23,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import ModeloDominio.ReadAndWriteSnippets;
+import ModeloDominio.Usuario;
 
 
 /**
@@ -82,7 +84,8 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 String[] nick=usuarioET.getText().toString().split("@");
                                 persistencia.insertarUsuario(nick[0],usuarioET.getText().toString());
-                                showHome(usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
+
+                                showHome(usuarioET.getText().toString(),ProviderType.Basic); //MEJOR CON ?: ""
                             } else {
 
                                 showAlert();
@@ -160,6 +163,8 @@ public class Login extends AppCompatActivity {
     private void showHome(String email, ProviderType provider){
         Intent homeIntent=new Intent(this,Home.class);
         homeIntent.putExtra("email",email);
+        String[] nick=usuarioET.getText().toString().split("@");
+        homeIntent.putExtra("nick", nick[0]);
         homeIntent.putExtra("provider",provider.name());
         startActivity(homeIntent);
     }

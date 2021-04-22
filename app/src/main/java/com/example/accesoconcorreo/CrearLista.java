@@ -163,9 +163,9 @@ public class CrearLista extends AppCompatActivity {
                             FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser(); //no sería mejor ir pasando el Usuario en los intents??
                             Log.d("CrearLista valor user", String.valueOf(user));
                             List<Usuario> lista=new ArrayList<>();
-                            Usuario u=new Usuario(user.getEmail());
+                            Usuario u=persistencia.convertirAUsuario(user);
                             lista.add(u);
-                            persistencia.insertarListaUsuario("1",nombreLista,user.getEmail());
+                            persistencia.insertarLista("1",nombreLista,u.getEmail());
                         }
                     }else{
                         Toast.makeText(getActivity(),"Error, se debe introducir un nombre para la lista",Toast.LENGTH_SHORT).show();
