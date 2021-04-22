@@ -14,7 +14,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ReadAndWriteSnippets {
 
@@ -31,9 +34,9 @@ public class ReadAndWriteSnippets {
     }
 
     // [START rtdb_write_new_user]
-    public void insertarUsuario(String userId, String name, String email) {
+    public void insertarUsuario(String name, String email) {
         Usuario user = new Usuario(name, email);
-        mDatabase.child("users").child(userId).setValue(user);
+        mDatabase.child("users").child(name).setValue(user);
     }
     public void writeNewUserWithTaskListeners(String userId, String name, String email) {
         Usuario user = new Usuario(name, email);
@@ -76,15 +79,22 @@ public class ReadAndWriteSnippets {
         return u;
     }
 
-    public void insertarLista(String listaID, String nombre, List<Usuario> usuarios) {
-        Lista lista=new Lista(listaID,nombre,usuarios);
-        for (Usuario u:usuarios) {
-            u.insertaLista(lista);
-        }
-        mDatabase.child("listas").child(listaID).setValue(lista);
+    public void insertarListaUsuario(String IDLista,String nombrelista,String email,){
+        String key=mDatabase.child("listas").push().getKey();
+        List<String> listusuarios=new ArrayList<>();
+        listusuarios.add(email);
+        Lista list=new Lista(IDLista,nombrelista,listusuarios);
+        Map<String,Object> postValues = list.toMap();
 
+        Map<String,Object> childUpdates= new HashMap<>();
+        childUpdates.put("/users-listas/"+key,postValues);
+        childUpdates.put("/listas/"+key,postValues);
 
+        mDatabase.updateChildren(childUpdates);
+    }
 
+    public List<Lista> obtenerListasbyUserID(){
+        mDatabase.child("users-lista").child()
     }
     public Usuario convertirAUsuario(FirebaseUser user){
 
