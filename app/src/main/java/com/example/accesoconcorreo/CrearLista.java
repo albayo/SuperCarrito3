@@ -182,8 +182,9 @@ public class CrearLista extends AppCompatActivity {
             return inflater.inflate(R.layout.fragment_introducir_nom_lista, container, false);
         }
 
+
         private void cerrarFragment() {
-            getActivity().onBackPressed(); //no funciona, mirar con logger
+            getActivity().onBackPressed();
             //getFragmentManager().beginTransaction().remove(this).commit();
             /*Intent intent = new Intent(CrearLista.class, ListaProductos.class);
             startActivity(intent);*/
