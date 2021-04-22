@@ -2,10 +2,13 @@ package com.example.accesoconcorreo;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
+import android.media.Image;
 import android.os.Bundle;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -94,6 +97,22 @@ public class Login extends AppCompatActivity {
 
             }
 
+        });
+        ImageButton mostrarContrasena = findViewById(R.id.imageButton_mostrarC);
+        mostrarContrasena.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método que sirve para mostrar/ocultar la contraseña (cambiar su modo de visualización)
+             * @param v Representa al objeto View sobre el cual se ha hecho click
+             */
+            @Override
+            public void onClick(View v) {
+
+                if( contraseniaET.getTransformationMethod() == null){
+                    contraseniaET.setTransformationMethod(new PasswordTransformationMethod());;
+                }else{
+                    contraseniaET.setTransformationMethod(null);
+                }
+            }
         });
 
         Button btnAcceder =findViewById(R.id.btnAcceder);
