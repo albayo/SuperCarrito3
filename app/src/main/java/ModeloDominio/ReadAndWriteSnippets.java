@@ -25,6 +25,7 @@ public class ReadAndWriteSnippets {
 
     // [START declare_database_ref]
     private DatabaseReference mDatabase;
+
     // [END declare_database_ref]
 
     public ReadAndWriteSnippets() {
@@ -36,7 +37,7 @@ public class ReadAndWriteSnippets {
     // [START rtdb_write_new_user]
     public void insertarUsuario(String name, String email) {
         Usuario user = new Usuario(name, email);
-        mDatabase.child("users").child(name).setValue(user);
+        mDatabase.child("users").child(name).setValue(user.toMap());
     }
     public void writeNewUserWithTaskListeners(String userId, String name, String email) {
         Usuario user = new Usuario(name, email);
@@ -59,8 +60,8 @@ public class ReadAndWriteSnippets {
                 });
         // [END rtdb_write_new_user_task]
     }
-    public Usuario getUsuario(String userId){ //MIRAR BIEN
-        Usuario u=(Usuario)mDatabase.child("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+   /* public Usuario getUsuario(String userId){ //MIRAR BIEN
+        mDatabase.child("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
 
             //NOSE PARA QUE USA ESTO , NOSE COMO SACAR EL USUARIO DESPUES DEL ON COMPLETE.
             @Override
@@ -77,13 +78,21 @@ public class ReadAndWriteSnippets {
         }).getResult().getValue();
 
         return u;
-    }
+    }*/
 
     public Usuario convertirAUsuario(String nick){
         Usuario u=null;
-        Map<String, Object> m=(Map<String, Object>) mDatabase.child("users").child(nick).get().getResult().getValue();
-        u=new Usuario(nick,(String)m.get("email"));
-        u.setListas((List<String>) m.get("listas"));
+        mDatabase.child("users").child(nick).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    Log.d("FIREBASE",String.valueOf(task.getResult().getValue()));
+                }
+            }
+        });
+       // Log.d("FIREBASE",String.valueOf(task.getResult().getValue()));
+       // u=new Usuario(nick,(String)m.get("email"));
+        //u.setListas((List<String>) m.get("listas"));
         return u;
     }
 

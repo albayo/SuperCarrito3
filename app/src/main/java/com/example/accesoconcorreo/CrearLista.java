@@ -93,18 +93,24 @@ public class CrearLista extends AppCompatActivity {
         listaDialogFragment.show(getSupportFragmentManager(),"tag");
 
         String ultB = listaDialogFragment.getUltBoton();
+        listaDialogFragment.getLifecycle().getCurrentState();
+        while(!listaDialogFragment.isCancelable()){
+
+        }
         if(ultB.length() > 0){
             if(ultB.equals("Aceptar")){
                 Intent intent = new Intent(this, ListaProductos.class);
                 intent.putExtra("nick",nick);
                 intent.putExtra("email",email);
+                intent.putExtra("nombreLista",listaDialogFragment.getNombreLista());
                 startActivity(intent);
             }
         }
-        Intent intent = new Intent(this, ListaProductos.class);
+        /*Intent intent = new Intent(this, ListaProductos.class);
         intent.putExtra("nick",nick);
         intent.putExtra("email",email);
-        startActivity(intent);
+        intent.putExtra("nombreLista",listaDialogFragment.getNombreLista());
+        startActivity(intent);*/
     }
     public static class ListaDialogFragment extends DialogFragment
     {
@@ -122,6 +128,7 @@ public class CrearLista extends AppCompatActivity {
         private String tipoLista;
         private String email;
         private String nick;
+        private String nombreLista;
 
         //Representa la clase de Lógica de Negocio la cuál será necesaria para sacar la información de la BD
        // private SuperViewModel superViewModel;
@@ -147,7 +154,9 @@ public class CrearLista extends AppCompatActivity {
         public String getUltBoton(){
             return this.ultBoton;
         }
-
+        public String getNombreLista(){
+            return this.nombreLista;
+        }
         /**
          * Método que inicializa las componentes del dialogfragment
          * @param view
@@ -161,6 +170,7 @@ public class CrearLista extends AppCompatActivity {
             btnAceptar = (Button) view.findViewById(R.id.btnAceptar);
             btnCancelar = (Button) view.findViewById(R.id.btnCancelar);
             persistencia= new ReadAndWriteSnippets();
+            Log.d("FIREBASE","HOLAAA");
             btnAceptar.setOnClickListener(new View.OnClickListener() {
                 /**
                  * Método que sirve para comprobar que lo introducido en los campos de usuario y
@@ -181,7 +191,7 @@ public class CrearLista extends AppCompatActivity {
                             Usuario u=persistencia.convertirAUsuario(nick);
                             lista.add(u);
                             persistencia.insertarLista("1",nombreLista,nick);
-                            cerrarFragment();
+
                         }
                     }else{
                         Toast.makeText(getActivity(),"Error, se debe introducir un nombre para la lista",Toast.LENGTH_SHORT).show();
@@ -215,10 +225,18 @@ public class CrearLista extends AppCompatActivity {
             return inflater.inflate(R.layout.fragment_introducir_nom_lista, container, false);
         }
 
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            getActivity().onBackPressed();
+        }
+
         /**
          * Método que sirve para cerrar el Fragment
          */
+
         private void cerrarFragment() {
+
             getActivity().onBackPressed();
             //getFragmentManager().beginTransaction().remove(this).commit();
             /*Intent intent = new Intent(CrearLista.class, ListaProductos.class);
