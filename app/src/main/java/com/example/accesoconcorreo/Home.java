@@ -33,6 +33,8 @@ public class Home extends AppCompatActivity {
         database=FirebaseDatabase.getInstance();
         myRef=database.getReference();
         user= FirebaseAuth.getInstance().getCurrentUser();
+        String email=getIntent().getExtras().get("email").toString();
+        String nick=getIntent().getStringExtra("nick");
         recyclerView=findViewById(R.id.recycler_lista_super_prod);
         FloatingActionButton fabAñadirLista=findViewById(R.id.fabAniadir_lista);
         fabAñadirLista.setOnClickListener(new View.OnClickListener() {
@@ -40,14 +42,15 @@ public class Home extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Home.this,
                         CrearLista.class);
+                intent.putExtra("nick",nick);
+                intent.putExtra("email",email);
                 startActivity(intent);
                 Intent replyIntent = new Intent();
                 Lista l = (Lista) intent.getSerializableExtra("lista");
                //hacer insert en el usuario internamente
             }
         });
-       String email=getIntent().getExtras().get("email").toString();
-       String nick=getIntent().getStringExtra("nick");
+
         Usuario u=new Usuario(nick,email);
         ReadAndWriteSnippets persistencia=new ReadAndWriteSnippets();
        /*List<String> listasUsuario=persistencia.obtenerListasbyUserID();

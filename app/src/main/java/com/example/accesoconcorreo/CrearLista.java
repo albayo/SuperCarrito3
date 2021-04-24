@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -35,7 +36,8 @@ public class CrearLista extends AppCompatActivity {
 
     //Representa el CardView que implica la creación de una lista personal
     private CardView cardViewsola;
-
+    private String email;
+    private String nick;
     /**
      * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
      * "activity_pantalla_listas"
@@ -48,9 +50,11 @@ public class CrearLista extends AppCompatActivity {
         setContentView(R.layout.activity_crear_lista);
         cardViewsola = (CardView)findViewById(R.id.lista_personal_card);
         cardViewgrupo = (CardView)findViewById(R.id.grupo_compra_card);
-        //superViewModel = new ViewModelProvider(this).get(SuperViewModel.class);
+        email=getIntent().getExtras().get("email").toString();
+        nick=getIntent().getStringExtra("nick");
         registerForContextMenu(cardViewsola);
         registerForContextMenu(cardViewgrupo);
+
         //usuario=firebaseAuth.getCurrentUser();
         cardViewgrupo.setOnClickListener(new View.OnClickListener(){
 
@@ -85,19 +89,26 @@ public class CrearLista extends AppCompatActivity {
      * @param tipoLista Representa
      */
     public void abrirFragment(String tipoLista){
-        ListaDialogFragment listaDialogFragment = new ListaDialogFragment(tipoLista);
+        ListaDialogFragment listaDialogFragment = new ListaDialogFragment(tipoLista,email,nick);
         listaDialogFragment.show(getSupportFragmentManager(),"tag");
 
         String ultB = listaDialogFragment.getUltBoton();
         if(ultB.length() > 0){
             if(ultB.equals("Aceptar")){
                 Intent intent = new Intent(this, ListaProductos.class);
+                intent.putExtra("nick",nick);
+                intent.putExtra("email",email);
                 startActivity(intent);
             }
         }
+        Intent intent = new Intent(this, ListaProductos.class);
+        intent.putExtra("nick",nick);
+        intent.putExtra("email",email);
+        startActivity(intent);
     }
     public static class ListaDialogFragment extends DialogFragment
     {
+
         //Representa el EditText en el cual habrá que introducir el nombre que se le querra dar a la lista
         private EditText etNombre;
 
@@ -109,6 +120,8 @@ public class CrearLista extends AppCompatActivity {
 
         //Representa una cadena que indica el tipo de lista que se tendrá que crear
         private String tipoLista;
+        private String email;
+        private String nick;
 
         //Representa la clase de Lógica de Negocio la cuál será necesaria para sacar la información de la BD
        // private SuperViewModel superViewModel;
@@ -121,7 +134,9 @@ public class CrearLista extends AppCompatActivity {
          * Constructor base
          * @param tipoLista
          */
-        public ListaDialogFragment(String tipoLista){
+        public ListaDialogFragment(String tipoLista,String email,String nick){
+            this.email=email;
+            this.nick=nick;
             this.tipoLista = tipoLista;
         }
 
@@ -160,12 +175,13 @@ public class CrearLista extends AppCompatActivity {
                         if (tipoLista.equals("grupal")) {
                             //crear la lista GRUPAL con nombre "nombre"
                         } else {
-                            FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser(); //no sería mejor ir pasando el Usuario en los intents??
-                            Log.d("CrearLista valor user", String.valueOf(user));
+
+                            Log.d("CrearLista valor user", String.valueOf(nick));
                             List<Usuario> lista=new ArrayList<>();
-                            Usuario u=persistencia.convertirAUsuario(user);
+                            Usuario u=persistencia.convertirAUsuario(nick);
                             lista.add(u);
-                            persistencia.insertarLista("1",nombreLista,u.getEmail());
+                            persistencia.insertarLista("1",nombreLista,nick);
+                            cerrarFragment();
                         }
                     }else{
                         Toast.makeText(getActivity(),"Error, se debe introducir un nombre para la lista",Toast.LENGTH_SHORT).show();
