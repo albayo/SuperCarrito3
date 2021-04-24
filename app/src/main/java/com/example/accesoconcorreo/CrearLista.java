@@ -106,11 +106,6 @@ public class CrearLista extends AppCompatActivity {
                 startActivity(intent);
             }
         }
-        /*Intent intent = new Intent(this, ListaProductos.class);
-        intent.putExtra("nick",nick);
-        intent.putExtra("email",email);
-        intent.putExtra("nombreLista",listaDialogFragment.getNombreLista());
-        startActivity(intent);*/
     }
     public static class ListaDialogFragment extends DialogFragment
     {
@@ -190,7 +185,8 @@ public class CrearLista extends AppCompatActivity {
                             List<Usuario> lista=new ArrayList<>();
                             Usuario u=persistencia.convertirAUsuario(nick);
                             lista.add(u);
-                            persistencia.insertarLista("1",nombreLista,nick);
+                            persistencia.insertarLista(nombreLista,nick);
+                            cerrarFragment();
 
                         }
                     }else{
@@ -223,12 +219,6 @@ public class CrearLista extends AppCompatActivity {
         @Override
         public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
             return inflater.inflate(R.layout.fragment_introducir_nom_lista, container, false);
-        }
-
-        @Override
-        public void onDestroy() {
-            super.onDestroy();
-            getActivity().onBackPressed();
         }
 
         /**

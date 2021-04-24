@@ -20,8 +20,9 @@ import java.util.Map;
 
 public class Lista implements Serializable {
 
+    private static int contLista=0;
 
-    private String idLista;
+    private int idLista;
 
     private String nombre;
 
@@ -37,7 +38,7 @@ public class Lista implements Serializable {
      * Inicializa todas sus componentes
      */
     public Lista (){
-        this.idLista="";
+        this.idLista=0;
         this.nombre="";
          this.usuarios=new ArrayList<>();
         this.productos=new ArrayList<>();
@@ -45,12 +46,12 @@ public class Lista implements Serializable {
 
     /**
      * Constructor completo para una Lista (ya que una lista se crea vacía, sin productos en ella)
-     * @param idLista Representa el identificador de la Lista
      * @param nombre Representa el nombre de la Lista
      * @param u Representa los usuarios que participan en la Lista
      */
-    public Lista(String idLista, String nombre, List<String> u){
-        this.idLista=idLista;
+    public Lista(String nombre, List<String> u){
+        contLista++;
+        this.idLista=contLista;
         this.usuarios=u;
         this.nombre=nombre;
         this.productos=new java.util.ArrayList<Producto>();
@@ -61,7 +62,7 @@ public class Lista implements Serializable {
      * Método que devuelve el identificador de la Lista
      * @return El identificador de la Lista (la cadena devuelta no podrá ser nula)
      */
-    public String getIdLista() {
+    public int getIdLista() {
         return idLista;
     }
 
@@ -69,7 +70,7 @@ public class Lista implements Serializable {
      * Método que establece como identificador de la Lista la cadena pasada por parámetro
      * @param idLista Representa el nuevo identificador de la Lista (no podrá ser nulo)
      */
-    public void setIdLista(String idLista) {
+    public void setIdLista(int idLista) {
         this.idLista = idLista;
     }
 
@@ -120,6 +121,12 @@ public class Lista implements Serializable {
     public void setUsuarios(List<String> u){
         this.usuarios=u;
     }
+
+    /**
+     * Devuleve el contador estático de listas
+     * @return
+     */
+    public static int getContLista(){return contLista;}
 
     /**
      * Métodd que devuelve un objeto HashMap que guarda la información de una Lista.
