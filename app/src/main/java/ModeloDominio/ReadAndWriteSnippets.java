@@ -11,8 +11,10 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -133,8 +135,28 @@ public class ReadAndWriteSnippets {
        insertContadorListas(Lista.getContLista());
     }
 
-    public List<String> obtenerListasbyUserID(String nick){
-        Usuario u=this.convertirAUsuario(nick);
-        return (List<String>) mDatabase.child("users").child(nick).child("listas").get().getResult().getValue();
+    public List<String> obtenerListasbyUserID(String nick) {
+        //Usuario u=this.convertirAUsuario(nick);
+        List<String> llistas = new ArrayList<>();
+        mDatabase.child("users").child(nick).child("listas").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        String nombrelista = ds.child("nombre").getValue().toString();
+                        llistas.add(nombrelista);
+                    }
+
+                    //crear adapter para mostrar en recycler
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        }
+        );
+        return llistas;
     }
 }

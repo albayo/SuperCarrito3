@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
@@ -53,11 +54,14 @@ public class Home extends AppCompatActivity {
 
         Usuario u=new Usuario(nick,email);
         ReadAndWriteSnippets persistencia=new ReadAndWriteSnippets();
-       /*List<String> listasUsuario=persistencia.obtenerListasbyUserID();
+        List<String> listasUsuario=persistencia.obtenerListasbyUserID(u.getNick());
+        System.out.println(listasUsuario.size());
+        TextView textView=findViewById(R.id.tamañolista);
+        textView.setText("Tamaño: "+listasUsuario.size());
+        TextView nombrelista=findViewById(R.id.nombrelista);
         for(String l: listasUsuario){
-            TextView t=new TextView(this);
-            t.setText(l);
-        }*/
+            nombrelista.setText(l);
+        }
         TextView t=findViewById(R.id.sustituir);
         t.setText(nick);
 
