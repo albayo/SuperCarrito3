@@ -96,8 +96,28 @@ public class ReadAndWriteSnippets {
         return u;
     }
 
+    public int getContadorListas(){ //REVISARR PARA LLAMARLO EN INSERTAR LISTA
+       String n=String.valueOf( mDatabase.child("contadorLista").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+           @Override
+           public void onComplete(@NonNull Task<DataSnapshot> task) {
+               if(task.isSuccessful()){
+                   Log.d("FIREBASE","SIIIIIII");
+               }else {
+                   Log.e("FIREBASE","SNOO");
+               }
 
+           }
+       }).getResult().getValue());
+
+       Log.d("FIREBASE","HOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO "+n);
+       return Integer.valueOf(n);
+    }
+    public void insertContadorListas(int n){
+        mDatabase.child("contadorLista").setValue(n);
+    }
     public void insertarLista(String nombrelista,String nick){
+       // Lista.setContLista(getContadorListas()); FALLA EL SACAR EL CONTADOR DE LA BD POR ESO POR AHORA PONEMOS EL NUMERO QUE SEA.
+        Lista.setContLista(2);
 
         List<String> listusuarios=new ArrayList<>();
         listusuarios.add(nick);
@@ -106,16 +126,11 @@ public class ReadAndWriteSnippets {
 
         Usuario u=this.convertirAUsuario(nick);
 
+
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("nombre").setValue(nombrelista);
         mDatabase.child("users").child(nick).child("listas").child(String.valueOf(list.getIdLista())).setValue(nombrelista);
-        /*
-        Map<String,Object> childUpdates= new HashMap<>();
-        //No sabemos si es asi la url en la que inserta.
-        childUpdates.put("/users/"+u.getNick()+"/listas/"+IDLista,nombrelista);
-        childUpdates.put("/listas/"+IDLista,postValues);
 
-        mDatabase.updateChildren(childUpdates);
-         */
+       insertContadorListas(Lista.getContLista());
     }
 
     public List<String> obtenerListasbyUserID(String nick){

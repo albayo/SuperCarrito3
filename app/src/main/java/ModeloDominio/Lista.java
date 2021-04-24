@@ -127,7 +127,7 @@ public class Lista implements Serializable {
      * @return
      */
     public static int getContLista(){return contLista;}
-
+    public static void setContLista(int n){contLista=n;}
     /**
      * Métodd que devuelve un objeto HashMap que guarda la información de una Lista.
      * @return
