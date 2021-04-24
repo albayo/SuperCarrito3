@@ -99,20 +99,23 @@ public class ReadAndWriteSnippets {
 
     public void insertarLista(String IDLista,String nombrelista,String nick){
 
-            List<String> listusuarios=new ArrayList<>();
+        List<String> listusuarios=new ArrayList<>();
         listusuarios.add(nick);
-            Lista list=new Lista(IDLista,nombrelista,listusuarios);
+        Lista list=new Lista(IDLista,nombrelista,listusuarios);
         Map<String,Object> postValues = list.toMap();
 
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
         Usuario u=this.convertirAUsuario(nick);
 
+        mDatabase.child("listas").child(IDLista).child("nombre").setValue(nombrelista);
+        mDatabase.child("users").child(nick).child("listas").child(IDLista).setValue(nombrelista);
+        /*
         Map<String,Object> childUpdates= new HashMap<>();
         //No sabemos si es asi la url en la que inserta.
         childUpdates.put("/users/"+u.getNick()+"/listas/"+IDLista,nombrelista);
         childUpdates.put("/listas/"+IDLista,postValues);
 
         mDatabase.updateChildren(childUpdates);
+         */
     }
 
     public List<String> obtenerListasbyUserID(String nick){
