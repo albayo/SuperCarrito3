@@ -22,14 +22,10 @@ import ModeloDominio.Producto;
 public class ListaProductos extends AppCompatActivity {
 
 
-        //Representa la clase de Lógica de Negocio la cuál será necesaria para comprobar información con la BD
-       // private SuperViewModel superViewModel;
+
 
         //Representa el RecyclerView en el cual se dispondrán los Productos de la Lista
         private RecyclerView recyclerViewproductos;
-
-        //Representa el adapter que se necesita para poder disponer los datos de las Productos de la Lista en el RecyclerView
-       // private ProductoListAdapter adapatador;
 
         /**
          * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad

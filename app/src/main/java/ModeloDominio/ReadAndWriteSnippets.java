@@ -78,21 +78,25 @@ public class ReadAndWriteSnippets {
 
         return u;
     }
-    public Usuario convertirAUsuario(FirebaseUser user){
-        String [] userid=user.getEmail().split("@");
-        Usuario u=(Usuario)mDatabase.child("users").child(userid[0]).get().getResult().getValue();
+
+    public Usuario convertirAUsuario(String nick){
+        Usuario u=null;
+        Map<String, Object> m=(Map<String, Object>) mDatabase.child("users").child(nick).get().getResult().getValue();
+        u=new Usuario(nick,(String)m.get("email"));
+        u.setListas((List<String>) m.get("listas"));
         return u;
     }
 
-    public void insertarLista(String IDLista,String nombrelista,String email){
+
+    public void insertarLista(String IDLista,String nombrelista,String nick){
 
             List<String> listusuarios=new ArrayList<>();
-        listusuarios.add(email);
+        listusuarios.add(nick);
             Lista list=new Lista(IDLista,nombrelista,listusuarios);
         Map<String,Object> postValues = list.toMap();
 
         FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        Usuario u=this.convertirAUsuario(user);
+        Usuario u=this.convertirAUsuario(nick);
 
         Map<String,Object> childUpdates= new HashMap<>();
         //No sabemos si es asi la url en la que inserta.
@@ -102,9 +106,8 @@ public class ReadAndWriteSnippets {
         mDatabase.updateChildren(childUpdates);
     }
 
-    public List<String> obtenerListasbyUserID(){
-        FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        Usuario u=this.convertirAUsuario(user);
-        return (List<String>) mDatabase.child("users").child(u.getNick()).child("listas").get().getResult().getValue();
+    public List<String> obtenerListasbyUserID(String nick){
+        Usuario u=this.convertirAUsuario(nick);
+        return (List<String>) mDatabase.child("users").child(nick).child("listas").get().getResult().getValue();
     }
 }
