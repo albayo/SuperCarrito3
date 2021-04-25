@@ -26,7 +26,7 @@ public class ReadAndWriteSnippets {
     private static final String TAG = "ReadAndWriteSnippets";
 
     // [START declare_database_ref]
-    private DatabaseReference mDatabase;
+    private static DatabaseReference mDatabase;
 
     // [END declare_database_ref]
 
@@ -84,46 +84,59 @@ public class ReadAndWriteSnippets {
 
     public Usuario convertirAUsuario(String nick){
         Usuario u=null;
-        mDatabase.child("users").child(nick).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    Log.d("FIREBASE",String.valueOf(task.getResult().getValue()));
-                }
-            }
-        });
+       // mDatabase.child("users").child(nick).get().addLis;
        // Log.d("FIREBASE",String.valueOf(task.getResult().getValue()));
        // u=new Usuario(nick,(String)m.get("email"));
         //u.setListas((List<String>) m.get("listas"));
         return u;
     }
 
-    public int getContadorListas(){ //REVISARR PARA LLAMARLO EN INSERTAR LISTA
-       String n=String.valueOf( mDatabase.child("contadorLista").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-           @Override
-           public void onComplete(@NonNull Task<DataSnapshot> task) {
-               if(task.isSuccessful()){
-                   Log.d("FIREBASE","SIIIIIII");
-               }else {
-                   Log.e("FIREBASE","SNOO");
-               }
+   /* public static void actualizaContadorListas(){ //REVISARR PARA LLAMARLO EN INSERTAR LISTA
+        String n="";
+        mDatabase.child("contadorLista").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    String n=snapshot.getValue().toString();
+                    Lista.setContLista(Integer.valueOf(n));
+                    Log.d("CONTADOR","Contador "+Lista.getContLista());
+                    Log.d("Contador","msgCont "+n);
+                }
+            }
 
-           }
-       }).getResult().getValue());
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("FIREBASE","AL ACTUALIZAR EL CONTADOR");
+            }
 
-       Log.d("FIREBASE","HOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO "+n);
-       return Integer.valueOf(n);
+
+        });
+    }*/
+    public static void actualizaContadorListas(){
+
+        mDatabase.child("contadorLista").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                String n=dataSnapshot.getValue().toString();
+                Lista.setContLista(Integer.valueOf(n));
+                Log.d("CONTADOR","Contador "+Lista.getContLista());
+                Log.d("Contador","msgCont "+n);
+            }
+        });
+
     }
     public void insertContadorListas(int n){
         mDatabase.child("contadorLista").setValue(n);
     }
-    public void insertarLista(String nombrelista,String nick){
-       // Lista.setContLista(getContadorListas()); FALLA EL SACAR EL CONTADOR DE LA BD POR ESO POR AHORA PONEMOS EL NUMERO QUE SEA.
-        Lista.setContLista(2);
+    public void insertarLista(String nombrelista,String nick) {
+
+        actualizaContadorListas();
 
         List<String> listusuarios=new ArrayList<>();
         listusuarios.add(nick);
+        Log.d("Contador","INSERTAR:"+ Lista.getContLista());
         Lista list=new Lista(nombrelista,listusuarios);
+
         Map<String,Object> postValues = list.toMap();
 
         Usuario u=this.convertirAUsuario(nick);
@@ -142,11 +155,10 @@ public class ReadAndWriteSnippets {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        String nombrelista = ds.child("nombre").getValue().toString();
-                        llistas.add(nombrelista);
+                    Iterable<DataSnapshot> ds= snapshot.child("nombre").getChildren();
+                    for (DataSnapshot d:ds) {
+                        llistas.add(String.valueOf(d.getValue()));
                     }
-
                     //crear adapter para mostrar en recycler
                 }
             }

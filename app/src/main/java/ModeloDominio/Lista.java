@@ -38,6 +38,7 @@ public class Lista implements Serializable {
      * Inicializa todas sus componentes
      */
     public Lista (){
+        ReadAndWriteSnippets.actualizaContadorListas();
         this.idLista=0;
         this.nombre="";
          this.usuarios=new ArrayList<>();
@@ -50,6 +51,7 @@ public class Lista implements Serializable {
      * @param u Representa los usuarios que participan en la Lista
      */
     public Lista(String nombre, List<String> u){
+        ReadAndWriteSnippets.actualizaContadorListas();
         contLista++;
         this.idLista=contLista;
         this.usuarios=u;

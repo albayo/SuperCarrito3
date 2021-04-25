@@ -160,6 +160,7 @@ public class CrearLista extends AppCompatActivity {
         @Override
         public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
             super.onViewCreated(view, savedInstanceState);
+            ReadAndWriteSnippets.actualizaContadorListas();
             //superViewModel = new ViewModelProvider(this).get(SuperViewModel.class);
             etNombre = (EditText) view.findViewById(R.id.etNombre);
             btnAceptar = (Button) view.findViewById(R.id.btnAceptar);
@@ -175,13 +176,15 @@ public class CrearLista extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     ultBoton = "Aceptar";
+
+                    Log.d("Cont", "Onclick:" +Lista.getContLista());
                     String nombreLista = etNombre.getText().toString();
                     if(nombreLista != null && nombreLista.trim().length() > 0) {
                         if (tipoLista.equals("grupal")) {
                             //crear la lista GRUPAL con nombre "nombre"
                         } else {
 
-                            Log.d("CrearLista valor user", String.valueOf(nick));
+                            Log.d("Cont", "CrearLista:" +Lista.getContLista());
                             List<Usuario> lista=new ArrayList<>();
                             Usuario u=persistencia.convertirAUsuario(nick);
                             lista.add(u);
