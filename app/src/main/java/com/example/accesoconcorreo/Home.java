@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ModeloDominio.Lista;
@@ -54,7 +55,7 @@ public class Home extends AppCompatActivity {
 
         Usuario u=new Usuario(nick,email);
         ReadAndWriteSnippets persistencia=new ReadAndWriteSnippets();
-        List<String> listasUsuario=persistencia.obtenerListasbyUserID(u.getNick());
+        ArrayList<String> listasUsuario=persistencia.obtenerListasbyUserID(u.getNick());
         System.out.println(listasUsuario.size());
         TextView textView=findViewById(R.id.tamañolista);
         textView.setText("Tamaño: "+listasUsuario.size());

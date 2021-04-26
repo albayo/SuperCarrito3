@@ -143,14 +143,15 @@ public class ReadAndWriteSnippets {
 
 
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("nombre").setValue(nombrelista);
+        //convendria poner un child nombre
         mDatabase.child("users").child(nick).child("listas").child(String.valueOf(list.getIdLista())).setValue(nombrelista);
 
        insertContadorListas(Lista.getContLista());
     }
 
-    public List<String> obtenerListasbyUserID(String nick) {
+    public ArrayList<String> obtenerListasbyUserID(String nick) {
         //Usuario u=this.convertirAUsuario(nick);
-        List<String> llistas = new ArrayList<>();
+        ArrayList<String> llistas = new ArrayList<>();
         mDatabase.child("users").child(nick).child("listas").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -171,4 +172,30 @@ public class ReadAndWriteSnippets {
         );
         return llistas;
     }
+
+        /*
+    public ArrayList<String> obtenerListasbyUserID(String nick) {
+        //Usuario u=this.convertirAUsuario(nick);
+        ArrayList<String> llistas = new ArrayList<>();
+        mDatabase.child("users").child(nick).child("listas").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot d:snapshot.getChildren()) {
+                        llistas.add(d.child("nombre").getValue().toString());
+                    }
+                    //crear adapter para mostrar en recycler
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        }
+        );
+        return llistas;
+    }
+    */
+
 }
