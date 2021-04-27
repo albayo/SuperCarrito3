@@ -135,6 +135,34 @@ public class ReadAndWriteSnippets {
         return llistas;
     }
 /*
+    public static void getProducto(String idProducto){
+        Log.d("GETPRODUCTO","INI");
+
+        mDatabase.child("json").child("results").child(idProducto).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    Log.d("GETPRODUCTO","TASK OK");
+                    fDataSnapshot d:task.getResult()){
+
+                    }
+                }
+
+
+                String nombre=ds.child("product_name").getValue().toString();
+                String ingredients=ds.child("ingredients_text").getValue().toString();
+                String imgage=ds.child("image_url").getValue().toString();
+                String brand=ds.child("brand_owner").getValue().toString();
+                Producto p=new Producto(String.valueOf(idProducto),nombre,brand,imgage,ingredients,"");
+            }
+        });
+
+
+
+        Log.d("GETPRODUCTO","FIN");
+
+    }*/
+/* Se usará mas tarde no borrar!!!!
     public void obtenerTodosProductos() {
         List<String> llistas = new ArrayList<>();
         mDatabase.child("json").child("results").addValueEventListener(new ValueEventListener() {

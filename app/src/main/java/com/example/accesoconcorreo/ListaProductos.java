@@ -15,6 +15,8 @@ import android.util.Log;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +29,7 @@ import java.util.List;
 import Adapters.ListaListAdapter;
 import Adapters.ProductListAdapter;
 import ModeloDominio.Producto;
+import ModeloDominio.ReadAndWriteSnippets;
 
 /**
  * Esta clase define la actividad (llamada "activity_lista_producto") que dispondrá en pantalla los
@@ -35,7 +38,7 @@ import ModeloDominio.Producto;
  * @version: 13/04/2021
  */
 public class ListaProductos extends AppCompatActivity {
-
+        private List<Producto> productos;
         private DatabaseReference mDatabase;
          private ProductListAdapter productosAdapter;
         private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán los Productos de la Lista
@@ -53,29 +56,33 @@ public class ListaProductos extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_lista_productos2);
             mDatabase=FirebaseDatabase.getInstance().getReference();
-
+            productos=new ArrayList<>();
             recyclerViewproductos=(RecyclerView)findViewById(R.id.lista_prod_recycler);
             recyclerViewproductos.setLayoutManager(new LinearLayoutManager(this));
             toolbar=(Toolbar)findViewById(R.id.toolbar_list_prod);
             String nombreLista=getIntent().getStringExtra("nombreLista");
             toolbar.setTitle(nombreLista);
             String idLista=getIntent().getStringExtra("idLista");
-            //Log.d("IDLista",idLista);
-           // obtenerProductosLista(idLista);
+            Log.d("IDLista",idLista);
+            obtenerProductosLista(idLista);
         }
 
     public void obtenerProductosLista(String listaid) {
-        List<String> llistas = new ArrayList<>();
-        mDatabase.child("listas").child(listaid).addValueEventListener(new ValueEventListener() {
+
+        mDatabase.child("listas").child(listaid).child("productos").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String nombre=ds.getValue().toString();
-                        llistas.add(nombre);
+                        Producto p=null;
+
+                        addProducto(nombre);
+                        Log.d("ObtenerProduct",nombre);
+                        Log.d("ObtenerProduct","Numero " +productos.size());
                     }
-                    //productosAdapter= new ProductListAdapter(R.layout.pantalla_listas_list,llistas);
-                    //recyclerViewproductos.setAdapter(productosAdapter);
+                    productosAdapter= new ProductListAdapter(R.layout.pantalla_listas_list,productos);
+                    recyclerViewproductos.setAdapter(productosAdapter);
                 }
             }
             @Override
@@ -85,6 +92,33 @@ public class ListaProductos extends AppCompatActivity {
         );
 
     }
+    public void addProducto(String idProducto){
+        Log.d("GETPRODUCTO","INI");
+
+        mDatabase.child("json").child("results").child(idProducto).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot ds) {
+                if (ds.exists()) {
+                    productos.clear();
+
+                    String nombre = ds.child("product_name").getValue().toString();
+                    String ingredients = ds.child("ingredients_text").getValue().toString();
+                    String imgage = ds.child("image_url").getValue().toString();
+                    String brand = ds.child("brand_owner").getValue().toString();
+                    Producto p = new Producto(String.valueOf(idProducto), nombre, brand, imgage, ingredients, "");
+                    productos.add(p);
+                    Log.d("GETPRODUCTO", p.getNombre());
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        Log.d("GETPRODUCTO","FIN");
+    }
+
 
 
 }
