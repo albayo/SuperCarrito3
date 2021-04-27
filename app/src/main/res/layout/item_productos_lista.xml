@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/item_producto_lista"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="15dp"
+    app:cardElevation="4dp"
+    app:cardUseCompatPadding="true">
+
+    <LinearLayout
+        android:id="@+id/Linear_producto_lista"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="6dp">
+
+        <RelativeLayout
+            android:id="@+id/Relative_producto_lista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="6dp">
+
+            <ImageView
+                android:id="@+id/fotoproducto_lista"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                app:srcCompat="@mipmap/ic_producto" />
+
+            <LinearLayout
+                android:id="@+id/linear_datoProductos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_toEndOf="@id/fotoproducto_lista"
+                android:layout_toRightOf="@id/fotoproducto_lista"
+                android:orientation="vertical"
+                android:padding="6dp">
+
+                <TextView
+
+                    android:id="@+id/nombre_producto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombreproducto"
+                    android:textSize="14sp" />
+
+                <TextView
+
+                    android:id="@+id/super_producto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nombresuper"
+                    android:textSize="12sp" />
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/aniadir_mas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_toStartOf="@id/checkBox_seleccionar"
+                android:layout_toLeftOf="@id/checkBox_seleccionar"
+                app:srcCompat="@drawable/ic_add_black"
+                tools:ignore="VectorDrawableCompat" />
+
+            <CheckBox
+                android:id="@+id/checkBox_seleccionar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <ImageView
+                android:id="@+id/quitar_menos"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_toStartOf="@id/numero_producto_pedido"
+                android:layout_toLeftOf="@id/numero_producto_pedido"
+                app:srcCompat="@drawable/ic_remove_black"
+                tools:ignore="VectorDrawableCompat" />
+
+            <TextView
+                android:id="@+id/numero_producto_pedido"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_toStartOf="@id/aniadir_mas"
+                android:layout_toLeftOf="@id/aniadir_mas"
+                android:text="1" />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>

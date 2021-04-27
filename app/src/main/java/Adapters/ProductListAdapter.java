@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.accesoconcorreo.R;
+
 import java.util.List;
 
 import ModeloDominio.Producto;
@@ -25,18 +27,19 @@ import ModeloDominio.Producto;
     public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductoViewHolder> {
         //Representa el objeto necesario para la instanciacion en forma de View del layout necesario en este caso(item:prod_list)
 
-
+        private int resource;
         //Representa una lista de los productos que obtendremos de la base de datos para mostrarlos.
         private List<Producto> mProductos;  // Cached copy of Productos
 
         /**
          * Constructor de un adapter de la lista de productos
-         * @param context Representa el contexto de la aplicacion
+         * @param resource Representa el contexto de la aplicacion
          * @param Productos Representa la lista de productos a mostrar
          */
-        public ProductoListAdapter(Context context,List<Producto> Productos) {
-            mInflater  = LayoutInflater. from (context);
-            this.mProductos=Productos;
+        public ProductListAdapter(int resource,List<Producto> Productos) {
+            this.resource=resource;
+            //u = usuario;
+            this.mProductos = Productos;
         }
 
         /**
@@ -47,8 +50,8 @@ import ModeloDominio.Producto;
 
         @Override
         public  ProductoViewHolder onCreateViewHolder(ViewGroup parent, int  viewType) {
-            View itemView =  mInflater .inflate(R.layout.item_prod_list, parent,  false );
-            return new  ProductoViewHolder(itemView);
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
+            return new ProductListAdapter.ProductoViewHolder(itemView);
         }
 
         /**
@@ -120,4 +123,4 @@ import ModeloDominio.Producto;
         }
     }
 
-}
+

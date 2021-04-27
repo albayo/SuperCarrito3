@@ -22,4 +22,11 @@
 
 
     <style name="Theme.Supercarrito.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+    <style name="Theme.AccesoConCorreo.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.AccesoConCorreo.AppBarOverlay"
+        parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.AccesoConCorreo.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>
