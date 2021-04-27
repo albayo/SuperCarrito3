@@ -1,6 +1,7 @@
 package ModeloDominio;
 
 import android.util.Log;
+import android.widget.ArrayAdapter;
 
 import androidx.annotation.NonNull;
 
@@ -90,28 +91,6 @@ public class ReadAndWriteSnippets {
         //u.setListas((List<String>) m.get("listas"));
         return u;
     }
-
-   /* public static void actualizaContadorListas(){ //REVISARR PARA LLAMARLO EN INSERTAR LISTA
-        String n="";
-        mDatabase.child("contadorLista").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    String n=snapshot.getValue().toString();
-                    Lista.setContLista(Integer.valueOf(n));
-                    Log.d("CONTADOR","Contador "+Lista.getContLista());
-                    Log.d("Contador","msgCont "+n);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("FIREBASE","AL ACTUALIZAR EL CONTADOR");
-            }
-
-
-        });
-    }*/
     public static void actualizaContadorListas(){
 
         mDatabase.child("contadorLista").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -119,8 +98,7 @@ public class ReadAndWriteSnippets {
             public void onSuccess(DataSnapshot dataSnapshot) {
                 String n=dataSnapshot.getValue().toString();
                 Lista.setContLista(Integer.valueOf(n));
-                Log.d("CONTADOR","Contador "+Lista.getContLista());
-                Log.d("Contador","msgCont "+n);
+
             }
         });
 
@@ -148,7 +126,7 @@ public class ReadAndWriteSnippets {
        insertContadorListas(Lista.getContLista());
     }
 
-    public List<String> obtenerListasbyUserID(String nick) {
+    public List<String> obtenerListasbyUserID( String nick) {
         //Usuario u=this.convertirAUsuario(nick);
         List<String> llistas = new ArrayList<>();
         mDatabase.child("users").child(nick).child("listas").addValueEventListener(new ValueEventListener() {
@@ -170,5 +148,30 @@ public class ReadAndWriteSnippets {
         }
         );
         return llistas;
+    }
+    public void obtenerListasUsuario(List<String> llistas,String nick) {
+        Usuario u=new Usuario(nick);
+        Log.d("ObtenerListas","En ELLO");
+
+        mDatabase.child("users").child(nick).child("listas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                List<String> llistas = new ArrayList<>();
+                Iterable<DataSnapshot> ds= dataSnapshot.getChildren();
+                Log.d("ObtenerListas","Success");
+                int i=1;
+                for (DataSnapshot d:ds) {
+
+                    llistas.add(d.getValue().toString());
+                    Log.d("ObtenerListas","Metiendo"+d.getValue());
+                    //Log.d("ObtenerListas","Metiendo"+ llistas.get(i));
+                    i++;
+                }
+                //crear adapter para mostrar en recycler
+               // ArrayAdapter<String> adapter=new ArrayAdapter<String>();
+            }
+        });
+
+        Log.d("ObtenerListas","Fin");
     }
 }

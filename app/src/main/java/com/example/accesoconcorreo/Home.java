@@ -3,19 +3,26 @@ package com.example.accesoconcorreo;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ModeloDominio.Lista;
@@ -27,6 +34,7 @@ public class Home extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseDatabase database;
     DatabaseReference myRef;
+    private List<String> listasUsuario;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,7 +44,31 @@ public class Home extends AppCompatActivity {
         user= FirebaseAuth.getInstance().getCurrentUser();
         String email=getIntent().getExtras().get("email").toString();
         String nick=getIntent().getStringExtra("nick");
-        recyclerView=findViewById(R.id.recycler_lista_super_prod);
+        ReadAndWriteSnippets persistencia=new ReadAndWriteSnippets();
+        Usuario u=new Usuario(nick,email);
+      //  List<String> listasUsuario=persistencia.obtenerListasUsuario(u.getNick());
+        listasUsuario=new ArrayList<>();
+        //persistencia.obtenerListasUsuario(listasUsuario,u.getNick());
+
+        myRef.child("users").child(nick).child("listas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+
+                Iterable<DataSnapshot> ds= dataSnapshot.getChildren();
+                Log.d("ObtenerListas","Success");
+                int i=1;
+                for (DataSnapshot d:ds) {
+
+                    listasUsuario.add(d.getValue().toString());
+                    Log.d("ObtenerListas","Metiendo"+d.getValue());
+                    //Log.d("ObtenerListas","Metiendo"+ llistas.get(i));
+                    i++;
+                }
+                //crear adapter para mostrar en recycler
+                @SuppressLint("ResourceType") ArrayAdapter<String> adapter=new ArrayAdapter<String>(getApplicationContext(),R.id.recycler_lista_super_prod,listasUsuario);
+
+            }
+        });
         FloatingActionButton fabAñadirLista=findViewById(R.id.fabAniadir_lista);
         fabAñadirLista.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,13 +84,15 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        Usuario u=new Usuario(nick,email);
-        ReadAndWriteSnippets persistencia=new ReadAndWriteSnippets();
-        List<String> listasUsuario=persistencia.obtenerListasbyUserID(u.getNick());
-        System.out.println(listasUsuario.size());
+        recyclerView=findViewById(R.id.recycler_lista_super_prod);
+
+
+
+
         TextView textView=findViewById(R.id.tamañolista);
         textView.setText("Tamaño: "+listasUsuario.size());
         TextView nombrelista=findViewById(R.id.nombrelista);
+
         for(String l: listasUsuario){
             nombrelista.setText(l);
         }
