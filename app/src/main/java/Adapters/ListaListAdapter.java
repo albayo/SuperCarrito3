@@ -1,6 +1,8 @@
 package Adapters;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +11,9 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.accesoconcorreo.CrearLista;
+import com.example.accesoconcorreo.Home;
+import com.example.accesoconcorreo.ListaProductos;
 import com.example.accesoconcorreo.R;
 
 import java.io.Serializable;
@@ -35,6 +40,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
     private List<String> mListas;  // Cached copy of Listas
 
     private int resource;
+    private Activity a;
     //He añadido un usuario
 
     /**
@@ -43,8 +49,9 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
      * @param l Representa la lista de Listas que se dispondrá
      *
      */
-    public ListaListAdapter(int resource,List<String> l) {
+    public ListaListAdapter(Activity a, int resource, List<String> l) {
         this.resource=resource;
+        this.a=a;
         //u = usuario;
         this.mListas = l;
     }
@@ -116,7 +123,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
      * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
      * @version: 13/04/2021
      */
-    public class  ListaViewHolder  extends  RecyclerView.ViewHolder {
+    public class  ListaViewHolder  extends  RecyclerView.ViewHolder implements View.OnClickListener{
         //Representa el View donde se dispondrán los nombres de las listas
         private final TextView ListaNombreView;
         public View view;
@@ -134,5 +141,17 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
             this.view=itemView;
             this.ListaNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
         }
+
+        @Override
+        public void onClick(View v) {
+            int mPosicion=getLayoutPosition();
+            String lista =mListas.get(mPosicion);
+
+            Intent intent = new Intent(a, ListaProductos.class);
+            intent.putExtra("nLista", lista);
+            a.startActivity(intent);
+        }
     }
+
+
 }
