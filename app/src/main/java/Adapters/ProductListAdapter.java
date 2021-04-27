@@ -36,7 +36,7 @@ import ModeloDominio.Producto;
          * @param resource Representa el contexto de la aplicacion
          * @param Productos Representa la lista de productos a mostrar
          */
-        public ProductListAdapter(int resource,List<Producto> Productos) {
+        public ProductListAdapter(int resource, List<Producto> Productos) {
             this.resource=resource;
             //u = usuario;
             this.mProductos = Productos;

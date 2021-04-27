@@ -141,7 +141,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
 
             Log.d("ListaListAdapter", "Creando intent a ListaProductos");
             Intent intent = new Intent(a, ListaProductos.class);
-            intent.putExtra("nLista", lista);
+            intent.putExtra("nombreLista", lista);
             intent.putExtra("idLista", id);
 
             a.startActivity(intent);

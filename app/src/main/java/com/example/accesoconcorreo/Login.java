@@ -90,17 +90,19 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (usuarioET.getText().toString().trim().length() > 0 && contraseniaET.getText().toString().trim().length() > 0) {
-                    Task<AuthResult> authResultTask = FirebaseAuth.getInstance().createUserWithEmailAndPassword(usuarioET.getText().toString(), contraseniaET.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
-                                String[] nick=usuarioET.getText().toString().split("@");
-                                persistencia.insertarUsuario(nick[0],usuarioET.getText().toString());
-                                showHome(usuarioET.getText().toString(),ProviderType.Basic); //MEJOR CON ?: ""
-                            } else {
-                                showAlert();
-                            }
-                        }
+                    Task<AuthResult> authResultTask = FirebaseAuth.getInstance().createUserWithEmailAndPassword(usuarioET.getText().toString(), contraseniaET.getText().toString())
+                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        String[] nick=usuarioET.getText().toString().split("@");
+                                        persistencia.insertarUsuario(nick[0],usuarioET.getText().toString());
+                                        showHome(usuarioET.getText().toString(),ProviderType.Basic); //MEJOR CON ?: ""
+                                    } else {
+                                        showAlert();
+                                    }
+                                }
+
                     });
 
                 } else {

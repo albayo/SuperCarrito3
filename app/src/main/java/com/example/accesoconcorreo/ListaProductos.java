@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.ListaListAdapter;
+import Adapters.ProductListAdapter;
 import ModeloDominio.Producto;
 
 /**
@@ -36,7 +37,7 @@ import ModeloDominio.Producto;
 public class ListaProductos extends AppCompatActivity {
 
         private DatabaseReference mDatabase;
-         private ListaListAdapter mListaAdapter;
+         private ProductListAdapter productosAdapter;
         private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán los Productos de la Lista
         private RecyclerView recyclerViewproductos;
 
@@ -60,7 +61,7 @@ public class ListaProductos extends AppCompatActivity {
             toolbar.setTitle(nombreLista);
             String idLista=getIntent().getStringExtra("idLista");
             //Log.d("IDLista",idLista);
-            //obtenerProductosLista(idLista);
+           // obtenerProductosLista(idLista);
         }
 
     public void obtenerProductosLista(String listaid) {
@@ -73,8 +74,8 @@ public class ListaProductos extends AppCompatActivity {
                         String nombre=ds.getValue().toString();
                         llistas.add(nombre);
                     }
-                    mListaAdapter= new ListaListAdapter(ListaProductos.this,R.layout.pantalla_listas_list,llistas,null);
-                    recyclerViewproductos.setAdapter(mListaAdapter);
+                    //productosAdapter= new ProductListAdapter(R.layout.pantalla_listas_list,llistas);
+                    //recyclerViewproductos.setAdapter(productosAdapter);
                 }
             }
             @Override
