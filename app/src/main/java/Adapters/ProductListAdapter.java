@@ -4,6 +4,7 @@ package Adapters;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,6 +41,7 @@ import ModeloDominio.Producto;
             this.resource=resource;
             //u = usuario;
             this.mProductos = Productos;
+            Log.d("ADAPTER","Constructor");
         }
 
         /**
@@ -50,6 +52,7 @@ import ModeloDominio.Producto;
 
         @Override
         public  ProductoViewHolder onCreateViewHolder(ViewGroup parent, int  viewType) {
+            Log.d("ADAPTER","inicia");
             View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
             return new ProductListAdapter.ProductoViewHolder(itemView);
         }
@@ -61,13 +64,16 @@ import ModeloDominio.Producto;
          */
         @Override
         public void  onBindViewHolder(ProductoViewHolder holder,  int  position) {
+
             if  ( mProductos  !=  null ) {
+                Log.d("ADAPTER","NO NULL LISTA");
                 Producto current =  mProductos .get(position);
                 holder. ProductoNombreView .setText(current.getNombre());
                 holder.ProductoImageView.setImageURI(Uri.parse(current.getImage()));
                 holder.ProductoSuperView.setText(current.getSupermercado());
             }  else  {
                 // Covers the case of data not being ready yet.
+                Log.d("ADAPTER","NULL LISTA");
                 holder. ProductoNombreView .setText( "No Producto" );
             }
         }
@@ -115,7 +121,7 @@ import ModeloDominio.Producto;
             private  ProductoViewHolder(View itemView) {
                 super (itemView);
 
-                ProductoNombreView  = itemView.findViewById(R.id.nombre_producto);
+                ProductoNombreView = itemView.findViewById(R.id.nombre_producto);
                 ProductoImageView=itemView.findViewById(R.id.fotoproducto_lista);
                 ProductoSuperView=itemView.findViewById(R.id.super_producto);
 

@@ -73,6 +73,7 @@ public class ListaProductos extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+                    productos.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String nombre=ds.getValue().toString();
                         Producto p=null;
@@ -81,7 +82,7 @@ public class ListaProductos extends AppCompatActivity {
                         Log.d("ObtenerProduct",nombre);
                         Log.d("ObtenerProduct","Numero " +productos.size());
                     }
-                    productosAdapter= new ProductListAdapter(R.layout.pantalla_listas_list,productos);
+                    productosAdapter= new ProductListAdapter(R.layout.item_productos_lista,productos);
                     recyclerViewproductos.setAdapter(productosAdapter);
                 }
             }
@@ -91,6 +92,7 @@ public class ListaProductos extends AppCompatActivity {
         }
         );
 
+
     }
     public void addProducto(String idProducto){
         Log.d("GETPRODUCTO","INI");
@@ -99,7 +101,6 @@ public class ListaProductos extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot ds) {
                 if (ds.exists()) {
-                    productos.clear();
 
                     String nombre = ds.child("product_name").getValue().toString();
                     String ingredients = ds.child("ingredients_text").getValue().toString();
@@ -107,7 +108,12 @@ public class ListaProductos extends AppCompatActivity {
                     String brand = ds.child("brand_owner").getValue().toString();
                     Producto p = new Producto(String.valueOf(idProducto), nombre, brand, imgage, ingredients, "");
                     productos.add(p);
-                    Log.d("GETPRODUCTO", p.getNombre());
+                    Log.d("ADDPRODUCTO", "Nombre "+p.getNombre());
+
+                    Log.d("ADDPRODUCTO", "Num "+productos.size());
+
+                    //ESTO NO DEBERÍA IR AQUÍ PERO SINO EL ADAPTER NO SE INICIA
+                    productosAdapter.setProductos(productos);
                 }
             }
 
@@ -117,6 +123,7 @@ public class ListaProductos extends AppCompatActivity {
             }
         });
         Log.d("GETPRODUCTO","FIN");
+
     }
 
 
