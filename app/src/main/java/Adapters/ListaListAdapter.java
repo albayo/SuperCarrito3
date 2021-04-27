@@ -139,9 +139,11 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
         public void onClick(View v) {
             int mPosicion=getLayoutPosition();
             String lista =mListas.get(mPosicion);
+            String id=mListasId.get(mPosicion);
 
             Intent intent = new Intent(a, ListaProductos.class);
             intent.putExtra("nLista", lista);
+            intent.putExtra("idLista",id);
 
             a.startActivity(intent);
             
