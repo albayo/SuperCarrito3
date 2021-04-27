@@ -3,6 +3,7 @@ package com.example.accesoconcorreo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,6 +11,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -69,6 +71,29 @@ public class Home extends AppCompatActivity {
                 Lista l = (Lista) intent.getSerializableExtra("lista");
                 //hacer insert en el usuario internamente
             }
+        });
+
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                CardView child=(CardView)recyclerView.findChildViewUnder(e.getX(), e.getY());
+                if(child!=null){
+                    int position = recyclerView.getChildAdapterPosition(child);
+                    child.get
+
+                }
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+
         });
 
         Usuario u = new Usuario(nick, email);

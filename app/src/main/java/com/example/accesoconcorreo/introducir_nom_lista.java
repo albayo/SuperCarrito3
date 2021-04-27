@@ -110,6 +110,12 @@ public class introducir_nom_lista extends DialogFragment {
                         lista.add(u);
                         persistencia.insertarLista(nombreLista,nick);
                         cerrarFragment();
+
+                        Intent intent = new Intent(getContext(), ListaProductos.class);
+                        intent.putExtra("nick",nick);
+                        intent.putExtra("email",email);
+                        intent.putExtra("nombreLista",nombreLista);
+                        startActivity(intent);
                     }
                 }else{
                     Toast.makeText(getActivity(),"Error, se debe introducir un nombre para la lista",Toast.LENGTH_SHORT).show();
@@ -149,11 +155,7 @@ public class introducir_nom_lista extends DialogFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Intent intent = new Intent(getContext(), ListaProductos.class);
-        intent.putExtra("nick",nick);
-        intent.putExtra("email",email);
-        intent.putExtra("nombreLista",nombreLista);
-        startActivity(intent);
+
     }
 
     /**
