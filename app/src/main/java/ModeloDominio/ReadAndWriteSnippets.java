@@ -136,6 +136,7 @@ public class ReadAndWriteSnippets {
                     Iterable<DataSnapshot> ds= snapshot.getChildren();
                     for (DataSnapshot d:ds) {
                         llistas.add(String.valueOf(d.getValue()));
+
                     }
                     //crear adapter para mostrar en recycler
                 }
