@@ -133,6 +133,7 @@ public class Home extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+                    llistas.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String nombre = ds.getValue().toString();
                         llistas.add(nombre);
