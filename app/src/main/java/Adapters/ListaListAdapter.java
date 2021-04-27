@@ -149,7 +149,9 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
 
             Intent intent = new Intent(a, ListaProductos.class);
             intent.putExtra("nLista", lista);
+
             a.startActivity(intent);
+            
         }
     }
 
