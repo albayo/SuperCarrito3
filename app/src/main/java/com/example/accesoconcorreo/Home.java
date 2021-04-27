@@ -54,7 +54,7 @@ public class Home extends AppCompatActivity {
 
         Usuario u=new Usuario(nick,email);
         ReadAndWriteSnippets persistencia=new ReadAndWriteSnippets();
-        List<String> listasUsuario=persistencia.obtenerListasbyUserID(u.getNick());
+        List<String> listasUsuario=persistencia.obtenerListasUsuario(u.getNick());
         System.out.println(listasUsuario.size());
         TextView textView=findViewById(R.id.tamañolista);
         textView.setText("Tamaño: "+listasUsuario.size());

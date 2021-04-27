@@ -90,28 +90,6 @@ public class ReadAndWriteSnippets {
         //u.setListas((List<String>) m.get("listas"));
         return u;
     }
-
-   /* public static void actualizaContadorListas(){ //REVISARR PARA LLAMARLO EN INSERTAR LISTA
-        String n="";
-        mDatabase.child("contadorLista").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    String n=snapshot.getValue().toString();
-                    Lista.setContLista(Integer.valueOf(n));
-                    Log.d("CONTADOR","Contador "+Lista.getContLista());
-                    Log.d("Contador","msgCont "+n);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Log.e("FIREBASE","AL ACTUALIZAR EL CONTADOR");
-            }
-
-
-        });
-    }*/
     public static void actualizaContadorListas(){
 
         mDatabase.child("contadorLista").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -155,7 +133,7 @@ public class ReadAndWriteSnippets {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    Iterable<DataSnapshot> ds= snapshot.child("nombre").getChildren();
+                    Iterable<DataSnapshot> ds= snapshot.getChildren();
                     for (DataSnapshot d:ds) {
                         llistas.add(String.valueOf(d.getValue()));
                     }
@@ -169,6 +147,27 @@ public class ReadAndWriteSnippets {
             }
         }
         );
+        return llistas;
+    }
+
+
+    public List<String> obtenerListasUsuario(String nick) {
+        //Usuario u=this.convertirAUsuario(nick);
+        Log.d("OBTENER","INICIO");
+        List<String> llistas = new ArrayList<>();
+        mDatabase.child("users").child(nick).child("listas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                Iterable<DataSnapshot> ds= dataSnapshot.getChildren();
+                for (DataSnapshot d:ds) {
+                    llistas.add(String.valueOf(d.getValue()));
+                    Log.d("OBTENER","METIENDO "+d.getValue());
+                }
+            }
+        });
+        Log.d("OBTENER","FIN");
+
+
         return llistas;
     }
 }
