@@ -115,6 +115,7 @@ public class introducir_nom_lista extends DialogFragment {
                         intent.putExtra("nick",nick);
                         intent.putExtra("email",email);
                         intent.putExtra("nombreLista",nombreLista);
+                        intent.putExtra("idLista",Lista.getContLista());
                         startActivity(intent);
                     }
                 }else{
