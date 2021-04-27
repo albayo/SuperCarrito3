@@ -162,6 +162,7 @@ public class ReadAndWriteSnippets {
                 Iterable<DataSnapshot> ds= dataSnapshot.getChildren();
                 for (DataSnapshot d:ds) {
                     llistas.add(String.valueOf(d.getValue()));
+
                     Log.d("OBTENER","METIENDO "+d.getValue());
                 }
             }

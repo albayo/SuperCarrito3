@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
+import Adapters.ListaListAdapter;
 import ModeloDominio.Lista;
 import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Usuario;
@@ -27,6 +28,8 @@ public class Home extends AppCompatActivity {
     private FirebaseUser user;
     private FirebaseDatabase database;
     DatabaseReference myRef;
+    private ReadAndWriteSnippets persistencia;
+    private ListaListAdapter mListaAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,10 @@ public class Home extends AppCompatActivity {
         String nick=getIntent().getStringExtra("nick");
         recyclerView=findViewById(R.id.recycler_lista_super_prod);
         FloatingActionButton fabAñadirLista=findViewById(R.id.fabAniadir_lista);
+        persistencia=new ReadAndWriteSnippets();
+        List<String> listas=persistencia.obtenerListasUsuario(nick);
+       // mListaAdapter=new ListaListAdapter(this.getApplicationContext(),listas);
+
         fabAñadirLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
