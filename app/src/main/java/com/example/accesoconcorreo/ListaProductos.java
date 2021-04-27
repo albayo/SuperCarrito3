@@ -1,5 +1,6 @@
 package com.example.accesoconcorreo;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -12,8 +13,16 @@ import android.os.Build;
 import android.os.Bundle;
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import Adapters.ListaListAdapter;
 import ModeloDominio.Producto;
 
 /**
@@ -24,8 +33,8 @@ import ModeloDominio.Producto;
  */
 public class ListaProductos extends AppCompatActivity {
 
-
-
+        private DatabaseReference mDatabase;
+         private ListaListAdapter mListaAdapter;
         private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán los Productos de la Lista
         private RecyclerView recyclerViewproductos;
 
@@ -40,7 +49,7 @@ public class ListaProductos extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //esta línea sirve para impedir que se pueda girar la pantalla
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_lista_productos2);
-
+            mDatabase=FirebaseDatabase.getInstance().getReference();
 
             recyclerViewproductos=(RecyclerView)findViewById(R.id.lista_prod_recycler);
             recyclerViewproductos.setLayoutManager(new LinearLayoutManager(this));
@@ -49,6 +58,28 @@ public class ListaProductos extends AppCompatActivity {
             toolbar.setTitle(nombreLista);
 
         }
+
+    public void obtenerProductosLista(String listaid) {
+        List<String> llistas = new ArrayList<>();
+        mDatabase.child("listas").child(listaid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        String nombre=ds.getValue().toString();
+                        llistas.add(nombre);
+                    }
+                    mListaAdapter= new ListaListAdapter(R.layout.pantalla_listas_list,llistas);
+                    recyclerViewproductos.setAdapter(mListaAdapter);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        }
+        );
+
+    }
 
 
 }

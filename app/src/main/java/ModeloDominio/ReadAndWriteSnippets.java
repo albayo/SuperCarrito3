@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.accesoconcorreo.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,6 +21,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import Adapters.ListaListAdapter;
 
 public class ReadAndWriteSnippets {
 
@@ -62,25 +65,6 @@ public class ReadAndWriteSnippets {
                 });
         // [END rtdb_write_new_user_task]
     }
-   /* public Usuario getUsuario(String userId){ //MIRAR BIEN
-        mDatabase.child("users").child(userId).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-
-            //NOSE PARA QUE USA ESTO , NOSE COMO SACAR EL USUARIO DESPUES DEL ON COMPLETE.
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if (!task.isSuccessful()) {
-                    Log.e("firebase", "Error getting data", task.getException());
-                }
-                else {
-                    Log.d("firebase", String.valueOf(task.getResult().getValue()));
-
-
-                }
-            }
-        }).getResult().getValue();
-
-        return u;
-    }*/
 
     public Usuario convertirAUsuario(String nick){
         Usuario u=null;
@@ -150,25 +134,27 @@ public class ReadAndWriteSnippets {
         );
         return llistas;
     }
-
-
-    public List<String> obtenerListasUsuario(String nick) {
-        //Usuario u=this.convertirAUsuario(nick);
-        Log.d("OBTENER","INICIO");
+/*
+    public void obtenerTodosProductos() {
         List<String> llistas = new ArrayList<>();
-        mDatabase.child("users").child(nick).child("listas").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+        mDatabase.child("json").child("results").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-                Iterable<DataSnapshot> ds= dataSnapshot.getChildren();
-                for (DataSnapshot d:ds) {
-                    llistas.add(String.valueOf(d.getValue()));
-                    Log.d("OBTENER","METIENDO "+d.getValue());
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        String nombre=ds.getValue().toString();
+                        llistas.add(nombre);
+                    }
+                    mListaAdapter= new ListaListAdapter(R.layout.pantalla_listas_list,llistas);
+                    recyclerView.setAdapter(mListaAdapter);
                 }
             }
-        });
-        Log.d("OBTENER","FIN");
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+                                                                                            }
+        );
 
+    }*/
 
-        return llistas;
-    }
 }
