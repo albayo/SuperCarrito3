@@ -56,7 +56,6 @@ public class Home extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         FloatingActionButton fabAñadirLista = findViewById(R.id.fabAniadir_lista);
         persistencia = new ReadAndWriteSnippets();
-        List<String> listas = persistencia.obtenerListasUsuario(nick);
         // mListaAdapter=new ListaListAdapter(this.getApplicationContext(),listas);
 
         fabAñadirLista.setOnClickListener(new View.OnClickListener() {
@@ -84,7 +83,7 @@ public class Home extends AppCompatActivity {
                 CardView child=(CardView)recyclerView.findChildViewUnder(e.getX(), e.getY());
                 if(child!=null){
                     int position = recyclerView.getChildAdapterPosition(child);
-                    
+
 
                 }
             }
