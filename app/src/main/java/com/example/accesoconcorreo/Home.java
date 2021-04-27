@@ -84,7 +84,7 @@ public class Home extends AppCompatActivity {
                 CardView child=(CardView)recyclerView.findChildViewUnder(e.getX(), e.getY());
                 if(child!=null){
                     int position = recyclerView.getChildAdapterPosition(child);
-                    child.get
+                    
 
                 }
             }
