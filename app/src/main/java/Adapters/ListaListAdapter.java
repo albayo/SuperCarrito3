@@ -25,23 +25,24 @@ import ModeloDominio.Usuario;
 
 public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.ListaViewHolder> implements Serializable {
     //Representa
-    private final LayoutInflater mInflater;
+
 
     //Representa el Usuario que se ha logueado en la aplicación
     //private Usuario u;
 
     //Representa las listas que se representarán
-    private List<Lista> mListas;  // Cached copy of Listas
+    private List<String> mListas;  // Cached copy of Listas
 
+    private int resource;
     //He añadido un usuario
 
     /**
      * Constructor de la clase
-     * @param context Representa el contexto de la aplicación
+     * @param resource Representa el contexto de la aplicación
      * @param l Representa la lista de Listas que se dispondrá
      */
-    public ListaListAdapter(Context context,List<Lista> l) {
-        mInflater  = LayoutInflater. from (context);
+    public ListaListAdapter(int resource,List<String> l) {
+        this.resource=resource;
         //u = usuario;
         this.mListas = l;
     }
@@ -56,7 +57,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
      */
     @Override
     public ListaListAdapter.ListaViewHolder onCreateViewHolder(ViewGroup parent, int  viewType) {
-        View itemView =  mInflater .inflate(R.layout.pantalla_listas_list, parent,  false );
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
         return new ListaListAdapter.ListaViewHolder(itemView);
     }
 
@@ -67,10 +68,10 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
      */
     @Override
     public void  onBindViewHolder(ListaListAdapter.ListaViewHolder holder, int  position) {
-        if  ( mListas  !=  null ) {
+        if  ( mListas  !=  null || mListas.get(position)!=null) {
 
-            Lista current =  mListas .get(position);
-            holder.ListaNombreView.setText(current.getNombre());
+            String current =  mListas.get(position);
+            holder.ListaNombreView.setText(current);
 
         }  else  {
             // Covers the case of data not being ready yet.
@@ -82,7 +83,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
      * Método que establece como lista de Listas la lista pasada por parámetro
      * @param Listas Representa la lista de Listas que se quiere asignar
      */
-    public void  setListas(List<Lista> Listas){
+    public void  setListas(List<String> Listas){
         mListas  = Listas;
         notifyDataSetChanged();
     }
@@ -105,17 +106,19 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
      * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
      * @version: 13/04/2021
      */
-    class  ListaViewHolder  extends  RecyclerView.ViewHolder {
+    public class  ListaViewHolder  extends  RecyclerView.ViewHolder {
         //Representa el View donde se dispondrán los nombres de las listas
         private final TextView ListaNombreView;
-
+        public View view;
         /**
          * Constructor de la clase
          * @param itemView View en el cual se busca el TextView en el cual se representará la información
          */
+
         private  ListaViewHolder(View itemView) {
             super (itemView);
-            ListaNombreView=itemView.findViewById(R.id.text_lista_usuario);
+            this.view=itemView;
+            ListaNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
         }
     }
 }
