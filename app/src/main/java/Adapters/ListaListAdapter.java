@@ -40,6 +40,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
      * Constructor de la clase
      * @param resource Representa el contexto de la aplicación
      * @param l Representa la lista de Listas que se dispondrá
+     *
      */
     public ListaListAdapter(int resource,List<String> l) {
         this.resource=resource;
