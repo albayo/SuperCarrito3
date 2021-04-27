@@ -1,6 +1,7 @@
 package Adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,15 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
     public void  onBindViewHolder(ListaListAdapter.ListaViewHolder holder, int  position) {
         if  ( mListas  !=  null || mListas.get(position)!=null) {
 
+
             String current =  mListas.get(position);
+            Log.d("Adapter", current);
+            if(holder==null){
+                Log.d("Holder nulo", " si");
+            }
+            if(holder.ListaNombreView==null){
+                Log.d("View de lista nulo", " si");
+            }
             holder.ListaNombreView.setText(current);
 
         }  else  {
@@ -118,8 +127,12 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
 
         private  ListaViewHolder(View itemView) {
             super (itemView);
+
+            Log.d("View nulo", itemView.toString());
+
+
             this.view=itemView;
-            ListaNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
+            this.ListaNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
         }
     }
 }

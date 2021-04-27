@@ -88,7 +88,7 @@ public class Home extends AppCompatActivity {
                         String nombre=ds.getValue().toString();
                         llistas.add(nombre);
                     }
-                    mListaAdapter= new ListaListAdapter(R.layout.activity_home,llistas);
+                    mListaAdapter= new ListaListAdapter(R.layout.pantalla_listas_list,llistas);
                     recyclerView.setAdapter(mListaAdapter);
                 }
             }
