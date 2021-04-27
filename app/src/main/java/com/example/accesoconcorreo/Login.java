@@ -6,6 +6,7 @@ import android.media.Image;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -53,6 +54,17 @@ public class Login extends AppCompatActivity {
     private ReadAndWriteSnippets persistencia;
 
     /**
+     * Método que sirve para borrar los campos de usuario y contraseña cuando se vuelva a recuperar
+     *      el foco después de haber ido a otra activity
+     */
+    @Override
+    protected void onResume() {
+        super.onResume();
+        usuarioET.setText("");
+        contraseniaET.setText("");
+    }
+
+    /**
      * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
      * "activity_pantalla_listas"
      *
@@ -66,7 +78,7 @@ public class Login extends AppCompatActivity {
        // superViewModel = new ViewModelProvider(this).get(SuperViewModel.class);
         setContentView(R.layout.activity_login);
         usuarioET = findViewById(R.id.editText_email);
-        contraseniaET = findViewById(R.id.editText_contrasenia);//
+        contraseniaET = findViewById(R.id.editText_contrasenia);
         Button btnRegistrar = findViewById(R.id.btnRegistrar);
         persistencia=new ReadAndWriteSnippets();
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
@@ -84,10 +96,8 @@ public class Login extends AppCompatActivity {
                             if (task.isSuccessful()) {
                                 String[] nick=usuarioET.getText().toString().split("@");
                                 persistencia.insertarUsuario(nick[0],usuarioET.getText().toString());
-
                                 showHome(usuarioET.getText().toString(),ProviderType.Basic); //MEJOR CON ?: ""
                             } else {
-
                                 showAlert();
                             }
                         }
@@ -109,14 +119,16 @@ public class Login extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-
+                Log.d("Mostrar contraseña","Click");
                 if( contraseniaET.getTransformationMethod() == null){
+                    Log.d("Mostrar contraseña","Habilitar mostrar contraseña");
                     contraseniaET.setTransformationMethod(new PasswordTransformationMethod());;
                 }else{
                     contraseniaET.setTransformationMethod(null);
                 }
             }
         });
+        //OnCompleteListener<AuthResult>()
 
         Button btnAcceder =findViewById(R.id.btnAcceder);
         btnAcceder.setOnClickListener(new View.OnClickListener() {
@@ -130,13 +142,12 @@ public class Login extends AppCompatActivity {
                 usuarioET = findViewById(R.id.editText_email);
                 contraseniaET = findViewById(R.id.editText_contrasenia);
                 if (usuarioET.getText().toString().trim().length() > 0 && contraseniaET.getText().toString().trim().length() > 0) {
-                    FirebaseAuth.getInstance().signInWithEmailAndPassword(usuarioET.getText().toString(),contraseniaET.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    FirebaseAuth.getInstance().signInWithEmailAndPassword(usuarioET.getText().toString(), contraseniaET.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if(task.isSuccessful()){
-                                showHome(usuarioET.getText().toString(),ProviderType.Basic); //MEJOR CON ?: ""
-                            }
-                            else{
+                            if (task.isSuccessful()) {
+                                showHome(usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
+                            } else {
                                 showAlert();
                             }
                         }

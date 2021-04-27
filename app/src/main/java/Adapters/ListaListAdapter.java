@@ -29,19 +29,13 @@ import ModeloDominio.Usuario;
  * @version: 13/04/2021
  */
 
-public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.ListaViewHolder> implements Serializable {
-    //Representa
-
-
-    //Representa el Usuario que se ha logueado en la aplicación
-    //private Usuario u;
+public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.ListaViewHolder>{
 
     //Representa las listas que se representarán
     private List<String> mListas;  // Cached copy of Listas
     private List<String> mListasId;
     private int resource;
     private Activity a;
-    //He añadido un usuario
 
     /**
      * Constructor de la clase
@@ -51,7 +45,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
      */
     public ListaListAdapter(Activity a, int resource, List<String> l,List<String> lid) {
         this.resource=resource;
-        this.a=a;
+        this.a = a;
         //u = usuario;
         this.mListas = l;
         this.mListasId=lid;
@@ -68,7 +62,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
     @Override
     public ListaListAdapter.ListaViewHolder onCreateViewHolder(ViewGroup parent, int  viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
-        return new ListaListAdapter.ListaViewHolder(itemView);
+        return new ListaListAdapter.ListaViewHolder(itemView, this);
     }
 
     /**
@@ -79,10 +73,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
     @Override
     public void  onBindViewHolder(ListaListAdapter.ListaViewHolder holder, int  position) {
         if  ( mListas  !=  null || mListas.get(position)!=null) {
-
-
             String current =  mListas.get(position);
-
             holder.ListaNombreView.setText(current);
             holder.idLista.setText(mListasId.get(position));
         }  else  {
@@ -123,30 +114,37 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
         private final TextView ListaNombreView;
         public View view;
         private final TextView idLista;
+        final ListaListAdapter adapter;
         /**
          * Constructor de la clase
          * @param itemView View en el cual se busca el TextView en el cual se representará la información
+         * @param adapter representa el adaptador que maneja los datos y views del RecyclerView
          */
 
-        private  ListaViewHolder(View itemView) {
+        private  ListaViewHolder(View itemView, ListaListAdapter adapter) {
             super (itemView);
             this.view=itemView;
             this.ListaNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
             this.idLista=(TextView)itemView.findViewById(R.id.text_id_lista);
+
+            this.adapter = adapter;
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
-            int mPosicion=getLayoutPosition();
-            String lista =mListas.get(mPosicion);
-            String id=mListasId.get(mPosicion);
+            //Se obtiene la posicion del item que ha sido clickado
+            int mPosicion = getLayoutPosition();
+            Log.d("LLAdapter pos click", String.valueOf(mPosicion));
+            String lista = mListas.get(mPosicion);
+            String id = mListasId.get(mPosicion);
 
+            Log.d("ListaListAdapter", "Creando intent a ListaProductos");
             Intent intent = new Intent(a, ListaProductos.class);
             intent.putExtra("nLista", lista);
-            intent.putExtra("idLista",id);
+            intent.putExtra("idLista", id);
 
             a.startActivity(intent);
-            
         }
     }
 

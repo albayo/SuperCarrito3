@@ -1,5 +1,6 @@
 package com.example.accesoconcorreo;
 
+import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -105,12 +106,23 @@ public class Home extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onBackPressed() {
         AlertDialog.Builder b= new AlertDialog.Builder(this);
         b.setTitle("Confirmación");
         b.setMessage("¿Está seguro/a de que desea cerrar sesión?");
-        b.setPositiveButton("Aceptar",null);
+        b.setPositiveButton("Aceptar",new DialogInterface.OnClickListener() {
+
+            /**
+             * Método que sirve para volver a activity_home
+             * @param dialog representa el Dialog en el que se ha hecho click
+             * @param which representa el botón que ha sido clickado o la posición del item clickado
+             */
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Home.super.onBackPressed();
+            }
+        });
+
         b.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
 
             /**
@@ -125,7 +137,16 @@ public class Home extends AppCompatActivity {
         });
         AlertDialog alert=b.create();
         alert.show();
+        //super.onBackPressed();
     }
+
+    /*@Override
+    protected void onPause() {
+        OnBackPressedDispatcher backPressedDispatcher = getOnBackPressedDispatcher();
+        backPressedDispatcher.
+        super.onPause();
+
+    }*/
 
     public void obtenerListasUsuario(String nick) {
         List<String> llistas = new ArrayList<>();

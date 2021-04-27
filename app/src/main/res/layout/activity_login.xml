@@ -10,12 +10,11 @@
         android:id="@+id/btnRegistrar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
         android:text="@string/registrar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editText_contrasenia"
-        app:layout_constraintStart_toStartOf="@+id/editText_contrasenia"
-        app:layout_constraintTop_toBottomOf="@+id/btnAcceder" />
+        app:layout_constraintBottom_toBottomOf="@+id/btnAcceder"
+        app:layout_constraintEnd_toStartOf="@+id/btnAcceder"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btnAcceder" />
 
     <ImageView
         android:id="@+id/imageView_logosuper"
@@ -33,7 +32,7 @@
         android:id="@+id/editText_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="116dp"
+        android:layout_marginTop="80dp"
         android:autofillHints=""
         android:ems="10"
         android:hint="@string/email_logueo"
@@ -64,13 +63,12 @@
         android:id="@+id/btnAcceder"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="42dp"
+        android:layout_marginRight="42dp"
         android:text="@string/acceder"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/editText_contrasenia"
-        app:layout_constraintHorizontal_bias="0.49"
-        app:layout_constraintStart_toStartOf="@+id/editText_contrasenia"
-        app:layout_constraintTop_toBottomOf="@+id/editText_contrasenia"
-        app:layout_constraintVertical_bias="0.385" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_contrasenia" />
 
     <ImageView
         android:id="@+id/imageView_email"
