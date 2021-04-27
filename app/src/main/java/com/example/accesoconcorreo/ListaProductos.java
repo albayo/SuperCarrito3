@@ -50,12 +50,5 @@ public class ListaProductos extends AppCompatActivity {
 
         }
 
-        /**
-         * Método que saca los productos de la BD y los representa en una lista de Productos
-         * @return La lista de Productos disponibles en la BD
-         */
-        /*public List<Producto> obtenerProductos(){
-            LiveData<List<Producto>> lproductos=superViewModel.getProductos();
-            return lproductos.getValue();
-        }*/
+
 }

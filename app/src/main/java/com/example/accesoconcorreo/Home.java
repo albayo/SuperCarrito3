@@ -1,13 +1,17 @@
 package com.example.accesoconcorreo;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -69,6 +73,29 @@ public class Home extends AppCompatActivity {
             }
         });
 
+        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+            @Override
+            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                return false;
+            }
+
+            @Override
+            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
+                CardView child=(CardView)recyclerView.findChildViewUnder(e.getX(), e.getY());
+                if(child!=null){
+                    int position = recyclerView.getChildAdapterPosition(child);
+                    child.get
+
+                }
+            }
+
+            @Override
+            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+            }
+
+        });
+
         Usuario u = new Usuario(nick, email);
 
         TextView t = findViewById(R.id.sustituir);
@@ -78,6 +105,29 @@ public class Home extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        AlertDialog.Builder b= new AlertDialog.Builder(this);
+        b.setTitle("Confirmación");
+        b.setMessage("¿Está seguro/a de que desea cerrar sesión?");
+        b.setPositiveButton("Aceptar",null);
+        b.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
+            /**
+             * Método que sirve para volver a activity_home
+             * @param dialog representa el Dialog en el que se ha hecho click
+             * @param which representa el botón que ha sido clickado o la posición del item clickado
+             */
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                onResume();
+            }
+        });
+        AlertDialog alert=b.create();
+        alert.show();
+    }
+
     public void obtenerListasUsuario(String nick) {
         List<String> llistas = new ArrayList<>();
         mDatabaseReference.child("users").child(nick).child("listas").addValueEventListener(new ValueEventListener() {
@@ -85,20 +135,16 @@ public class Home extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        String nombre=ds.getValue().toString();
+                        String nombre = ds.getValue().toString();
                         llistas.add(nombre);
                     }
-                    mListaAdapter= new ListaListAdapter(R.layout.pantalla_listas_list,llistas);
+                    mListaAdapter = new ListaListAdapter(R.layout.pantalla_listas_list, llistas);
                     recyclerView.setAdapter(mListaAdapter);
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
-        }
-        );
-
+        });
     }
 }
