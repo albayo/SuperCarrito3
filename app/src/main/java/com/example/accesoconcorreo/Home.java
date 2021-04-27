@@ -37,7 +37,7 @@ import ModeloDominio.Usuario;
 
 public class Home extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private FirebaseUser user;
+
     private FirebaseDatabase database;
     private DatabaseReference mDatabaseReference;
     private ReadAndWriteSnippets persistencia;
@@ -49,7 +49,7 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         database = FirebaseDatabase.getInstance();
         mDatabaseReference = database.getReference();
-        user = FirebaseAuth.getInstance().getCurrentUser();
+       // user = FirebaseAuth.getInstance().getCurrentUser();
         String email = getIntent().getExtras().get("email").toString();
         String nick = getIntent().getStringExtra("nick");
         recyclerView = (RecyclerView) findViewById(R.id.recycler_lista_super_prod);
@@ -129,16 +129,20 @@ public class Home extends AppCompatActivity {
 
     public void obtenerListasUsuario(String nick) {
         List<String> llistas = new ArrayList<>();
+        List<String> lListaid=new ArrayList<>();
         mDatabaseReference.child("users").child(nick).child("listas").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     llistas.clear();
+                    lListaid.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
+                        String id=ds.getKey();
                         String nombre = ds.getValue().toString();
                         llistas.add(nombre);
+                        lListaid.add(id);
                     }
-                    mListaAdapter = new ListaListAdapter(R.layout.pantalla_listas_list, llistas);
+                    mListaAdapter = new ListaListAdapter(Home.this,R.layout.pantalla_listas_list, llistas,lListaid);
                     recyclerView.setAdapter(mListaAdapter);
                 }
             }

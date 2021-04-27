@@ -38,7 +38,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
 
     //Representa las listas que se representarán
     private List<String> mListas;  // Cached copy of Listas
-
+    private List<String> mListasId;
     private int resource;
     private Activity a;
     //He añadido un usuario
@@ -49,11 +49,12 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
      * @param l Representa la lista de Listas que se dispondrá
      *
      */
-    public ListaListAdapter(Activity a, int resource, List<String> l) {
+    public ListaListAdapter(Activity a, int resource, List<String> l,List<String> lid) {
         this.resource=resource;
         this.a=a;
         //u = usuario;
         this.mListas = l;
+        this.mListasId=lid;
     }
 
 
@@ -81,15 +82,9 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
 
 
             String current =  mListas.get(position);
-            Log.d("Adapter", current);
-            if(holder==null){
-                Log.d("Holder nulo", " si");
-            }
-            if(holder.ListaNombreView==null){
-                Log.d("View de lista nulo", " si");
-            }
-            holder.ListaNombreView.setText(current);
 
+            holder.ListaNombreView.setText(current);
+            holder.idLista.setText(mListasId.get(position));
         }  else  {
             // Covers the case of data not being ready yet.
             holder. ListaNombreView .setText( "No hay listas" );
@@ -127,6 +122,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
         //Representa el View donde se dispondrán los nombres de las listas
         private final TextView ListaNombreView;
         public View view;
+        private final TextView idLista;
         /**
          * Constructor de la clase
          * @param itemView View en el cual se busca el TextView en el cual se representará la información
@@ -134,12 +130,9 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
 
         private  ListaViewHolder(View itemView) {
             super (itemView);
-
-            Log.d("View nulo", itemView.toString());
-
-
             this.view=itemView;
             this.ListaNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
+            this.idLista=(TextView)itemView.findViewById(R.id.text_id_lista);
         }
 
         @Override

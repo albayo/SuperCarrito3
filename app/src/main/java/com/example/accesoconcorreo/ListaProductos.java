@@ -56,7 +56,7 @@ public class ListaProductos extends AppCompatActivity {
             toolbar=(Toolbar)findViewById(R.id.toolbar_list_prod);
             String nombreLista=getIntent().getStringExtra("nombreLista");
             toolbar.setTitle(nombreLista);
-
+            //obtenerProductosLista();
         }
 
     public void obtenerProductosLista(String listaid) {
@@ -69,7 +69,7 @@ public class ListaProductos extends AppCompatActivity {
                         String nombre=ds.getValue().toString();
                         llistas.add(nombre);
                     }
-                    mListaAdapter= new ListaListAdapter(R.layout.pantalla_listas_list,llistas);
+                    mListaAdapter= new ListaListAdapter(ListaProductos.this,R.layout.pantalla_listas_list,llistas,null);
                     recyclerViewproductos.setAdapter(mListaAdapter);
                 }
             }
