@@ -103,6 +103,7 @@ public class CrearLista extends AppCompatActivity {
                 intent.putExtra("nick",nick);
                 intent.putExtra("email",email);
                 intent.putExtra("nombreLista",listaDialogFragment.getNombreLista());
+                intent.putExtra("idLista",Lista.getContLista());
                 startActivity(intent);
             }
         }

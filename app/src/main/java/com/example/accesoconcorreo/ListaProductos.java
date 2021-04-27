@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.database.DataSnapshot;
@@ -56,7 +58,9 @@ public class ListaProductos extends AppCompatActivity {
             toolbar=(Toolbar)findViewById(R.id.toolbar_list_prod);
             String nombreLista=getIntent().getStringExtra("nombreLista");
             toolbar.setTitle(nombreLista);
-            //obtenerProductosLista();
+            String idLista=getIntent().getStringExtra("idLista");
+            //Log.d("IDLista",idLista);
+            //obtenerProductosLista(idLista);
         }
 
     public void obtenerProductosLista(String listaid) {
