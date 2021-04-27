@@ -66,7 +66,7 @@ public class Login extends AppCompatActivity {
        // superViewModel = new ViewModelProvider(this).get(SuperViewModel.class);
         setContentView(R.layout.activity_login);
         usuarioET = findViewById(R.id.editText_email);
-        contraseniaET = findViewById(R.id.editText_contrasenia);
+        contraseniaET = findViewById(R.id.editText_contrasenia);//
         Button btnRegistrar = findViewById(R.id.btnRegistrar);
         persistencia=new ReadAndWriteSnippets();
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
