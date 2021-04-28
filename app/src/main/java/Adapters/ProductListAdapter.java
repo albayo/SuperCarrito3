@@ -67,14 +67,22 @@ import ModeloDominio.Producto;
 
             if  ( mProductos  !=  null ) {
                 Log.d("ADAPTER","NO NULL LISTA");
-                Producto current =  mProductos .get(position);
-                holder. ProductoNombreView .setText(current.getNombre());
+                Producto current =  mProductos.get(position);
+                String nomProd = current.getNombre().split(",")[1];
+                //para poner la primera letra en MAY del nombre
+                char[] arr = nomProd.trim().toCharArray();
+                arr[0] = Character.toUpperCase(arr[0]);
+                nomProd = new String(arr);
+                Log.d("Nombre producto", nomProd);
+
+                holder.ProductoNombreView.setText(nomProd);
                 holder.ProductoImageView.setImageURI(Uri.parse(current.getImage()));
+                Log.d("Nombre super", current.getSupermercado());
                 holder.ProductoSuperView.setText(current.getSupermercado());
             }  else  {
                 // Covers the case of data not being ready yet.
                 Log.d("ADAPTER","NULL LISTA");
-                holder. ProductoNombreView .setText( "No Producto" );
+                holder.ProductoNombreView.setText( "No Producto" );
             }
         }
         /**
@@ -122,8 +130,8 @@ import ModeloDominio.Producto;
                 super (itemView);
 
                 ProductoNombreView = itemView.findViewById(R.id.nombre_producto);
-                ProductoImageView=itemView.findViewById(R.id.fotoproducto_lista);
-                ProductoSuperView=itemView.findViewById(R.id.super_producto);
+                ProductoImageView = itemView.findViewById(R.id.fotoproducto_lista);
+                ProductoSuperView = itemView.findViewById(R.id.super_producto);
 
             }
         }

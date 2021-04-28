@@ -59,7 +59,9 @@ public class ListaProductos extends AppCompatActivity {
             productos=new ArrayList<>();
             recyclerViewproductos=(RecyclerView)findViewById(R.id.lista_prod_recycler);
             recyclerViewproductos.setLayoutManager(new LinearLayoutManager(this));
-            toolbar=(Toolbar)findViewById(R.id.toolbar_list_prod);
+            toolbar=(Toolbar)findViewById(R.id.toolbar_list_prod);//este toolbar no debería estar
+            //habría que cambiar el nombre del toolbar de la aplicación, el que aparece todo el rato
+            //ir cambiandolo cada pantalla
             String nombreLista=getIntent().getStringExtra("nombreLista");
             toolbar.setTitle(nombreLista);
             String idLista=getIntent().getStringExtra("idLista");
