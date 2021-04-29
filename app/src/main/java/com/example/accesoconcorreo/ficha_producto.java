@@ -22,7 +22,7 @@ import ModeloDominio.Producto;
 public class ficha_producto extends AppCompatActivity {
 
     private Producto producto;
-
+//
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //esta línea sirve para impedir que se pueda girar la pantalla
