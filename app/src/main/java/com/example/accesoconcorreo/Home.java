@@ -74,8 +74,6 @@ public class Home extends AppCompatActivity {
 
         Usuario u = new Usuario(nick, email);
 
-        TextView t = findViewById(R.id.sustituir);
-        t.setText(nick);
 
         this.obtenerListasUsuario(u.getNick());
 
