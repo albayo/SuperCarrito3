@@ -14,7 +14,7 @@ public class Producto {
 
     private String image;
 
-
+    private String gradoNutrition;
     private String ingred; // Una string para ingredienteS ????
     private String supermercado;
 
@@ -40,13 +40,22 @@ public class Producto {
      * @param ingred Representa los ingredientes del Producto
      * @param s Representa el supermercado en el que se puede comprar el Producto
      */
-    public Producto(String idProducto, String nombre, String brand, String image, String ingred,String s) {
+    public Producto(String idProducto, String nombre, String brand, String image, String ingred,String s,String grade) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.brand = brand;
         this.image = image;
         this.ingred = ingred;
         this.supermercado=s;
+        this.gradoNutrition=grade;
+    }
+
+    public String getGradoNutrition() {
+        return gradoNutrition;
+    }
+
+    public void setGradoNutrition(String gradoNutrition) {
+        this.gradoNutrition = gradoNutrition;
     }
 
     /**
