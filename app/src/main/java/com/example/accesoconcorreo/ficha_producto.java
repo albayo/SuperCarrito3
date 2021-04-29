@@ -33,11 +33,24 @@ public class ficha_producto extends AppCompatActivity {
         myToolbar.setTitle("SuperCarrito");
 
         producto=(Producto) getIntent().getSerializableExtra("producto");
+        if(producto==null){
+            Log.d("marcos patan","jejejje");
+        }
+
+
         ImageView fotoprod= findViewById(R.id.imagen_ficha_producto);
         ImageView fotonutri= findViewById(R.id.image_grado_nutrition);
         Uri uri=Uri.parse(producto.getImage());
-        fotoprod.setImageURI(uri);
+
         TextView nutricional= findViewById(R.id.textview_nutrientes);
+        TextView nombre= findViewById(R.id.text_nombre_producto);
+        nombre.setText(producto.getNombre());
+        if(!producto.getImage().equals(""))
+            fotoprod.setImageURI(uri);
+
+        else
+            fotoprod.setImageResource(R.mipmap.pordefecto);
+
 
     }
 }
