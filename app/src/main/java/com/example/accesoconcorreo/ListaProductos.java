@@ -55,15 +55,19 @@ public class ListaProductos extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //esta línea sirve para impedir que se pueda girar la pantalla
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_lista_productos2);
+
+            Toolbar myToolbar = (Toolbar) findViewById(R.id.listaProdToolbar);
+
             mDatabase=FirebaseDatabase.getInstance().getReference();
             productos=new ArrayList<>();
             recyclerViewproductos=(RecyclerView)findViewById(R.id.lista_prod_recycler);
             recyclerViewproductos.setLayoutManager(new LinearLayoutManager(this));
-            toolbar=(Toolbar)findViewById(R.id.toolbar_list_prod);//este toolbar no debería estar
             //habría que cambiar el nombre del toolbar de la aplicación, el que aparece todo el rato
             //ir cambiandolo cada pantalla
             String nombreLista=getIntent().getStringExtra("nombreLista");
-            toolbar.setTitle(nombreLista);
+
+            myToolbar.setTitle(nombreLista); // establece el titulo del appBar al nombre de la lista
+
             String idLista=getIntent().getStringExtra("idLista");
             Log.d("IDLista",idLista);
             obtenerProductosLista(idLista);

@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/loginToolbar"
+        android:id="@+id/fichaProdToolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
@@ -40,7 +40,7 @@
         android:src="@mipmap/carro"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/loginToolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/fichaProdToolbar" />
 
     <EditText
         android:id="@+id/editText_email"

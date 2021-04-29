@@ -2,6 +2,7 @@ package com.example.accesoconcorreo;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuView;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
@@ -27,6 +28,10 @@ public class ficha_producto extends AppCompatActivity {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //esta línea sirve para impedir que se pueda girar la pantalla
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ficha_producto);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.fichaProdToolbar);
+        myToolbar.setTitle("SuperCarrito");
+
         producto=(Producto) getIntent().getSerializableExtra("producto");
         ImageView fotoprod= findViewById(R.id.imagen_ficha_producto);
         ImageView fotonutri= findViewById(R.id.image_grado_nutrition);

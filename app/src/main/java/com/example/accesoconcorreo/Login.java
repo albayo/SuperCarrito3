@@ -23,7 +23,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 import ModeloDominio.ReadAndWriteSnippets;
-import ModeloDominio.Usuario;
 
 
 /**
@@ -76,7 +75,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.loginToolbar);
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.fichaProdToolbar);
         myToolbar.setTitle("SuperCarrito");
 
         usuarioET = findViewById(R.id.editText_email);
