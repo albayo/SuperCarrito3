@@ -153,7 +153,7 @@ import ModeloDominio.Producto;
 
                 Log.d("ListaListAdapter", "Creando intent a ListaProductos");
                 Intent intent = new Intent(a, ListaProductos.class);
-                intent.putExtra("nombreLista", current);
+                intent.putExtra("producto", current);
 
                 a.startActivity(intent);
             }
