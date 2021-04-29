@@ -40,7 +40,7 @@ import ModeloDominio.ReadAndWriteSnippets;
 public class ListaProductos extends AppCompatActivity {
         private List<Producto> productos;
         private DatabaseReference mDatabase;
-         private ProductListAdapter productosAdapter;
+        private ProductListAdapter productosAdapter;
         private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán los Productos de la Lista
         private RecyclerView recyclerViewproductos;
 
