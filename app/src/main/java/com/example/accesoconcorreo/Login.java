@@ -17,10 +17,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import ModeloDominio.ReadAndWriteSnippets;
 
@@ -36,6 +43,7 @@ import ModeloDominio.ReadAndWriteSnippets;
 //      Contraseña: alvarobayo
 
 public class Login extends AppCompatActivity {
+    private static final int GOOGLE_SIGN_IN=100;
     private FirebaseAuth mAuth;
     //Representa el TAG que sirve para distinguir la actividad
     private static final String LOG_TAG = Login.class.getSimpleName();
@@ -113,6 +121,22 @@ public class Login extends AppCompatActivity {
 
             }
 
+
+        });
+        Button btngoogle = findViewById(R.id.login_google);
+
+        btngoogle.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                        .requestIdToken(getString(R.string.default_web_client_id))
+                        .requestEmail()
+                        .build();
+                GoogleSignInClient googleclient = GoogleSignIn.getClient(Login.this,gso);
+                startActivityForResult(googleclient.getSignInIntent(),GOOGLE_SIGN_IN);
+               // googleclient.signOut();
+            }
         });
         ImageButton mostrarContrasena = findViewById(R.id.imageButton_mostrarC);
         mostrarContrasena.setOnClickListener(new View.OnClickListener() {
@@ -183,7 +207,37 @@ public class Login extends AppCompatActivity {
         startActivity(homeIntent);
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
+        if (requestCode == GOOGLE_SIGN_IN) {
+            Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+            try {
+                // Google Sign In was successful, authenticate with Firebase
+                GoogleSignInAccount account = task.getResult(ApiException.class);
+                if(account!=null){
+                    AuthCredential credential= GoogleAuthProvider.getCredential(account.getIdToken(),null);
+                    FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if(task.isSuccessful()){
+                                showHome(account.getEmail(),ProviderType.google);
+                            }else{
+                                showAlert();
+                            }
+                        }
+                    });
+                }
+                Log.d("GOOGLE", "firebaseAuthWithGoogle:" + account.getId());
+               // firebaseAuthWithGoogle(account.getIdToken());
+            } catch (ApiException e) {
+                // Google Sign In failed, update UI appropriately
+                Log.w("GOOGLE", "Google sign in failed", e);
+            }
+        }
+    }
     /**
      * Método que sirve para lanzar la actividad de carga de datos en la BD de la API
      *
