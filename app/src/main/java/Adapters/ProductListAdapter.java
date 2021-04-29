@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accesoconcorreo.ListaProductos;
 import com.example.accesoconcorreo.R;
+import com.example.accesoconcorreo.ficha_producto;
 
 import java.util.List;
 
@@ -145,16 +146,19 @@ import ModeloDominio.Producto;
                 ProductoImageView = itemView.findViewById(R.id.fotoproducto_lista);
                 ProductoSuperView = itemView.findViewById(R.id.super_producto);
 
+                itemView.setOnClickListener(this);
+
             }
 
 
             @Override
             public void onClick(View v) {
                 int position = getLayoutPosition();
+                Log.d("LLAdapter pos click", String.valueOf(position));
                 Producto current =  mProductos.get(position);
 
-                Log.d("ListaListAdapter", "Creando intent a ListaProductos");
-                Intent intent = new Intent(a, ListaProductos.class);
+                Log.d("fichaProducto", "Creando intent a fichaProducto");
+                Intent intent = new Intent(a, ficha_producto.class);
                 intent.putExtra("producto", current);
 
                 a.startActivity(intent);
