@@ -47,9 +47,17 @@ public class ficha_producto extends AppCompatActivity {
         nombre.setText(producto.getNombre());
         if(!producto.getImage().equals(""))
             fotoprod.setImageURI(uri);
-
         else
             fotoprod.setImageResource(R.mipmap.pordefecto);
+        
+        String nutri=producto.getGradoNutrition();
+        switch(nutri){
+            case "a":fotonutri.setImageResource(R.mipmap.nutriscore_a);
+            case "b":fotonutri.setImageResource(R.mipmap.nutriscore_b);
+            case "c":fotonutri.setImageResource(R.mipmap.nutriscore_c);
+            case "d":fotonutri.setImageResource(R.mipmap.nutriscore_d);
+            case "e":fotonutri.setImageResource(R.mipmap.nutriscore_e);
+        }
 
 
     }
