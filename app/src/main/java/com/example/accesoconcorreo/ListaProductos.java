@@ -84,7 +84,7 @@ public class ListaProductos extends AppCompatActivity {
                         Log.d("ObtenerProduct",nombre);
                         Log.d("ObtenerProduct","Numero " +productos.size());
                     }
-                    productosAdapter= new ProductListAdapter(R.layout.item_productos_lista,productos);
+                    productosAdapter= new ProductListAdapter(ListaProductos.this,R.layout.item_productos_lista,productos);
                     recyclerViewproductos.setAdapter(productosAdapter);
                 }
             }
