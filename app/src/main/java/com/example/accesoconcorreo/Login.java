@@ -2,9 +2,7 @@ package com.example.accesoconcorreo;
 
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
-import android.media.Image;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -74,9 +73,12 @@ public class Login extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //esta línea sirve para impedir que se pueda girar la pantalla
         super.onCreate(savedInstanceState);
-        mAuth = FirebaseAuth.getInstance();
-       // superViewModel = new ViewModelProvider(this).get(SuperViewModel.class);
         setContentView(R.layout.activity_login);
+        mAuth = FirebaseAuth.getInstance();
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.loginToolbar);
+        myToolbar.setTitle("SuperCarrito");
+
         usuarioET = findViewById(R.id.editText_email);
         contraseniaET = findViewById(R.id.editText_contrasenia);
         Button btnRegistrar = findViewById(R.id.btnRegistrar);

@@ -1,6 +1,5 @@
 package com.example.accesoconcorreo;
 
-import androidx.activity.OnBackPressedDispatcher;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,17 +10,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
+import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,6 +47,9 @@ public class Home extends AppCompatActivity {
        // user = FirebaseAuth.getInstance().getCurrentUser();
         String email = getIntent().getExtras().get("email").toString();
         String nick = getIntent().getStringExtra("nick");
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.homeToolbar);
+        myToolbar.setTitle("SuperCarrito-" + nick);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_lista_super_prod);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         FloatingActionButton fabAñadirLista = findViewById(R.id.fabAniadir_lista);
