@@ -108,12 +108,13 @@ public class ListaProductos extends AppCompatActivity {
                     String ingredients = ds.child("ingredients_text").getValue().toString();
                     String imgage = ds.child("image_url").getValue().toString();
                     String brand = ds.child("brand_owner").getValue().toString();
-                    Producto p = new Producto(String.valueOf(idProducto), nombre, brand, imgage, ingredients, "");
+                    String gradoNutricion= ds.child("nutriscore_grade").getValue().toString();
+                    Producto p = new Producto(String.valueOf(idProducto), nombre, brand, imgage, ingredients, "",gradoNutricion);
                     productos.add(p);
                     Log.d("ADDPRODUCTO", "Nombre "+p.getNombre());
 
                     Log.d("ADDPRODUCTO", "Num "+productos.size());
-
+                    Log.d("ADDPRODUCTO", "Num "+p.getImage());
                     //ESTO NO DEBERÍA IR AQUÍ PERO SINO EL ADAPTER NO SE INICIA
                     productosAdapter.setProductos(productos);
                 }
