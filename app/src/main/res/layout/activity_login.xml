@@ -13,8 +13,10 @@
         android:text="@string/registrar"
         app:layout_constraintBottom_toBottomOf="@+id/btnAcceder"
         app:layout_constraintEnd_toStartOf="@+id/btnAcceder"
+        app:layout_constraintHorizontal_bias="0.447"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnAcceder" />
+        app:layout_constraintTop_toTopOf="@+id/btnAcceder"
+        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView_logosuper"
@@ -105,6 +107,17 @@
         app:layout_constraintBottom_toBottomOf="@+id/editText_contrasenia"
         app:layout_constraintStart_toEndOf="@+id/editText_contrasenia"
         app:layout_constraintTop_toTopOf="@+id/editText_contrasenia" />
+
+    <Button
+        android:id="@+id/login_google"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:drawableStart="@mipmap/ic_google_logo"
+        android:text="GOOGLE"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/btnAcceder"
+        app:layout_constraintTop_toBottomOf="@+id/btnRegistrar"
+        app:layout_constraintVertical_bias="0.483" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
     <!-- -->

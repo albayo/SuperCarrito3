@@ -7,5 +7,6 @@ package com.example.accesoconcorreo;
  * @version: 13/04/2021
  */
 public enum ProviderType {
-    Basic;
+    Basic,
+    google;
 }

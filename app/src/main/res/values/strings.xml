@@ -31,4 +31,6 @@
     <string name="previous">Previous</string>
 
 
+    <string name="prefs_file">com.example.accesoconcorreo.PREFERENCE_FILE_KEY</string>
+
 </resources>
