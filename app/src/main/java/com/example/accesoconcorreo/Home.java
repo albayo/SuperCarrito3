@@ -73,28 +73,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                return false;
-            }
 
-            @Override
-            public void onTouchEvent(@NonNull RecyclerView rv, @NonNull MotionEvent e) {
-                CardView child=(CardView)recyclerView.findChildViewUnder(e.getX(), e.getY());
-                if(child!=null){
-                    int position = recyclerView.getChildAdapterPosition(child);
-
-
-                }
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-
-        });
 
         Usuario u = new Usuario(nick, email);
 

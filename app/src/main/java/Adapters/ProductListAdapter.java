@@ -2,7 +2,9 @@ package Adapters;
 
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.accesoconcorreo.ListaProductos;
 import com.example.accesoconcorreo.R;
 
 import java.util.List;
@@ -31,16 +34,18 @@ import ModeloDominio.Producto;
         private int resource;
         //Representa una lista de los productos que obtendremos de la base de datos para mostrarlos.
         private List<Producto> mProductos;  // Cached copy of Productos
+        private Activity a;
 
         /**
          * Constructor de un adapter de la lista de productos
          * @param resource Representa el contexto de la aplicacion
          * @param Productos Representa la lista de productos a mostrar
          */
-        public ProductListAdapter(int resource, List<Producto> Productos) {
+        public ProductListAdapter(Activity a, int resource, List<Producto> Productos) {
             this.resource=resource;
             //u = usuario;
             this.mProductos = Productos;
+            this.a=a;
             Log.d("ADAPTER","Constructor");
         }
 
@@ -76,7 +81,12 @@ import ModeloDominio.Producto;
                 Log.d("Nombre producto", nomProd);
 
                 holder.ProductoNombreView.setText(nomProd);
-                holder.ProductoImageView.setImageURI(Uri.parse(current.getImage()));
+                Uri img=Uri.parse(current.getImage());
+                if(current.getImage()=="") {
+                    holder.ProductoImageView.setImageURI(Uri.parse(current.getImage()));
+                }
+                else
+                    holder.ProductoImageView.setImageResource(R.mipmap.pordefecto);
                 Log.d("Nombre super", current.getSupermercado());
                 holder.ProductoSuperView.setText(current.getSupermercado());
             }  else  {
@@ -112,7 +122,7 @@ import ModeloDominio.Producto;
          * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
          * @version: 13/04/2021
          */
-        class  ProductoViewHolder  extends  RecyclerView.ViewHolder {
+        class  ProductoViewHolder  extends  RecyclerView.ViewHolder implements View.OnClickListener{
             // Representa un textView en el cual vamos a almacenar el descendente del nombre del producto
             private final TextView ProductoNombreView;
             // Representa un imageView en el cual vamos a almacenar el descendente de la imagen del producto
@@ -133,6 +143,19 @@ import ModeloDominio.Producto;
                 ProductoImageView = itemView.findViewById(R.id.fotoproducto_lista);
                 ProductoSuperView = itemView.findViewById(R.id.super_producto);
 
+            }
+
+
+            @Override
+            public void onClick(View v) {
+                int position = getLayoutPosition();
+                Producto current =  mProductos.get(position);
+
+                Log.d("ListaListAdapter", "Creando intent a ListaProductos");
+                Intent intent = new Intent(a, ListaProductos.class);
+                intent.putExtra("nombreLista", current);
+
+                a.startActivity(intent);
             }
         }
     }
