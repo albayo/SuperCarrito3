@@ -3,6 +3,7 @@ package com.example.accesoconcorreo;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.ViewModelProvider;
@@ -48,6 +49,10 @@ public class CrearLista extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_lista);
+
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.crearlistaToolbar);
+        myToolbar.setTitle("SuperCarrito-Crear Lista");
+
         cardViewsola = (CardView)findViewById(R.id.lista_personal_card);
         cardViewgrupo = (CardView)findViewById(R.id.grupo_compra_card);
         email=getIntent().getExtras().get("email").toString();

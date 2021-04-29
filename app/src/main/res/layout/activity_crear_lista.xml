@@ -7,6 +7,23 @@
     style="@style/Theme.AccesoConCorreo"
     tools:context=".CrearLista">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/crearlistaToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@color/white" />
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
@@ -23,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="250dp"
+            android:layout_marginTop="300dp"
             android:layout_marginRight="20dp"
             android:backgroundTint="@color/white"
             app:cardCornerRadius="15dp"
@@ -46,8 +63,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/lista_personal"
-                    android:textSize="18sp"
-                    android:textColor="@color/naranja_tipo3"/>
+                    android:textColor="@color/naranja_tipo3"
+                    android:textSize="18sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
