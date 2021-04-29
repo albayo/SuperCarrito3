@@ -73,7 +73,9 @@ import ModeloDominio.Producto;
             if  ( mProductos  !=  null ) {
                 Log.d("ADAPTER","NO NULL LISTA");
                 Producto current =  mProductos.get(position);
-                String nomProd = current.getNombre().split(",")[1];
+                String nomProd=current.getNombre();
+                if(current.getNombre().contains(","))
+                    nomProd = current.getNombre().split(",")[1];
                 //para poner la primera letra en MAY del nombre
                 char[] arr = nomProd.trim().toCharArray();
                 arr[0] = Character.toUpperCase(arr[0]);
@@ -81,10 +83,10 @@ import ModeloDominio.Producto;
                 Log.d("Nombre producto", nomProd);
 
                 holder.ProductoNombreView.setText(nomProd);
-                Uri img=Uri.parse(current.getImage());
-                if(current.getImage()=="") {
+
+                if(!current.getImage().equals(""))
                     holder.ProductoImageView.setImageURI(Uri.parse(current.getImage()));
-                }
+
                 else
                     holder.ProductoImageView.setImageResource(R.mipmap.pordefecto);
                 Log.d("Nombre super", current.getSupermercado());
