@@ -106,7 +106,7 @@ public class Login extends AppCompatActivity {
                                     if (task.isSuccessful()) {
                                         String[] nick=usuarioET.getText().toString().split("@");
                                         persistencia.insertarUsuario(nick[0],usuarioET.getText().toString());
-                                        showHome(usuarioET.getText().toString(),ProviderType.Basic); //MEJOR CON ?: ""
+                                        showHome(nick[0],usuarioET.getText().toString(),ProviderType.Basic); //MEJOR CON ?: ""
                                     } else {
                                         showAlert();
                                     }
@@ -135,7 +135,7 @@ public class Login extends AppCompatActivity {
                         .build();
                 GoogleSignInClient googleclient = GoogleSignIn.getClient(Login.this,gso);
                 startActivityForResult(googleclient.getSignInIntent(),GOOGLE_SIGN_IN);
-               // googleclient.signOut();
+                googleclient.signOut();
             }
         });
         ImageButton mostrarContrasena = findViewById(R.id.imageButton_mostrarC);
@@ -173,7 +173,8 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                showHome(usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
+                                String nick[]=usuarioET.getText().toString().split("@");
+                                showHome(nick[0],usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
                             } else {
                                 showAlert();
                             }
@@ -198,15 +199,16 @@ public class Login extends AppCompatActivity {
         AlertDialog alert=b.create();
         alert.show();
     }
-    private void showHome(String email, ProviderType provider){
+    private void showHome(String nick,String email, ProviderType provider){
         Intent homeIntent=new Intent(this,Home.class);
         homeIntent.putExtra("email",email);
-        String[] nick=usuarioET.getText().toString().split("@");
-        homeIntent.putExtra("nick", nick[0]);
+
+        homeIntent.putExtra("nick", nick);
         homeIntent.putExtra("provider",provider.name());
         startActivity(homeIntent);
     }
 
+    //PARA LO DE GOOGLE
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -223,7 +225,9 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                showHome(account.getEmail(),ProviderType.google);
+
+                                persistencia.insertarUsuario(account.getDisplayName(),account.getEmail());
+                                showHome(account.getDisplayName(),account.getEmail(),ProviderType.google);
                             }else{
                                 showAlert();
                             }
@@ -238,22 +242,6 @@ public class Login extends AppCompatActivity {
             }
         }
     }
-    /**
-     * Método que sirve para lanzar la actividad de carga de datos en la BD de la API
-     *
-     * @param view Representa al objeto View sobre el cual se ha hecho click
-     * @param u    Representa al Usuario que se ha logueado en la aplicación
-     */
-    /*protected void launchPantalla_listas(View view, Usuario u) {
-
-        //CAMBIAR DEBE LLEVAR A LA ACTIVIDAD DE CARGA, NO A LA DE LAS LISTAS
-        //DEPENDE SI FIREBASE CARGA LA API O NO
-        Log.d(LOG_TAG, "btnAcceder clicado!");
-        Intent intent = new Intent(this,AccesoCorreo.class);
-        intent.putExtra("usuario", u);
-        startActivity(intent);
-
-    }*/
 }
 
 
