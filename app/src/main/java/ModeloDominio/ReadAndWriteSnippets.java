@@ -61,10 +61,10 @@ public class ReadAndWriteSnippets {
         });
 
     }
-    public void insertContadorListas(int n){
+    public static void insertContadorListas(int n){
         mDatabase.child("contadorLista").setValue(n);
     }
-    public void insertarLista(String nombrelista,String nick) {
+    public static void insertarLista(String nombrelista,String nick) {
 
         actualizaContadorListas();
 

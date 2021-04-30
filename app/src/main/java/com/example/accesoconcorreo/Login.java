@@ -51,7 +51,7 @@ public class Login extends AppCompatActivity {
     private static final String LOG_TAG = Login.class.getSimpleName();
 
     //Representa la clase de Lógica de Negocio la cuál será necesaria para comprobar información con la BD
-    //private SuperViewModel superViewModel;
+    private ReadAndWriteSnippets persistencia;
 
     //Representa el cuadro de texto (EditText) en el cual se escribirá el nombre de Usuario
     private EditText usuarioET;
@@ -59,7 +59,7 @@ public class Login extends AppCompatActivity {
     //Representa el cuadro de texto (EditText) en el cual se escribirá la contraseña del Usuario
     private EditText contraseniaET;
 
-    private ReadAndWriteSnippets persistencia;
+
 
     /**
      * Método que sirve para borrar los campos de usuario y contraseña cuando se vuelva a recuperar
@@ -87,11 +87,10 @@ public class Login extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.fichaProdToolbar);
         myToolbar.setTitle("SuperCarrito");
-
+        persistencia=new ReadAndWriteSnippets();
         usuarioET = findViewById(R.id.editText_email);
         contraseniaET = findViewById(R.id.editText_contrasenia);
         Button btnRegistrar = findViewById(R.id.btnRegistrar);
-        persistencia=new ReadAndWriteSnippets();
         btnRegistrar.setOnClickListener(new View.OnClickListener() {
             /**
              * Método que sirve para comprobar que lo introducido en los campos de usuario y
@@ -137,7 +136,7 @@ public class Login extends AppCompatActivity {
                         .build();
                 GoogleSignInClient googleclient = GoogleSignIn.getClient(Login.this,gso);
                 startActivityForResult(googleclient.getSignInIntent(),GOOGLE_SIGN_IN);
-                googleclient.signOut();
+               // googleclient.signOut();
             }
         });
         ImageButton mostrarContrasena = findViewById(R.id.imageButton_mostrarC);
@@ -157,7 +156,6 @@ public class Login extends AppCompatActivity {
                 }
             }
         });
-        //OnCompleteListener<AuthResult>()
 
         Button btnAcceder =findViewById(R.id.btnAcceder);
         btnAcceder.setOnClickListener(new View.OnClickListener() {
@@ -214,7 +212,6 @@ public class Login extends AppCompatActivity {
 
         SharedPreferences pref=getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         pref.edit().putString("email",usuarioET.toString());
-        //String[] nick=usuarioET.getText().toString().split("@");
         pref.edit().putString("nick",nick);
         pref.edit().putString("provider",provider.toString());
         pref.edit().apply();
@@ -252,7 +249,8 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
 
-                                persistencia.insertarUsuario(account.getDisplayName(),account.getEmail());
+
+                                        persistencia.insertarUsuario(account.getDisplayName(),account.getEmail());
                                 showHome(account.getDisplayName(),account.getEmail(),ProviderType.google);
                             }else{
                                 showAlert();
