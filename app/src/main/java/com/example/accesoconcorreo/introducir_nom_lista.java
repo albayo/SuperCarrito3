@@ -106,8 +106,6 @@ public class introducir_nom_lista extends DialogFragment {
 
                         Log.d("Cont", "CrearLista:" +Lista.getContLista());
                         List<Usuario> lista=new ArrayList<>();
-                        Usuario u=persistencia.convertirAUsuario(nick);
-                        lista.add(u);
                         persistencia.insertarLista(nombreLista,nick);
                         cerrarFragment();
 
