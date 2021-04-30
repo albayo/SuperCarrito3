@@ -3,20 +3,21 @@ package com.example.accesoconcorreo;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.pm.ActivityInfo;
+import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageButton;
+import android.widget.TextClock;
+import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,10 +27,8 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapters.ListaListAdapter;
 import Adapters.ProductListAdapter;
 import ModeloDominio.Producto;
-import ModeloDominio.ReadAndWriteSnippets;
 
 /**
  * Esta clase define la actividad (llamada "activity_lista_producto") que dispondrá en pantalla los
@@ -43,6 +42,9 @@ public class ListaProductos extends AppCompatActivity {
         private ProductListAdapter productosAdapter;
         private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán los Productos de la Lista
         private RecyclerView recyclerViewproductos;
+        private ImageButton mBotonMas;
+        private ImageButton mBotonMenos;
+        private TextView mContador;
 
         /**
          * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
@@ -58,6 +60,10 @@ public class ListaProductos extends AppCompatActivity {
 
             Toolbar myToolbar = (Toolbar) findViewById(R.id.listaProdToolbar);
 
+            mBotonMas=(ImageButton) findViewById(R.id.aniadir_mas);
+            mBotonMenos=(ImageButton) findViewById(R.id.quitar_menos);
+            mContador=(TextView) findViewById(R.id.numero_producto_pedido);
+
             mDatabase=FirebaseDatabase.getInstance().getReference();
             productos=new ArrayList<>();
             recyclerViewproductos=(RecyclerView)findViewById(R.id.lista_prod_recycler);
@@ -71,6 +77,26 @@ public class ListaProductos extends AppCompatActivity {
             String idLista=getIntent().getStringExtra("idLista");
             Log.d("IDLista",idLista);
             obtenerProductosLista(idLista);
+
+            mBotonMas.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int i=Integer.valueOf(mContador.getText().toString());
+                    i++;
+                    mContador.setText(i);
+                }
+            });
+
+            mBotonMenos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int i=Integer.valueOf(mContador.getText().toString());
+                    if(i>0){
+                        i--;
+                        mContador.setText(i);
+                    }
+                }
+            });
         }
 
     public void obtenerProductosLista(String listaid) {

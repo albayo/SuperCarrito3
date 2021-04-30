@@ -72,7 +72,8 @@
                 android:layout_toStartOf="@id/checkBox_seleccionar"
                 android:layout_toLeftOf="@id/checkBox_seleccionar"
                 app:srcCompat="@drawable/ic_add_black"
-                tools:ignore="VectorDrawableCompat" />
+                tools:ignore="VectorDrawableCompat"
+                />
 
             <CheckBox
                 android:id="@+id/checkBox_seleccionar"
