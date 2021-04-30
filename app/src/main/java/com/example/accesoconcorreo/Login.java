@@ -1,6 +1,8 @@
 package com.example.accesoconcorreo;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.text.method.PasswordTransformationMethod;
@@ -191,6 +193,12 @@ public class Login extends AppCompatActivity {
 
         });
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+    }
+
     private void showAlert(){
         AlertDialog.Builder b= new AlertDialog.Builder(this);
         b.setTitle("Error");
@@ -202,10 +210,27 @@ public class Login extends AppCompatActivity {
     private void showHome(String nick,String email, ProviderType provider){
         Intent homeIntent=new Intent(this,Home.class);
         homeIntent.putExtra("email",email);
+        //GUARDAR DATOS
 
+        SharedPreferences pref=getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        pref.edit().putString("email",usuarioET.toString());
+        //String[] nick=usuarioET.getText().toString().split("@");
+        pref.edit().putString("nick",nick);
+        pref.edit().putString("provider",provider.toString());
+        pref.edit().apply();
         homeIntent.putExtra("nick", nick);
         homeIntent.putExtra("provider",provider.name());
         startActivity(homeIntent);
+    }
+    private void session(){
+        SharedPreferences pref=getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
+        String email=pref.getString("email",null);
+        String provider =pref.getString("provider",null);
+        String nick=pref.getString("nick",null);
+        if(email!=null && provider!=null){
+            //PUEDES PONER EL LAYOUT INVISIBLE
+            showHome(nick,email,ProviderType.valueOf(provider));
+        }
     }
 
     //PARA LO DE GOOGLE
@@ -242,6 +267,7 @@ public class Login extends AppCompatActivity {
             }
         }
     }
+
 }
 
 

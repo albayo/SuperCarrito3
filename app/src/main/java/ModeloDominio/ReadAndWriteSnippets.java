@@ -42,7 +42,10 @@ public class ReadAndWriteSnippets {
     // [START rtdb_write_new_user]
     public void insertarUsuario(String name, String email) {
         Usuario user = new Usuario(name, email);
-        mDatabase.child("users").child(name).setValue(user.toMap());
+        if(mDatabase.child("users").child(name).getKey()==null){
+            mDatabase.child("users").child(name).setValue(user.toMap());
+        }
+
     }
     public void writeNewUserWithTaskListeners(String userId, String name, String email) {
         Usuario user = new Usuario(name, email);
