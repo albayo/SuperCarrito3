@@ -51,7 +51,7 @@ public class Login extends AppCompatActivity {
     private static final String LOG_TAG = Login.class.getSimpleName();
 
     //Representa la clase de Lógica de Negocio la cuál será necesaria para comprobar información con la BD
-    //private SuperViewModel superViewModel;
+    private ReadAndWriteSnippets persistencia;
 
     //Representa el cuadro de texto (EditText) en el cual se escribirá el nombre de Usuario
     private EditText usuarioET;
@@ -87,7 +87,7 @@ public class Login extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.fichaProdToolbar);
         myToolbar.setTitle("SuperCarrito");
-
+        persistencia=new ReadAndWriteSnippets();
         usuarioET = findViewById(R.id.editText_email);
         contraseniaET = findViewById(R.id.editText_contrasenia);
         Button btnRegistrar = findViewById(R.id.btnRegistrar);
@@ -106,7 +106,7 @@ public class Login extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         String[] nick=usuarioET.getText().toString().split("@");
-                                        ReadAndWriteSnippets.insertarUsuario(nick[0],usuarioET.getText().toString());
+                                        persistencia.insertarUsuario(nick[0],usuarioET.getText().toString());
                                         showHome(nick[0],usuarioET.getText().toString(),ProviderType.Basic); //MEJOR CON ?: ""
                                     } else {
                                         showAlert();
@@ -136,7 +136,7 @@ public class Login extends AppCompatActivity {
                         .build();
                 GoogleSignInClient googleclient = GoogleSignIn.getClient(Login.this,gso);
                 startActivityForResult(googleclient.getSignInIntent(),GOOGLE_SIGN_IN);
-                googleclient.signOut();
+               // googleclient.signOut();
             }
         });
         ImageButton mostrarContrasena = findViewById(R.id.imageButton_mostrarC);
@@ -249,7 +249,8 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
 
-                                ReadAndWriteSnippets.insertarUsuario(account.getDisplayName(),account.getEmail());
+
+                                        persistencia.insertarUsuario(account.getDisplayName(),account.getEmail());
                                 showHome(account.getDisplayName(),account.getEmail(),ProviderType.google);
                             }else{
                                 showAlert();
