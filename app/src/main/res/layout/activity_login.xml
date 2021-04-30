@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_margin="0dp">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/fichaProdToolbar"
@@ -18,18 +18,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         app:titleTextColor="@color/white" />
-
-    <Button
-        android:id="@+id/btnRegistrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/registrar"
-        app:layout_constraintBottom_toBottomOf="@+id/btnAcceder"
-        app:layout_constraintEnd_toStartOf="@+id/btnAcceder"
-        app:layout_constraintHorizontal_bias="0.447"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnAcceder"
-        app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/imageView_logosuper"
@@ -48,11 +36,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
         android:autofillHints=""
+        android:backgroundTint="@color/naranja_tipo3"
         android:ems="10"
         android:hint="@string/email_logueo"
         android:inputType="textEmailAddress"
         android:textColor="@color/black"
-        android:backgroundTint="@color/naranja_tipo3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -64,25 +52,14 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="65dp"
         android:autofillHints=""
+        android:backgroundTint="@color/naranja_tipo3"
         android:ems="10"
         android:hint="@string/contrasenia_logueo"
         android:inputType="textPassword"
         android:textColor="@color/black"
-        android:backgroundTint="@color/naranja_tipo3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_email" />
-
-    <Button
-        android:id="@+id/btnAcceder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="42dp"
-        android:layout_marginRight="42dp"
-        android:text="@string/acceder"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText_contrasenia" />
 
     <ImageView
         android:id="@+id/imageView_email"
@@ -120,17 +97,54 @@
         app:layout_constraintStart_toEndOf="@+id/editText_contrasenia"
         app:layout_constraintTop_toTopOf="@+id/editText_contrasenia" />
 
-    <Button
-        android:id="@+id/login_google"
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:drawableStart="@mipmap/ic_google_logo"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editText_contrasenia"
+        app:layout_constraintVertical_bias="0.27"
+        tools:ignore="MissingConstraints">
+
+
+        <Button
+            android:id="@+id/btnRegistrar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:text="@string/registrar" />
+
+        <Button
+            android:id="@+id/btnAcceder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:text="@string/acceder" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login_google"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+
+        android:layout_weight="1"
+        android:drawableStart="@mipmap/google"
+        android:drawableLeft="@mipmap/google"
         android:text="GOOGLE"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnAcceder"
-        app:layout_constraintTop_toBottomOf="@+id/btnRegistrar"
-        app:layout_constraintVertical_bias="0.483"
-        android:drawableLeft="@mipmap/ic_google_logo" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.374" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
     <!-- -->
