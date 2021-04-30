@@ -1,35 +1,15 @@
 package com.example.accesoconcorreo;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.DialogFragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.List;
 
 import ModeloDominio.Lista;
-import ModeloDominio.ReadAndWriteSnippets;
-import ModeloDominio.Usuario;
+
 
 public class CrearLista extends AppCompatActivity {
     //Representa el CardView que implica la creación de una lista compartida
@@ -59,8 +39,6 @@ public class CrearLista extends AppCompatActivity {
         nick=getIntent().getStringExtra("nick");
         registerForContextMenu(cardViewsola);
         registerForContextMenu(cardViewgrupo);
-
-        //usuario=firebaseAuth.getCurrentUser();
         cardViewgrupo.setOnClickListener(new View.OnClickListener(){
 
             /**

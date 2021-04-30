@@ -40,7 +40,7 @@ public class ReadAndWriteSnippets {
     }
 
     // [START rtdb_write_new_user]
-    public void insertarUsuario(String name, String email) {
+    public static void insertarUsuario(String name, String email) {
         Usuario user = new Usuario(name, email);
         if(mDatabase.child("users").child(name).getKey()==null){
             mDatabase.child("users").child(name).setValue(user.toMap());
@@ -61,10 +61,10 @@ public class ReadAndWriteSnippets {
         });
 
     }
-    public void insertContadorListas(int n){
+    public static void insertContadorListas(int n){
         mDatabase.child("contadorLista").setValue(n);
     }
-    public void insertarLista(String nombrelista,String nick) {
+    public static void insertarLista(String nombrelista,String nick) {
 
         actualizaContadorListas();
 

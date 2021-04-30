@@ -46,7 +46,7 @@ public class introducir_nom_lista extends DialogFragment {
 
     //Representa la clase de Lógica de Negocio la cuál será necesaria para sacar la información de la BD
     // private SuperViewModel superViewModel;
-    private ReadAndWriteSnippets persistencia;
+
 
     //Representa el nombre del último botón en el cual se ha hecho click
     private String ultBoton="";
@@ -85,7 +85,6 @@ public class introducir_nom_lista extends DialogFragment {
         etNombre = (EditText) view.findViewById(R.id.etNombre);
         btnAceptar = (Button) view.findViewById(R.id.btnAceptar);
         btnCancelar = (Button) view.findViewById(R.id.btnCancelar);
-        persistencia= new ReadAndWriteSnippets();
         Log.d("FIREBASE","HOLAAA");
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             /**
@@ -106,7 +105,7 @@ public class introducir_nom_lista extends DialogFragment {
 
                         Log.d("Cont", "CrearLista:" +Lista.getContLista());
                         List<Usuario> lista=new ArrayList<>();
-                        persistencia.insertarLista(nombreLista,nick);
+                        ReadAndWriteSnippets.insertarLista(nombreLista,nick);
                         cerrarFragment();
 
                         Intent intent = new Intent(getContext(), ListaProductos.class);

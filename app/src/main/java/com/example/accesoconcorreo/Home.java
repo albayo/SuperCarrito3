@@ -35,7 +35,6 @@ public class Home extends AppCompatActivity {
 
     private FirebaseDatabase database;
     private DatabaseReference mDatabaseReference;
-    private ReadAndWriteSnippets persistencia;
     private ListaListAdapter mListaAdapter;
 
     @Override
@@ -53,8 +52,7 @@ public class Home extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_lista_super_prod);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         FloatingActionButton fabAñadirLista = findViewById(R.id.fabAniadir_lista);
-        persistencia = new ReadAndWriteSnippets();
-        // mListaAdapter=new ListaListAdapter(this.getApplicationContext(),listas);
+        
 
         fabAñadirLista.setOnClickListener(new View.OnClickListener() {
             @Override
