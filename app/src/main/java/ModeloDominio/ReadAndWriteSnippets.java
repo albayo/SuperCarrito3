@@ -47,36 +47,7 @@ public class ReadAndWriteSnippets {
         }
 
     }
-    public void writeNewUserWithTaskListeners(String userId, String name, String email) {
-        Usuario user = new Usuario(name, email);
 
-        // [START rtdb_write_new_user_task]
-        mDatabase.child("users").child(userId).setValue(user)
-                .addOnSuccessListener(new OnSuccessListener<Void>() {
-                    @Override
-                    public void onSuccess(Void aVoid) {
-                        // Write was successful!
-                        // ...
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        // Write failed
-                        // ...
-                    }
-                });
-        // [END rtdb_write_new_user_task]
-    }
-
-    public Usuario convertirAUsuario(String nick){
-        Usuario u=null;
-       // mDatabase.child("users").child(nick).get().addLis;
-       // Log.d("FIREBASE",String.valueOf(task.getResult().getValue()));
-       // u=new Usuario(nick,(String)m.get("email"));
-        //u.setListas((List<String>) m.get("listas"));
-        return u;
-    }
     public static void actualizaContadorListas(){
 
         mDatabase.child("contadorLista").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -103,68 +74,13 @@ public class ReadAndWriteSnippets {
         Lista list=new Lista(nombrelista,listusuarios);
 
         Map<String,Object> postValues = list.toMap();
-
-        Usuario u=this.convertirAUsuario(nick);
-
-
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("nombre").setValue(nombrelista);
         mDatabase.child("users").child(nick).child("listas").child(String.valueOf(list.getIdLista())).setValue(nombrelista);
 
        insertContadorListas(Lista.getContLista());
     }
 
-    public List<String> obtenerListasbyUserID(String nick) {
-        //Usuario u=this.convertirAUsuario(nick);
-        List<String> llistas = new ArrayList<>();
-        mDatabase.child("users").child(nick).child("listas").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    Iterable<DataSnapshot> ds= snapshot.getChildren();
-                    for (DataSnapshot d:ds) {
-                        llistas.add(String.valueOf(d.getValue()));
 
-                    }
-                    //crear adapter para mostrar en recycler
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        }
-        );
-        return llistas;
-    }
-/*
-    public static void getProducto(String idProducto){
-        Log.d("GETPRODUCTO","INI");
-
-        mDatabase.child("json").child("results").child(idProducto).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    Log.d("GETPRODUCTO","TASK OK");
-                    fDataSnapshot d:task.getResult()){
-
-                    }
-                }
-
-
-                String nombre=ds.child("product_name").getValue().toString();
-                String ingredients=ds.child("ingredients_text").getValue().toString();
-                String imgage=ds.child("image_url").getValue().toString();
-                String brand=ds.child("brand_owner").getValue().toString();
-                Producto p=new Producto(String.valueOf(idProducto),nombre,brand,imgage,ingredients,"");
-            }
-        });
-
-
-
-        Log.d("GETPRODUCTO","FIN");
-
-    }*/
 /* Se usará mas tarde no borrar!!!!
     public void obtenerTodosProductos() {
         List<String> llistas = new ArrayList<>();

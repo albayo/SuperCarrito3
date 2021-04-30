@@ -222,6 +222,7 @@ public class Login extends AppCompatActivity {
         homeIntent.putExtra("provider",provider.name());
         startActivity(homeIntent);
     }
+    //NO BORRAR
     private void session(){
         SharedPreferences pref=getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String email=pref.getString("email",null);
