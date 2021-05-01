@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AccesoConCorreo">
-        <activity android:name=".ficha_producto"></activity>
+        <activity android:name=".TodosProductos"></activity>
+        <activity android:name=".ficha_producto" />
         <activity android:name=".ListaProductos" />
         <activity android:name=".CrearLista" />
         <activity android:name=".Home" />

@@ -45,9 +45,7 @@ public class ListaProductos extends AppCompatActivity {
         private ProductListAdapter productosAdapter;
         private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán los Productos de la Lista
         private RecyclerView recyclerViewproductos;
-        private ImageButton mBotonMas;
-        private ImageButton mBotonMenos;
-        private TextView mContador;
+
 
         /**
          * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
@@ -78,22 +76,22 @@ public class ListaProductos extends AppCompatActivity {
             String idLista=getIntent().getStringExtra("idLista");
             Log.d("IDLista",idLista);
             obtenerProductosLista(idLista);
-            /*FloatingActionButton fabAñadirLista = findViewById(R.id.fabAniadir_lista);
+            FloatingActionButton fabAñadirProductos = findViewById(R.id.fabAniadir_Productos);
 
 
-            fabAñadirLista.setOnClickListener(new View.OnClickListener() {
+            fabAñadirProductos.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(ListaProductos.this,
-                            CrearLista.class);
-                    //intent.putExtra("nick", nick);
+                            TodosProductos.class);
+                    intent.putExtra("nick", idLista);
                     //intent.putExtra("email", email);
                     startActivity(intent);
-                    Intent replyIntent = new Intent();
-                    Lista l = (Lista) intent.getSerializableExtra("lista");
+                    //Intent replyIntent = new Intent();
+                    //Lista l = (Lista) intent.getSerializableExtra("lista");
                     //hacer insert en el usuario internamente
                 }
-            });*/
+            });
 
         }
 
@@ -106,7 +104,7 @@ public class ListaProductos extends AppCompatActivity {
                     productos.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String nombre=ds.getValue().toString();
-                        Producto p=null;
+
 
                         addProducto(nombre);
                         Log.d("ObtenerProduct",nombre);
