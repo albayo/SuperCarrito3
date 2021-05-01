@@ -75,33 +75,12 @@ public class ReadAndWriteSnippets {
 
         Map<String,Object> postValues = list.toMap();
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("nombre").setValue(nombrelista);
+        mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("productos").setValue("pr1");
         mDatabase.child("users").child(nick).child("listas").child(String.valueOf(list.getIdLista())).setValue(nombrelista);
 
        insertContadorListas(Lista.getContLista());
     }
 
 
-/* Se usará mas tarde no borrar!!!!
-    public void obtenerTodosProductos() {
-        List<String> llistas = new ArrayList<>();
-        mDatabase.child("json").child("results").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        String nombre=ds.getValue().toString();
-                        llistas.add(nombre);
-                    }
-                    mListaAdapter= new ListaListAdapter(R.layout.pantalla_listas_list,llistas);
-                    recyclerView.setAdapter(mListaAdapter);
-                }
-            }
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-                                                                                            }
-        );
-
-    }*/
 
 }

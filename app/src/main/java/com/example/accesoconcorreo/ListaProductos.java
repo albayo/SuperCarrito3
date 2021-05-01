@@ -74,7 +74,7 @@ public class ListaProductos extends AppCompatActivity {
             myToolbar.setTitle(nombreLista); // establece el titulo del appBar al nombre de la lista
 
             String idLista=getIntent().getStringExtra("idLista");
-            Log.d("IDLista",idLista);
+
             obtenerProductosLista(idLista);
             FloatingActionButton fabAñadirProductos = findViewById(R.id.fabAniadir_Productos);
 
@@ -84,7 +84,8 @@ public class ListaProductos extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = new Intent(ListaProductos.this,
                             TodosProductos.class);
-                    intent.putExtra("nick", idLista);
+                    intent.putExtra("idLista", idLista);
+                    intent.putExtra("nombreLista",nombreLista);
                     //intent.putExtra("email", email);
                     startActivity(intent);
                     //Intent replyIntent = new Intent();
@@ -103,11 +104,11 @@ public class ListaProductos extends AppCompatActivity {
                 if (snapshot.exists()) {
                     productos.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        String nombre=ds.getValue().toString();
+                        String id=ds.getValue().toString();
 
 
-                        addProducto(nombre);
-                        Log.d("ObtenerProduct",nombre);
+                        addProducto(id);
+                        Log.d("ObtenerProduct",id);
                         Log.d("ObtenerProduct","Numero " +productos.size());
                     }
                     productosAdapter= new ProductListAdapter(ListaProductos.this,R.layout.item_productos_lista,productos);
@@ -135,7 +136,7 @@ public class ListaProductos extends AppCompatActivity {
                     String imgage = ds.child("image_url").getValue().toString();
                     String brand = ds.child("brand_owner").getValue().toString();
                     String gradoNutricion= ds.child("nutriscore_grade").getValue().toString();
-                    Producto p = new Producto(String.valueOf(idProducto), nombre, brand, imgage, ingredients, "",gradoNutricion);
+                    Producto p = new Producto(idProducto, nombre, brand, imgage, ingredients, "",gradoNutricion);
                     productos.add(p);
                     Log.d("ADDPRODUCTO", "Nombre "+p.getNombre());
 

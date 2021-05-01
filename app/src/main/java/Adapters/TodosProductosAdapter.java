@@ -19,7 +19,9 @@ import com.example.accesoconcorreo.TodosProductos;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import ModeloDominio.Producto;
 
@@ -70,6 +72,7 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
         if  ( mProductos  !=  null || mProductos.get(position)!=null) {
 
             Producto current =  mProductos.get(position);
+            Log.d("IDDD",current.getIdProducto());
             String nomProd=current.getNombre();
             if(current.getNombre().contains(","))
                 nomProd = current.getNombre().split(",")[1];
@@ -89,10 +92,12 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
             Log.d("Nombre super", current.getSupermercado());
             holder.nombreSuper.setText(current.getSupermercado());
             DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
+            Map<String,Object> m=new HashMap<>();
+            m.put(current.getIdProducto(),current.getIdProducto());
             holder.añadirProducto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).setValue(current.getIdProducto());
+                    mDatabase.child("listas").child(idLista).child("productos").updateChildren(m);
                 }
             });
 
