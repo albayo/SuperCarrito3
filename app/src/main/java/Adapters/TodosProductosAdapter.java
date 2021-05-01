@@ -88,10 +88,11 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
                 holder.imagenProducto.setImageURI(Uri.parse(current.getImage()));
 
             else
+
                 holder.imagenProducto.setImageResource(R.mipmap.pordefecto);
             Log.d("Nombre super", current.getSupermercado());
             holder.nombreSuper.setText(current.getSupermercado());
-            DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
+              DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
             Map<String,Object> m=new HashMap<>();
             m.put(current.getIdProducto(),current.getIdProducto());
             holder.añadirProducto.setOnClickListener(new View.OnClickListener() {
