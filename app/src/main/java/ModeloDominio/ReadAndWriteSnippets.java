@@ -39,6 +39,11 @@ public class ReadAndWriteSnippets {
         // [END initialize_database_ref]
     }
 
+    public static void aniadirUsuarioaList(String nombreLista, String nick, String idLista,String email){
+        mDatabase.child("listas").child(idLista).child("usuarios").child(nick).setValue(email);
+        mDatabase.child("users").child(nick).child("listas").child(idLista).setValue(nombreLista);
+    }
+
     // [START rtdb_write_new_user]
     public void insertarUsuario(String name, String email) {
         Usuario user = new Usuario(name, email);

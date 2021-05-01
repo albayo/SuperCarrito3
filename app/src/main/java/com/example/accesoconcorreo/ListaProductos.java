@@ -46,6 +46,11 @@ public class ListaProductos extends AppCompatActivity {
         private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán los Productos de la Lista
         private RecyclerView recyclerViewproductos;
 
+        private String email;
+        private String nick;
+        private String nombreLista;
+        private String idLista;
+
 
         /**
          * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
@@ -61,7 +66,10 @@ public class ListaProductos extends AppCompatActivity {
 
             Toolbar myToolbar = (Toolbar) findViewById(R.id.listaProdToolbar);
 
-
+            idLista=getIntent().getStringExtra("idLista");
+            nombreLista=getIntent().getStringExtra("nombreLista");
+            //idLista
+            //nombreLista
 
             mDatabase=FirebaseDatabase.getInstance().getReference();
             productos=new ArrayList<>();
@@ -154,6 +162,26 @@ public class ListaProductos extends AppCompatActivity {
         });
         Log.d("GETPRODUCTO","FIN");
 
+    }
+    public void abrirFragment(String tipoLista){
+        AniadirListaGrupal listaDialogFragment = new AniadirListaGrupal(nombreLista,idLista);
+        listaDialogFragment.show(getSupportFragmentManager(),"tag");
+
+        String ultB = listaDialogFragment.getUltBoton();
+        listaDialogFragment.getLifecycle().getCurrentState();
+        while(!listaDialogFragment.isCancelable()){
+
+        }
+        if(ultB.length() > 0){
+            if(ultB.equals("Aceptar")){
+                Intent intent = new Intent(this, ListaProductos.class);
+                intent.putExtra("nick",nick);
+                intent.putExtra("email",email);
+                intent.putExtra("nombreLista",nombreLista);
+                intent.putExtra("idLista",Lista.getContLista());
+                startActivity(intent);
+            }
+        }
     }
 
 

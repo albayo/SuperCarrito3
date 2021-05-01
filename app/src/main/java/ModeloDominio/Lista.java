@@ -22,6 +22,8 @@ public class Lista implements Serializable {
 
     private static int contLista=0;
 
+    private String tipolista;
+
     private int idLista;
 
     private String nombre;
@@ -134,6 +136,11 @@ public class Lista implements Serializable {
      * Métodd que devuelve un objeto HashMap que guarda la información de una Lista.
      * @return
      */
+
+    public void setTipolista(String tipolista) {
+        this.tipolista = tipolista;
+    }
+
     public Map<String,Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("idLista",idLista);
