@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -133,6 +134,9 @@ import ModeloDominio.Producto;
             // Representa un textView en el cual vamos a almacenar el descendente del supermercado del producto
             private final TextView ProductoSuperView;
 
+            private final ImageButton botonMas;
+            private final ImageButton botonMenos;
+            private final TextView mContador;
             /**
              * Esta clase define el ViewHolder necesario para utilizar en nuestro ListAdapter, obteniendo los datos de un View
              * con las id que los representa en esta.
@@ -145,9 +149,29 @@ import ModeloDominio.Producto;
                 ProductoNombreView = itemView.findViewById(R.id.nombre_producto);
                 ProductoImageView = itemView.findViewById(R.id.fotoproducto_lista);
                 ProductoSuperView = itemView.findViewById(R.id.super_producto);
-
+                botonMas=(ImageButton) itemView.findViewById(R.id.aniadir_mas);
+                botonMenos=(ImageButton) itemView.findViewById(R.id.quitar_menos);
+                mContador=(TextView) itemView.findViewById(R.id.numero_producto_pedido);
                 itemView.setOnClickListener(this);
+                botonMas.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int i=Integer.valueOf(mContador.getText().toString());
+                        i++;
+                        mContador.setText(String.valueOf(i));
+                    }
+                });
 
+                botonMenos.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int i=Integer.valueOf(mContador.getText().toString());
+                        if(i>0){
+                            i--;
+                            mContador.setText(String.valueOf(i));
+                        }
+                    }
+                });
             }
 
 

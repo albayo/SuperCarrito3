@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.Image;
 import android.os.Build;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.ProductListAdapter;
+import ModeloDominio.Lista;
 import ModeloDominio.Producto;
 
 /**
@@ -60,9 +63,7 @@ public class ListaProductos extends AppCompatActivity {
 
             Toolbar myToolbar = (Toolbar) findViewById(R.id.listaProdToolbar);
 
-            mBotonMas=(ImageButton) findViewById(R.id.aniadir_mas);
-            mBotonMenos=(ImageButton) findViewById(R.id.quitar_menos);
-            mContador=(TextView) findViewById(R.id.numero_producto_pedido);
+
 
             mDatabase=FirebaseDatabase.getInstance().getReference();
             productos=new ArrayList<>();
@@ -77,26 +78,23 @@ public class ListaProductos extends AppCompatActivity {
             String idLista=getIntent().getStringExtra("idLista");
             Log.d("IDLista",idLista);
             obtenerProductosLista(idLista);
+            /*FloatingActionButton fabAñadirLista = findViewById(R.id.fabAniadir_lista);
 
-            mBotonMas.setOnClickListener(new View.OnClickListener() {
+
+            fabAñadirLista.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    int i=Integer.valueOf(mContador.getText().toString());
-                    i++;
-                    mContador.setText(i);
+                    Intent intent = new Intent(ListaProductos.this,
+                            CrearLista.class);
+                    //intent.putExtra("nick", nick);
+                    //intent.putExtra("email", email);
+                    startActivity(intent);
+                    Intent replyIntent = new Intent();
+                    Lista l = (Lista) intent.getSerializableExtra("lista");
+                    //hacer insert en el usuario internamente
                 }
-            });
+            });*/
 
-            mBotonMenos.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int i=Integer.valueOf(mContador.getText().toString());
-                    if(i>0){
-                        i--;
-                        mContador.setText(i);
-                    }
-                }
-            });
         }
 
     public void obtenerProductosLista(String listaid) {
