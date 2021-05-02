@@ -87,24 +87,21 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
             if(!current.getImage().equals(""))
                 holder.imagenProducto.setImageURI(Uri.parse(current.getImage()));
 
-            else
+            else {holder.imagenProducto.setImageResource(R.mipmap.pordefecto);}
 
-                holder.imagenProducto.setImageResource(R.mipmap.pordefecto);
             Log.d("Nombre super", current.getSupermercado());
             holder.nombreSuper.setText(current.getSupermercado());
               DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
-            Map<String,Object> m=new HashMap<>();
-            m.put(current.getIdProducto(),current.getIdProducto());
+
             holder.añadirProducto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mDatabase.child("listas").child(idLista).child("productos").updateChildren(m);
+                    mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).setValue(current.getIdProducto());
                 }
             });
 
         }  else  {
             // Covers the case of data not being ready yet.
-            Log.d("ADAPTER","NULL LISTA");
             holder.nombreSuper.setText( "No Producto" );
         }
     }
