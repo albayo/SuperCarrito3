@@ -33,7 +33,7 @@ public class TodosProductos extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todos_productos);
         String nombreLista=getIntent().getStringExtra("nombreLista");
-        idLista=getIntent().getStringExtra("id");
+        idLista=getIntent().getStringExtra("idLista");
         recyclerViewproductos=(RecyclerView)findViewById(R.id.super_prod_list_recycler);
         recyclerViewproductos.setLayoutManager(new LinearLayoutManager(this));
         toolbar=findViewById(R.id.toolbar_lista_super_prod);
@@ -48,6 +48,14 @@ public class TodosProductos extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
+                    Iterable<DataSnapshot> dataSnapshots=snapshot.getChildren();
+                    /*for(int i=0;i<40;i++){
+                        String id=dataSnapshots.iterator().next().getKey();
+                        Log.d("ID",id);
+
+                            addProducto(id);
+
+                    }*/
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String id=ds.getKey();
                         Log.d("ID",id);
@@ -75,7 +83,7 @@ public class TodosProductos extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot ds) {
                 if (ds.exists()) {
-
+                    String id=ds.getKey();
                     String nombre = ds.child("product_name").getValue().toString();
                     String ingredients = ds.child("ingredients_text").getValue().toString();
                     String imgage = ds.child("image_url").getValue().toString();
@@ -85,8 +93,10 @@ public class TodosProductos extends AppCompatActivity {
                     productos.add(p);
 
 
-                    //ESTO NO DEBERÍA IR AQUÍ PERO SINO EL ADAPTER NO SE INICIA
-                    todosProductosAdapter.setProductos(productos);
+                        todosProductosAdapter.setProductos(productos);
+
+
+
                 }
             }
 
