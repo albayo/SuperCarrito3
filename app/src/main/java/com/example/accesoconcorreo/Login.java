@@ -47,6 +47,7 @@ import ModeloDominio.ReadAndWriteSnippets;
 
 public class Login extends AppCompatActivity {
     private static final int GOOGLE_SIGN_IN=100;
+    //Representa una instancia de la BD
     private FirebaseAuth mAuth;
     //Representa el TAG que sirve para distinguir la actividad
     private static final String LOG_TAG = Login.class.getSimpleName();
