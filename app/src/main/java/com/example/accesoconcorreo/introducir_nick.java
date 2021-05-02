@@ -34,8 +34,9 @@ import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Usuario;
 
 /**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
+ * Esta clase define el fragmento llamado "fragment_introducir_nick" que sirve para introducir un nick para un nuevo usuario.
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 30/04/2021
  */
 public class introducir_nick extends DialogFragment {
 
@@ -61,9 +62,9 @@ public class introducir_nick extends DialogFragment {
     private String ultBoton = "";
 
     /**
-     * Constructor base
      *
-     * @param email
+     * @param email Representa el correo del nuevo usuario
+     * @param pwd Representa la contraseña del nuevo usuario
      */
     public introducir_nick(String email, String pwd) {
         this.email = email;
@@ -153,6 +154,7 @@ public class introducir_nick extends DialogFragment {
     }
 
     /**
+     * Método que devueve el inflater del fragment
      * @param inflater
      * @param container
      * @param savedInstanceState
@@ -178,21 +180,33 @@ public class introducir_nick extends DialogFragment {
         getFragmentManager().beginTransaction().remove(this).commit();
     }
 
+    /**
+     * Método que te lleva a la pantalla de listas del usuario
+     * @param nick Representa el nick del usuario
+     * @param email Representa el correo del usuario
+     * @param provider Representa la forma de registro del usuario
+     */
     private void showHome(String nick, String email, ProviderType provider) {
         Intent homeIntent = new Intent(getContext(), Home.class);
         homeIntent.putExtra("email", email);
         //GUARDAR DATOS
 
+        /*
         SharedPreferences pref = getContext().getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         pref.edit().putString("email", email);
         pref.edit().putString("nick", nick);
         pref.edit().putString("provider", provider.toString());
         pref.edit().apply();
+
+         */
         homeIntent.putExtra("nick", nick);
         homeIntent.putExtra("provider", provider.name());
         startActivity(homeIntent);
     }
 
+    /**
+     * Método que muestra un error al hacer el registro de usuario
+     */
     private void showAlert() {
         AlertDialog.Builder b = new AlertDialog.Builder(getContext());
         b.setTitle("Error");
