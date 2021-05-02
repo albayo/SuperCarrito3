@@ -13,27 +13,22 @@ import java.util.Map;
  * Esta clase define objetos que representan al las listas de los usuarios de la aplicación
  * Además representa la tabla llamada "lista_table" en la BD
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 13/04/2021
+ * @version: 02/05/2021
  */
 
-
-
 public class Lista implements Serializable {
-
+    //Representa el número de listas creadas
     private static int contLista=0;
-
+    //Representa el tipo de la lista
     private String tipolista;
-
+    //Representa el identificador de la lista (es único)
     private int idLista;
-
+    //Representa el nombre de la lista
     private String nombre;
-
     //Representa el/los usario/s que participan en la lista (este atributo no podrá ser nulo)
     private List<String> usuarios;
-
-
+    //Representa los productos que contiene la lista
     private List<Producto> productos;
-
 
     /**
      * Constructor vacío para una Lista
@@ -131,16 +126,24 @@ public class Lista implements Serializable {
      * @return
      */
     public static int getContLista(){return contLista;}
-    public static void setContLista(int n){contLista=n;}
-    /**
-     * Métodd que devuelve un objeto HashMap que guarda la información de una Lista.
-     * @return
-     */
 
+    /**
+     * Método que establece el atributo de la lista contLista al valor pasado por parámetro
+     * @param n Representa el nuevo valor que se le quiere dar a contLista
+     */
+    public static void setContLista(int n){contLista=n;}
+
+    /**
+     * Método que devuelve un objeto HashMap que guarda la información de una Lista.
+     */
     public void setTipolista(String tipolista) {
         this.tipolista = tipolista;
     }
 
+    /**
+     * Método que convierte la información contenida en la clase a un mapa
+     * @return result (mapa con el contenido de la clase)
+     */
     public Map<String,Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("idLista",idLista);

@@ -11,14 +11,22 @@ import android.view.View;
 
 import ModeloDominio.Lista;
 
+/**
+ * Esta clase define la actividad (llamada "activity_login") que servirá para el logueo del Usuario
+ * en la aplicación
+ *
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 02/05/2021
+ */
 
 public class CrearLista extends AppCompatActivity {
     //Representa el CardView que implica la creación de una lista compartida
     private CardView cardViewgrupo;
-
     //Representa el CardView que implica la creación de una lista personal
     private CardView cardViewsola;
+    //Representa el email del usuario que está logueado en la aplicación
     private String email;
+    //Representa el nick que tiene el usuario que está logueado en la aplicación
     private String nick;
     /**
      * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
@@ -69,8 +77,8 @@ public class CrearLista extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param tipoLista Representa
+     *  Método que abre el fragment introducir_nom_lista y saca la información cuando este se cierra
+     * @param tipoLista Representa el tipo de lista del cual desea crear el usuario la lista
      */
     public void abrirFragment(String tipoLista){
         introducir_nom_lista listaDialogFragment = new introducir_nom_lista(tipoLista,email,nick);

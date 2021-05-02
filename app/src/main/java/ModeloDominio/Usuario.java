@@ -18,14 +18,23 @@ import java.util.Map;
  * @version: 13/04/2021
  */
 
-@IgnoreExtraProperties //ESTO LO HE VISTO EN EL EJEMPLO DE FIREBASE, CREO QUE NO HACE FALTA QUE SEA SERIALIZABLE
+@IgnoreExtraProperties
 public class Usuario {
+    //Representa el numero de usuarios logueados en la aplicación
     private static int contUsuario=0;
+    //Representa el identificador del usuario
     private int id;
+    //Representa el nick del usuario
     private String nick;
+    //Representa el email del usuario
     private String email;
+    //Representa el nombre de las listas en la que participa el usuario
     private List<String> listas;
 
+    /**
+     * Constructor base de la clase
+     * @param email Representa el email con el que se ha logueado el usuario
+     */
     public Usuario(String email){
         contUsuario++;
         id=contUsuario;
@@ -81,10 +90,18 @@ public class Usuario {
         this.listas = l;
     }
 
+    /**
+     * Método que añade la lista cuyo nombre es l a las listas del usuario
+     * @param l Representa el nombre de una lista
+     */
     public void insertaLista(String l){
         listas.add(l);
     }
 
+    /**
+     * Método que convierte la información contenida en la clase a un mapa
+     * @return result (mapa con el contenido de la clase)
+     */
     public Map<String,Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
         result.put("id",id);

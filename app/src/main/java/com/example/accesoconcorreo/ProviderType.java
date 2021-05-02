@@ -1,10 +1,9 @@
 package com.example.accesoconcorreo;
 
 /**
- * Esta clase define la actividad (llamada "activity_pantalla_listas") que dispondrá en pantalla
- *  todas las listas del Usuario
+ * Esta clase define el modo en el que se ha logueado el usuario en la aplicación
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 13/04/2021
+ * @version: 02/05/2021
  */
 public enum ProviderType {
     Basic,

@@ -1,7 +1,6 @@
 package ModeloDominio;
 //Falta arreglar la base de datos ESTA MAL
 
-
 /**
  * Esta clase define objetos que representan a los Supermercados de la aplicación
  * Además representa la tabla llamada "supermercado_table" en la BD
@@ -9,10 +8,8 @@ package ModeloDominio;
  * @version: 13/04/2021
  */
 
-
-
 public class Supermercado{
-
+    //Representa el nombre del supermercado
     private String nombreSuper;
 
     /**
@@ -48,6 +45,4 @@ public class Supermercado{
     public void setNombreSuper(String nombre) {
         this.nombreSuper= nombre;
     }
-
-
 }

@@ -19,10 +19,22 @@ import android.widget.TextView;
 import Adapters.ProductListAdapter;
 import ModeloDominio.Producto;
 
+/**
+ * Esta clase define la actividad (llamada "activity_ficha_producto") que servirá para el disponer la información de un producto
+ *
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 02/05/2021
+ */
 public class ficha_producto extends AppCompatActivity {
-
+    //Representa el producto del cual se dispondrá por pantalla la información
     private Producto producto;
-//
+
+    /**
+     * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
+     * "activity_pantalla_listas"
+     *
+     * @param savedInstanceState Representa el objeto donde se guarda la información
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //esta línea sirve para impedir que se pueda girar la pantalla

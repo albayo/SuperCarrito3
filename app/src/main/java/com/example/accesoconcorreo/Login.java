@@ -40,7 +40,7 @@ import ModeloDominio.ReadAndWriteSnippets;
  * en la aplicación
  *
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 13/04/2021
+ * @version: 02/05/2021
  */
 //      USUARIO: 16alvaro1bac@gmail.com
 //      Contraseña: alvarobayo
@@ -131,7 +131,10 @@ public class Login extends AppCompatActivity {
         Button btngoogle = findViewById(R.id.login_google);
 
         btngoogle.setOnClickListener(new View.OnClickListener() {
-
+            /**
+             * Método que sirve para mostrar/ocultar la contraseña (cambiar su modo de visualización)
+             * @param v Representa al objeto View sobre el cual se ha hecho click
+             */
             @Override
             public void onClick(View v) {
                 GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -196,12 +199,9 @@ public class Login extends AppCompatActivity {
 
         });
     }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-    }
-
+    /**
+     * Método que sirve para mostrar un dialogo de alerta
+     */
     private void showAlert() {
         AlertDialog.Builder b = new AlertDialog.Builder(this);
         b.setTitle("Error");
@@ -211,6 +211,12 @@ public class Login extends AppCompatActivity {
         alert.show();
     }
 
+    /**
+     * Método que sirve para mostrar/ocultar la contraseña (cambiar su modo de visualización)
+     * @param nick Representa el nick que tiene el usuario logueado
+     * @param email Representa el email que tiene el email logueado
+     * @param provider Representa la forma en la que se ha logueado el usuario
+     */
     private void showHome(String nick, String email, ProviderType provider) {
         Intent homeIntent = new Intent(this, Home.class);
         homeIntent.putExtra("email", email);
@@ -252,11 +258,13 @@ public class Login extends AppCompatActivity {
                 if (account != null) {
                     AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
                     FirebaseAuth.getInstance().signInWithCredential(credential).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                        /**
+                         * Método que se ejecuta si la tarea a ejecutar se ejecuta de manera satisfactoria
+                         * @param task Representa la tarea que se ha ejecutado
+                         */
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-
-
                                 persistencia.insertarUsuario(account.getDisplayName(), account.getEmail());
                                 showHome(account.getDisplayName(), account.getEmail(), ProviderType.google);
                             } else {
@@ -265,11 +273,9 @@ public class Login extends AppCompatActivity {
                         }
                     });
                 }
-                Log.d("GOOGLE", "firebaseAuthWithGoogle:" + account.getId());
                 // firebaseAuthWithGoogle(account.getIdToken());
             } catch (ApiException e) {
                 // Google Sign In failed, update UI appropriately
-                Log.w("GOOGLE", "Google sign in failed", e);
             }
         }
     }
