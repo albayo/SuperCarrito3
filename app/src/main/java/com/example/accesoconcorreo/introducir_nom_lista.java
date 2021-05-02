@@ -44,9 +44,6 @@ public class introducir_nom_lista extends DialogFragment {
     private String nick;
     private String nombreLista;
 
-    //Representa la clase de Lógica de Negocio la cuál será necesaria para sacar la información de la BD
-    // private SuperViewModel superViewModel;
-
 
     //Representa el nombre del último botón en el cual se ha hecho click
     private String ultBoton="";

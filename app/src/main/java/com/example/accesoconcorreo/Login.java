@@ -31,6 +31,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
 
+import ModeloDominio.Lista;
 import ModeloDominio.ReadAndWriteSnippets;
 
 
@@ -100,21 +101,8 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (usuarioET.getText().toString().trim().length() > 0 && contraseniaET.getText().toString().trim().length() > 0) {
-                    Task<AuthResult> authResultTask = FirebaseAuth.getInstance().createUserWithEmailAndPassword(usuarioET.getText().toString(), contraseniaET.getText().toString())
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        String[] nick=usuarioET.getText().toString().split("@");
-                                        persistencia.insertarUsuario(nick[0],usuarioET.getText().toString());
-                                        showHome(nick[0],usuarioET.getText().toString(),ProviderType.Basic); //MEJOR CON ?: ""
-                                    } else {
-                                        showAlert();
-                                    }
-                                }
-
-                    });
-
+                    introducir_nick nickDialogFragment = new introducir_nick(usuarioET.getText().toString(),contraseniaET.getText().toString());
+                    nickDialogFragment.show(getSupportFragmentManager(),"tag");
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "Error, debe rellenar los campos", Toast.LENGTH_LONG);
                     toast.show();
@@ -266,6 +254,29 @@ public class Login extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     *
+     * @param email Representa
+     */
+    /*public void abrirFragment(String email, String pwd){
+        introducir_nick nickDialogFragment = new introducir_nick(email,pwd);
+        nickDialogFragment.show(getSupportFragmentManager(),"tag");
+
+        String ultB = nickDialogFragment.getUltBoton();
+        nickDialogFragment.getLifecycle().getCurrentState();
+        while(!nickDialogFragment.isCancelable()){
+
+        }
+        if(ultB.length() > 0){
+            if(ultB.equals("Aceptar")){
+                Intent intent = new Intent(this, ListaProductos.class);
+                intent.putExtra("nick",nickDialogFragment.getNick());
+                intent.putExtra("email",email);
+                startActivity(intent);
+            }
+        }
+    }*/
 
 }
 
