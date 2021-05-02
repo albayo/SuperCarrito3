@@ -49,11 +49,10 @@ public class TodosProductos extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        String nombre=ds.getKey();
-                        Log.d("Nombre",nombre);
+                        String id=ds.getKey();
+                        Log.d("ID",id);
                         if(productos.size()<5){
-                            Log.d("AÑADIR","ENTRA");
-                            addProducto(nombre);
+                            addProducto(id);
                         }
 
                     }
@@ -70,7 +69,7 @@ public class TodosProductos extends AppCompatActivity {
     }
 
     public void addProducto(String idProducto){
-        Log.d("GETPRODUCTO","INI");
+
 
         mDatabase.child("json").child("results").child(idProducto).addValueEventListener(new ValueEventListener() {
             @Override
@@ -84,10 +83,8 @@ public class TodosProductos extends AppCompatActivity {
                     String gradoNutricion= ds.child("nutriscore_grade").getValue().toString();
                     Producto p = new Producto(idProducto, nombre, brand, "", ingredients, "Eroski",gradoNutricion);
                     productos.add(p);
-                    Log.d("ADDPRODUCTO", "Nombre "+p.getNombre());
 
-                    Log.d("ADDPRODUCTO", "Num "+productos.size());
-                    Log.d("ADDPRODUCTO", "Num "+p.getImage());
+
                     //ESTO NO DEBERÍA IR AQUÍ PERO SINO EL ADAPTER NO SE INICIA
                     todosProductosAdapter.setProductos(productos);
                 }
@@ -98,7 +95,7 @@ public class TodosProductos extends AppCompatActivity {
 
             }
         });
-        Log.d("GETPRODUCTO","FIN");
+
 
     }
 }
