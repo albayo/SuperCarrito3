@@ -232,7 +232,7 @@ public class Login extends AppCompatActivity {
         startActivity(homeIntent);
     }
 
-    //NO BORRAR
+    /*
     private void session() {
         SharedPreferences pref = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         String email = pref.getString("email", null);
@@ -242,9 +242,14 @@ public class Login extends AppCompatActivity {
             //PUEDES PONER EL LAYOUT INVISIBLE
             showHome(nick, email, ProviderType.valueOf(provider));
         }
-    }
+    }*/
 
-    //PARA LO DE GOOGLE
+    /**
+     *  Método que registra al usuario con Google
+     * @param requestCode código que es solicitado
+     * @param resultCode código que ha sido resultado del evento
+     * @param data el intent del que sacamos los datos
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -280,28 +285,7 @@ public class Login extends AppCompatActivity {
         }
     }
 
-    /**
-     *
-     * @param email Representa
-     */
-    /*public void abrirFragment(String email, String pwd){
-        introducir_nick nickDialogFragment = new introducir_nick(email,pwd);
-        nickDialogFragment.show(getSupportFragmentManager(),"tag");
 
-        String ultB = nickDialogFragment.getUltBoton();
-        nickDialogFragment.getLifecycle().getCurrentState();
-        while(!nickDialogFragment.isCancelable()){
-
-        }
-        if(ultB.length() > 0){
-            if(ultB.equals("Aceptar")){
-                Intent intent = new Intent(this, ListaProductos.class);
-                intent.putExtra("nick",nickDialogFragment.getNick());
-                intent.putExtra("email",email);
-                startActivity(intent);
-            }
-        }
-    }*/
 }
 
 
