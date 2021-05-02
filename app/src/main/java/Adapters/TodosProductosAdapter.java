@@ -24,25 +24,33 @@ import java.util.List;
 import java.util.Map;
 
 import ModeloDominio.Producto;
-
+/**
+ * Esta clase define el adapter necesario para que la capa de Presentación y Persistencia se comuniquen
+ *  y se representen de forma visual los datos(todos los Productos de los supermercados)
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 02/05/2021
+ */
 public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosAdapter.TodosProductosHolder>{
 
-    //Representa las listas que se representarán
+    //Representa las listas de productos de la lista que se mostrarán
     private List<Producto> mProductos;  // Cached copy of Listas
+    //Representa el id de la Lista a la que añadir si se añaden productos
     private String idLista;
+    //Representa el objeto necesario para la instanciacion en forma de View del layout necesario en este caso(item:prod_list)
     private int resource;
+    //Representa el siguiente Activity a donde queremos redirigir.
     private Activity a;
 
     /**
      * Constructor de la clase
      * @param resource Representa el contexto de la aplicación
-     * @param l Representa la lista de Listas que se dispondrá
-     *
+     * @param l Representa la lista de Productos que se dispondrá
+     * @param a Representa el siguiente Activity al que iremos
+     * @param idLista Representa la lisa a la que añadiremos productos.
      */
     public TodosProductosAdapter(Activity a, int resource, List<Producto> l, String idLista) {
         this.resource=resource;
         this.a = a;
-        //u = usuario;
         this.mProductos = l;
         this.idLista=idLista;
     }
@@ -72,7 +80,6 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
         if  ( mProductos  !=  null || mProductos.get(position)!=null) {
 
             Producto current =  mProductos.get(position);
-            Log.d("IDDD",current.getIdProducto());
             String nomProd=current.getNombre();
             if(current.getNombre().contains(","))
                 nomProd = current.getNombre().split(",")[1];
@@ -80,7 +87,7 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
             char[] arr = nomProd.trim().toCharArray();
             arr[0] = Character.toUpperCase(arr[0]);
             nomProd = new String(arr);
-            Log.d("Nombre producto", nomProd);
+
 
             holder.nombreProductoView.setText(nomProd);
 
@@ -89,7 +96,7 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
 
             else {holder.imagenProducto.setImageResource(R.mipmap.pordefecto);}
 
-            Log.d("Nombre super", current.getSupermercado());
+
             holder.nombreSuper.setText(current.getSupermercado());
               DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
 
@@ -121,6 +128,10 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
         else return  0;
     }
 
+    /**
+     * Metodo que sirve para cambiar la lista de productos
+     * @param productos la nueva lista de productos que queremos mostrar
+     */
     public void setProductos(List<Producto> productos) {
         this.mProductos=productos;
     }
@@ -128,15 +139,20 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
     /**
      * Esta clase define el tipo el cual será usado para representar los datos(las listas de un Usuario)
      * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
-     * @version: 13/04/2021
+     * @version: 02/05/2021
      */
     public class  TodosProductosHolder  extends  RecyclerView.ViewHolder implements View.OnClickListener{
         //Representa el View donde se dispondrán los nombres de las listas
-        private final TextView nombreProductoView;
         public View view;
+        //Representa el TextView donde se dispondrá el nombre del producto
+        private final TextView nombreProductoView;
+        //Representa el TextView donde se dispondrá el nombre del supermercado donde se dispondrá el producto
         private final TextView nombreSuper;
+        //Representa la ImageView correspondiente a la imagen del producto.
         private final ImageView imagenProducto;
+        //Representa el Botón para añadir un producto a la lista
         private final Button añadirProducto;
+        //Representa el adapter al que corresponde
         final TodosProductosAdapter adapter;
         /**
          * Constructor de la clase
@@ -155,16 +171,15 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
             itemView.setOnClickListener(this);
 
         }
+        /**
+         * Método que representa el clickado en un item de la view
+         * @param v View en el cual se ha clickado
+         */
 
         @Override
         public void onClick(View v) {
             //Se obtiene la posicion del item que ha sido clickado
             int mPosicion = getLayoutPosition();
-            Log.d("LLAdapter pos click", String.valueOf(mPosicion));
-
-            //String id = mListasId.get(mPosicion);
-
-            Log.d("ListaListAdapter", "Creando intent a ListaProductos");
             Intent intent = new Intent(a, ListaProductos.class);
            // intent.putExtra("nombreLista", lista);
            // intent.putExtra("idLista", id);

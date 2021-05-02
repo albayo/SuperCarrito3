@@ -26,27 +26,30 @@ import ModeloDominio.Usuario;
  * Esta clase define el adapter necesario para que la capa de Presentación y Persistencia se comuniquen
  *  y se representen de forma visual los datos(las listas de un Usuario) de esta última
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 13/04/2021
+ * @version: 02/05/2021
  */
 
 public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.ListaViewHolder>{
 
     //Representa las listas que se representarán
     private List<String> mListas;  // Cached copy of Listas
-    private List<String> mListasId;
+    //Represente los ids de las listas , se cambiará por un Map.
+    private List<String> mListasId; //
+    //Representa el objeto necesario para la instanciacion en forma de View del layout necesario en este caso(item:prod_list)
     private int resource;
+    //Representa el siguiente activity al que iremos, para redirigir.
     private Activity a;
 
     /**
      * Constructor de la clase
      * @param resource Representa el contexto de la aplicación
      * @param l Representa la lista de Listas que se dispondrá
-     *
+     * @param lid Representa la lista con los ids de cada Lista
+     * @param a Representa el Activity siguiente al que queremos ir
      */
     public ListaListAdapter(Activity a, int resource, List<String> l,List<String> lid) {
         this.resource=resource;
         this.a = a;
-        //u = usuario;
         this.mListas = l;
         this.mListasId=lid;
     }
@@ -107,13 +110,16 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
     /**
      * Esta clase define el tipo el cual será usado para representar los datos(las listas de un Usuario)
      * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
-     * @version: 13/04/2021
+     * @version: 02/05/2021
      */
     public class  ListaViewHolder  extends  RecyclerView.ViewHolder implements View.OnClickListener{
         //Representa el View donde se dispondrán los nombres de las listas
-        private final TextView ListaNombreView;
         public View view;
+        //Representa el TextView donde sale el nombre de la lista
+        private final TextView ListaNombreView;
+       //Representa el TextView donde saldrá el id de la lista
         private final TextView idLista;
+        //Representa una copia del adapter
         final ListaListAdapter adapter;
         /**
          * Constructor de la clase
@@ -131,15 +137,17 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
             itemView.setOnClickListener(this);
         }
 
+        /**
+         * Método que representa el clickado en un item de la view
+         * @param v View en el cual se ha clickado
+         */
         @Override
         public void onClick(View v) {
             //Se obtiene la posicion del item que ha sido clickado
             int mPosicion = getLayoutPosition();
-            Log.d("LLAdapter pos click", String.valueOf(mPosicion));
             String lista = mListas.get(mPosicion);
             String id = mListasId.get(mPosicion);
 
-            Log.d("ListaListAdapter", "Creando intent a ListaProductos");
             Intent intent = new Intent(a, ListaProductos.class);
             intent.putExtra("nombreLista", lista);
             intent.putExtra("idLista", id);
