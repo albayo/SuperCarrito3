@@ -5,6 +5,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.cardview.widget.CardView;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 
@@ -86,7 +87,7 @@ public class CrearLista extends AppCompatActivity {
                 intent.putExtra("nick",nick);
                 intent.putExtra("email",email);
                 intent.putExtra("nombreLista",listaDialogFragment.getNombreLista());
-                intent.putExtra("idLista",Lista.getContLista());
+                intent.putExtra("idLista",String.valueOf(Lista.getContLista()));
                 startActivity(intent);
             }
         }

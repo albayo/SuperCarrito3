@@ -78,7 +78,6 @@ public class introducir_nom_lista extends DialogFragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         ReadAndWriteSnippets.actualizaContadorListas();
-        //superViewModel = new ViewModelProvider(this).get(SuperViewModel.class);
         etNombre = (EditText) view.findViewById(R.id.etNombre);
         btnAceptar = (Button) view.findViewById(R.id.btnAceptar);
         btnCancelar = (Button) view.findViewById(R.id.btnCancelar);
@@ -109,7 +108,7 @@ public class introducir_nom_lista extends DialogFragment {
                         intent.putExtra("nick",nick);
                         intent.putExtra("email",email);
                         intent.putExtra("nombreLista",nombreLista);
-                        intent.putExtra("idLista",Lista.getContLista());
+                        intent.putExtra("idLista",String.valueOf(Lista.getContLista()));
                         startActivity(intent);
                     }
                 }else{
