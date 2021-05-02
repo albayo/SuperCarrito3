@@ -88,6 +88,11 @@ public class ListaProductos extends AppCompatActivity {
 
 
             fabAñadirProductos.setOnClickListener(new View.OnClickListener() {
+
+                /**
+                 * Método que lanza una nueva pantalla. Te lleva a la pantalla con todos los productos.
+                 * @param v Representa al objeto View sobre el cual se ha hecho click
+                 */
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(ListaProductos.this,
@@ -104,9 +109,17 @@ public class ListaProductos extends AppCompatActivity {
 
         }
 
+    /**
+     * Método que saca de la base de datos los productos de una lista con id "listaid
+     * @param listaid Representa el id de la lista de la que queremos
+     */
     public void obtenerProductosLista(String listaid) {
 
         mDatabase.child("listas").child(listaid).child("productos").addValueEventListener(new ValueEventListener() {
+            /**
+             * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.
+             * @param snapshot Representa el nodo de la base de datos a actualizar.
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -131,10 +144,20 @@ public class ListaProductos extends AppCompatActivity {
 
 
     }
+
+    /**
+     * Metodo que añade un producto a la lista con id "idProducto"
+     * @param idProducto Representa el id del producto que quieres aadir a la lista
+     */
     public void addProducto(String idProducto){
         Log.d("GETPRODUCTO","INI");
 
         mDatabase.child("json").child("results").child(idProducto).addValueEventListener(new ValueEventListener() {
+
+            /**
+             * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.
+             * @param ds Representa el nodo de la base de datos a actualizar.
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot ds) {
                 if (ds.exists()) {
@@ -163,6 +186,7 @@ public class ListaProductos extends AppCompatActivity {
         Log.d("GETPRODUCTO","FIN");
 
     }
+    /*
     public void abrirFragment(String tipoLista){
         AniadirListaGrupal listaDialogFragment = new AniadirListaGrupal(nombreLista,idLista);
         listaDialogFragment.show(getSupportFragmentManager(),"tag");
@@ -183,6 +207,7 @@ public class ListaProductos extends AppCompatActivity {
             }
         }
     }
+    */
 
 
 

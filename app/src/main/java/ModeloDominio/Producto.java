@@ -4,6 +4,11 @@ package ModeloDominio;
 
 import java.io.Serializable;
 
+/**
+ * Esta clase define objetos que representan a los productos de los supermercados de la aplicación
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 02/05/2021
+ */
 public class Producto implements Serializable {
 
     //Representa la id de un producto

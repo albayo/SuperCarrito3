@@ -21,6 +21,11 @@ import java.util.List;
 import Adapters.TodosProductosAdapter;
 import ModeloDominio.Producto;
 
+/**
+ * Esta clase define la actividad llamada "activity_productos_compra" que sirve para mostrar todos los productos de la base de datos.
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 30/04/2021
+ */
 public class TodosProductos extends AppCompatActivity {
     private String idLista;
     private List<Producto> productos;
@@ -28,6 +33,12 @@ public class TodosProductos extends AppCompatActivity {
     private RecyclerView recyclerViewproductos;
     private TodosProductosAdapter todosProductosAdapter;
     private Toolbar toolbar;
+
+    /**
+     * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
+     * "activity_productos_comprar"
+     * @param savedInstanceState Representa el objeto donde se guarda la información
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +53,11 @@ public class TodosProductos extends AppCompatActivity {
         productos=new ArrayList<>();
         obtenerTodosProductos();
     }
+
+    /**
+     * Método que sirve para sacar todos los productos de la base de datos para mostrarlos al usuario
+     * y darle la opción de añadirlos a su lista.
+     */
     public void obtenerTodosProductos() {
 
         mDatabase.child("json").child("results").addValueEventListener(new ValueEventListener() {
@@ -58,7 +74,6 @@ public class TodosProductos extends AppCompatActivity {
                     }*/
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String id=ds.getKey();
-                        Log.d("ID",id);
                         if(productos.size()<5){
                             addProducto(id);
                         }
@@ -76,10 +91,18 @@ public class TodosProductos extends AppCompatActivity {
 
     }
 
+    /**
+     * Método que añade un producto con id "idProducto" a la lsita del usuario en la que se está
+     * @param idProducto Representa el id del producto que quieres añadir a la lista.
+     */
     public void addProducto(String idProducto){
 
 
         mDatabase.child("json").child("results").child(idProducto).addValueEventListener(new ValueEventListener() {
+            /**
+             * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.
+             * @param ds Representa el nodo de la base de datos a actualizar.
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot ds) {
                 if (ds.exists()) {

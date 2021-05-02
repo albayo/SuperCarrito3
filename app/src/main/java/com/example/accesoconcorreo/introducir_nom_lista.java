@@ -24,8 +24,9 @@ import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Usuario;
 
 /**
- * A simple {@link Fragment} subclass.
- * create an instance of this fragment.
+ * Esta clase define el fragmento llamado "fragment_introducir_nom_lista2" que sirve para introducit un nombre para una nueva lista.
+ *  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ *  * @version: 30/04/2021
  */
 public class introducir_nom_lista extends DialogFragment {
 
@@ -49,8 +50,11 @@ public class introducir_nom_lista extends DialogFragment {
     private String ultBoton="";
 
     /**
-     * Constructor base
-     * @param tipoLista
+     * Constructor
+     *
+     * @param tipoLista Define si la lsita es personal o grupal
+     * @param email Representa el correo del usuaria al que está creando la lista
+     * @param nick Representa el nick del usuaria al que está creando la lista
      */
     public introducir_nom_lista(String tipoLista,String email,String nick){
         this.email=email;
@@ -65,6 +69,11 @@ public class introducir_nom_lista extends DialogFragment {
     public String getUltBoton(){
         return this.ultBoton;
     }
+
+    /**
+     * Devuelve el nombre de la lista
+     * @return nombreLista
+     */
     public String getNombreLista(){
         return this.nombreLista;
     }
@@ -134,7 +143,7 @@ public class introducir_nom_lista extends DialogFragment {
     }
 
     /**
-     *
+     * Método que devuelve el inflater del fragment
      * @param inflater
      * @param container
      * @param savedInstanceState
