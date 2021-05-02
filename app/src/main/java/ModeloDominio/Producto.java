@@ -6,16 +6,19 @@ import java.io.Serializable;
 
 public class Producto implements Serializable {
 
-
+    //Representa la id de un producto
     private String idProducto;
+    //Representa el nombre de un producto
     private String nombre;
-
+    //Representa la marca del producto
     private String brand;
-
+    //Representa la marca del producto
     private String image;
-
+    //Representa el grado de nutricion del producto
     private String gradoNutrition;
+    //Representa la marca del producto
     private String ingred; // Una string para ingredienteS ????
+    //Representa la marca del supermercado
     private String supermercado;
 
     /**
@@ -49,11 +52,19 @@ public class Producto implements Serializable {
         this.supermercado=s;
         this.gradoNutrition=grade;
     }
-
+    /**
+     * Método que devuelve el grado de nutricion del Producto
+     * @return El grado de nutricion del Producto
+     */
     public String getGradoNutrition() {
         return gradoNutrition;
     }
 
+
+    /**
+     * Método que establece como graqdo de nutricion del Producto la cadena pasada por parámetro
+     * @param gradoNutrition Representa el nuevo grado de nutricion del Producto
+     */
     public void setGradoNutrition(String gradoNutrition) {
         this.gradoNutrition = gradoNutrition;
     }

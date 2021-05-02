@@ -30,12 +30,28 @@ import ModeloDominio.Lista;
 import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Usuario;
 
-public class Home extends AppCompatActivity {
-    private RecyclerView recyclerView;
+/**
+ * Esta clase define la actividad (llamada "activity_home") que dispondrá en pantalla las
+ *  listas que tiene un determinado usuario
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 02/05/2021
+ */
 
+public class Home extends AppCompatActivity {
+    //Representa el objeto recycler view de las listas
+    private RecyclerView recyclerView;
+    //Representa la base de datos
     private FirebaseDatabase database;
+    //Representa una referencia a la base de datos
     private DatabaseReference mDatabaseReference;
+    //Representa un adapter de tipo lista para poder mostrar las listas del usuario
     private ListaListAdapter mListaAdapter;
+
+    /**
+     * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
+     *  "activity_home" y poder mostrar las listas de los usuarios
+     * @param savedInstanceState Representa el objeto donde se guarda la información
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +59,6 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         database = FirebaseDatabase.getInstance();
         mDatabaseReference = database.getReference();
-       // user = FirebaseAuth.getInstance().getCurrentUser();
         String email = getIntent().getExtras().get("email").toString();
         String nick = getIntent().getStringExtra("nick");
 
@@ -52,8 +67,11 @@ public class Home extends AppCompatActivity {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_lista_super_prod);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         FloatingActionButton fabAñadirLista = findViewById(R.id.fabAniadir_lista);
-        
 
+        /**
+         * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
+         *  "activity_crear_lista" que sirve para que un usario añade una lista
+         */
         fabAñadirLista.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +94,9 @@ public class Home extends AppCompatActivity {
         this.obtenerListasUsuario(u.getNick());
 
     }
-
+    /**
+     * Método que sirve para volver a la activity anterior
+     */
     @Override
     public void onBackPressed() {
         AlertDialog.Builder b= new AlertDialog.Builder(this);
@@ -120,11 +140,18 @@ public class Home extends AppCompatActivity {
         super.onPause();
 
     }*/
-
+    /**
+     * Método que sirve para obtener las listas de un usario accendiendo a la base de datos por su nick
+     * @param nick
+     */
     public void obtenerListasUsuario(String nick) {
         List<String> llistas = new ArrayList<>();
         List<String> lListaid=new ArrayList<>();
         mDatabaseReference.child("users").child(nick).child("listas").addValueEventListener(new ValueEventListener() {
+            /**
+             * Método que cuando cambia un objeto en la base de datos se ejecuta para mostrar las listas de manera actualizada
+             * @param snapshot
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
