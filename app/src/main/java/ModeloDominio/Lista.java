@@ -10,8 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Esta clase define objetos que representan al las listas de los usuarios de la aplicación
- * Además representa la tabla llamada "lista_table" en la BD
+ * Esta clase define objetos que representan a las listas de los usuarios de la aplicación
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
  * @version: 02/05/2021
  */

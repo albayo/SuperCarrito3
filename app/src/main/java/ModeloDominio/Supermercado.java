@@ -3,7 +3,6 @@ package ModeloDominio;
 
 /**
  * Esta clase define objetos que representan a los Supermercados de la aplicación
- * Además representa la tabla llamada "supermercado_table" en la BD
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
  * @version: 13/04/2021
  */
@@ -18,7 +17,6 @@ public class Supermercado{
      */
     public Supermercado(){
         this.nombreSuper="";
-
     }
 
     /**
@@ -27,7 +25,6 @@ public class Supermercado{
      */
     public Supermercado(String nombre){
         this.nombreSuper=nombre;
-
     }
 
     /**

@@ -13,9 +13,8 @@ import java.util.Map;
 
 /**
  * Esta clase define objetos que representan al usuario de la aplicación
- * Además representa la tabla llamada "usuario_table" en la BD
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 13/04/2021
+ * @version: 02/05/2021
  */
 
 @IgnoreExtraProperties
