@@ -97,45 +97,4 @@ public class TodosProductos extends AppCompatActivity {
         );
 
     }
-
-    /**
-     * Método que añade un producto con id "idProducto" a la lsita del usuario en la que se está
-     *
-     * @param idProducto Representa el id del producto que quieres añadir a la lista.
-     */
-    public void addProducto(String idProducto) {
-
-
-        mDatabase.child("json").child("results").child(idProducto).addValueEventListener(new ValueEventListener() {
-            /**
-             * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.
-             * @param ds Representa el nodo de la base de datos a actualizar.
-             */
-            @Override
-            public void onDataChange(@NonNull DataSnapshot ds) {
-                if (ds.exists()) {
-                    String id = ds.getKey();
-                    String nombre = ds.child("product_name").getValue().toString();
-                    String ingredients = ds.child("ingredients_text").getValue().toString();
-                    String imgage = ds.child("image_url").getValue().toString();
-                    String brand = ds.child("brand_owner").getValue().toString();
-                    String gradoNutricion = ds.child("nutriscore_grade").getValue().toString();
-                    Producto p = new Producto(idProducto, nombre, brand, "", ingredients, "Eroski", gradoNutricion);
-                    productos.add(p);
-
-
-                    todosProductosAdapter.setProductos(productos);
-
-
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-
-    }
 }
