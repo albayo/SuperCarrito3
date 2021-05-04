@@ -59,7 +59,7 @@ public class TodosProductos extends AppCompatActivity {
      * y darle la opción de añadirlos a su lista.
      */
     public void obtenerTodosProductos() {
-        productos.clear();
+
         mDatabase.child("json").child("results").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -74,13 +74,9 @@ public class TodosProductos extends AppCompatActivity {
                     }*/
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String id=ds.getKey();
-                        String nombre = ds.child("product_name").getValue().toString();
-                        String ingredients = ds.child("ingredients_text").getValue().toString();
-                        String imgage = ds.child("image_url").getValue().toString();
-                        String brand = ds.child("brand_owner").getValue().toString();
-                        String gradoNutricion= ds.child("nutriscore_grade").getValue().toString();
-                        Producto p = new Producto(id, nombre, brand, "", ingredients, "Eroski",gradoNutricion);
-                        productos.add(p);
+                        if(productos.size()<5){
+                            addProducto(id);
+                        }
 
                     }
                     todosProductosAdapter= new TodosProductosAdapter(TodosProductos.this,R.layout.item_productos_comprar,productos,idLista);
