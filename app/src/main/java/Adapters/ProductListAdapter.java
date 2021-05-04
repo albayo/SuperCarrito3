@@ -166,7 +166,7 @@ import ModeloDominio.Producto;
                     @Override
                     public void onClick(View v) {
                         int i=Integer.valueOf(mContador.getText().toString());
-                        if(i>0){
+                        if(i>1){
                             i--;
                             mContador.setText(String.valueOf(i));
                         }

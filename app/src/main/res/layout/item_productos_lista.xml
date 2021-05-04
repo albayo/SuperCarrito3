@@ -69,6 +69,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_toStartOf="@id/checkBox_seleccionar"
                 android:layout_toLeftOf="@id/checkBox_seleccionar"
                 app:srcCompat="@drawable/ic_add_black"
@@ -97,6 +98,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_toStartOf="@id/numero_producto_pedido"
                 android:layout_toLeftOf="@id/numero_producto_pedido"
                 app:srcCompat="@drawable/ic_remove_black"
@@ -109,6 +111,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
+                android:layout_marginTop="16dp"
                 android:layout_toStartOf="@id/aniadir_mas"
                 android:layout_toLeftOf="@id/aniadir_mas"
                 android:text="1" />
