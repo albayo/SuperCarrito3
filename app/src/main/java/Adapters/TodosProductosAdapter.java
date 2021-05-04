@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.accesoconcorreo.ListaProductos;
 import com.example.accesoconcorreo.R;
 import com.example.accesoconcorreo.TodosProductos;
+import com.example.accesoconcorreo.ficha_producto;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -80,12 +81,15 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
     public void  onBindViewHolder(TodosProductosAdapter.TodosProductosHolder holder, int  position) {
         if  ( mProductos  !=  null || mProductos.get(position)!=null) {
 
-            Log.d("ADAPTERRR", "ON BINDDDDD");
+
             Producto current =  mProductos.get(position);
             String nomProd=current.getNombre();
             if(current.getNombre().contains(","))
                 nomProd = current.getNombre().split(",")[1];
             //para poner la primera letra en MAY del nombre
+            if(nomProd.length()>40){
+                nomProd=nomProd.substring(0,20)+"...";
+            }
             char[] arr = nomProd.trim().toCharArray();
             arr[0] = Character.toUpperCase(arr[0]);
             nomProd = new String(arr);
@@ -180,11 +184,11 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
 
         @Override
         public void onClick(View v) {
-            //Se obtiene la posicion del item que ha sido clickado
-            int mPosicion = getLayoutPosition();
-            Intent intent = new Intent(a, ListaProductos.class);
-           // intent.putExtra("nombreLista", lista);
-           // intent.putExtra("idLista", id);
+            int position = getLayoutPosition();
+            Producto current =  mProductos.get(position);
+
+            Intent intent = new Intent(a, ficha_producto.class);
+            intent.putExtra("producto", current);
 
             a.startActivity(intent);
         }

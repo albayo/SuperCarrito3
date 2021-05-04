@@ -11,8 +11,8 @@
 
     <LinearLayout
         android:id="@+id/Linear_producto_entero"
-        android:layout_width="137dp"
-        android:layout_height="150dp"
+        android:layout_width="130dp"
+        android:layout_height="180dp"
         android:orientation="vertical"
         android:padding="6dp">
 
@@ -50,15 +50,15 @@
                 android:text="@string/nombresuper"
                 android:textSize="12sp" />
 
-            <Button
-                android:id="@+id/btnAniadirProd"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/aniadir"
-                android:textSize="12sp" />
-
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btnAniadirProd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/aniadir"
+            android:textSize="10sp" />
 
 
     </LinearLayout>

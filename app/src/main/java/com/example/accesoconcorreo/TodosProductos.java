@@ -2,6 +2,7 @@ package com.example.accesoconcorreo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -93,6 +94,7 @@ public class TodosProductos extends AppCompatActivity {
                     }
                     todosProductosAdapter = new TodosProductosAdapter(TodosProductos.this, R.layout.item_productos_comprar, productos, idLista);
                     recyclerViewproductos.setAdapter(todosProductosAdapter);
+                    recyclerViewproductos.setLayoutManager(new GridLayoutManager(TodosProductos.this,3));
                 }
             }
             @Override
