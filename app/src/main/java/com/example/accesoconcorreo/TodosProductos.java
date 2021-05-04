@@ -20,13 +20,19 @@ import java.util.List;
 
 import Adapters.TodosProductosAdapter;
 import ModeloDominio.Producto;
-
+/**
+ * Esta clase define el adapter necesario para que la capa de Presentación y Persistencia se comuniquen
+ *  y se representen de forma visual los datos(los Prpductos de todos los supermercados) de esta última
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 02/05/2021
+ */
 /**
  * Esta clase define la actividad llamada "activity_productos_compra" que sirve para mostrar todos los productos de la base de datos.
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
  * @version: 30/04/2021
  */
 public class TodosProductos extends AppCompatActivity {
+
     private String idLista;
     private List<Producto> productos;
     private DatabaseReference mDatabase;
@@ -59,7 +65,7 @@ public class TodosProductos extends AppCompatActivity {
      * y darle la opción de añadirlos a su lista.
      */
     public void obtenerTodosProductos() {
-
+        productos.clear();
         mDatabase.child("json").child("results").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -74,9 +80,8 @@ public class TodosProductos extends AppCompatActivity {
                     }*/
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String id=ds.getKey();
-                        if(productos.size()<5){
-                            addProducto(id);
-                        }
+                        addProducto(id);
+
 
                     }
                     todosProductosAdapter= new TodosProductosAdapter(TodosProductos.this,R.layout.item_productos_comprar,productos,idLista);
@@ -96,8 +101,7 @@ public class TodosProductos extends AppCompatActivity {
      * @param idProducto Representa el id del producto que quieres añadir a la lista.
      */
     public void addProducto(String idProducto){
-
-
+        productos.clear();
         mDatabase.child("json").child("results").child(idProducto).addValueEventListener(new ValueEventListener() {
             /**
              * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.
@@ -116,10 +120,7 @@ public class TodosProductos extends AppCompatActivity {
                     productos.add(p);
 
 
-                        todosProductosAdapter.setProductos(productos);
-
-
-
+                    //todosProductosAdapter.setProductos(productos);
                 }
             }
 
