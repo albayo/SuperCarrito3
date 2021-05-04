@@ -161,7 +161,7 @@ public class ListaProductos extends AppCompatActivity {
 
                     String nombre = ds.child("product_name").getValue().toString();
                     String ingredients = ds.child("ingredients_text").getValue().toString();
-                    String imgage = ds.child("image_url").getValue().toString();
+                    String imgage = ds.child("image_small_url").getValue().toString();
                     String brand = ds.child("brand_owner").getValue().toString();
                     String gradoNutricion= ds.child("nutriscore_grade").getValue().toString();
                     Producto p = new Producto(idProducto, nombre, brand, imgage, ingredients, "",gradoNutricion);

@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Spinner;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -35,6 +36,8 @@ public class TodosProductos extends AppCompatActivity {
     private RecyclerView recyclerViewproductos;
     private TodosProductosAdapter todosProductosAdapter;
     private Toolbar toolbar;
+    private Spinner spinnerSuper;
+    private Spinner spinnerProd;
 
     /**
      * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
@@ -52,6 +55,8 @@ public class TodosProductos extends AppCompatActivity {
         recyclerViewproductos.setLayoutManager(new LinearLayoutManager(this));
         toolbar = findViewById(R.id.toolbar_lista_super_prod);
         toolbar.setTitle(nombreLista);
+        spinnerProd=findViewById(R.id.spinner_productos);
+        spinnerSuper=findViewById(R.id.spinner_super);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         productos = new ArrayList<>();
         obtenerTodosProductos();
