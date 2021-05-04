@@ -126,11 +126,8 @@ public class ListaProductos extends AppCompatActivity {
                     productos.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String id=ds.getValue().toString();
-
-
                         addProducto(id);
-                        Log.d("ObtenerProduct",id);
-                        Log.d("ObtenerProduct","Numero " +productos.size());
+
                     }
                     productosAdapter= new ProductListAdapter(ListaProductos.this,R.layout.item_productos_lista,productos);
                     recyclerViewproductos.setAdapter(productosAdapter);
@@ -169,11 +166,7 @@ public class ListaProductos extends AppCompatActivity {
                     String gradoNutricion= ds.child("nutriscore_grade").getValue().toString();
                     Producto p = new Producto(idProducto, nombre, brand, imgage, ingredients, "",gradoNutricion);
                     productos.add(p);
-                    Log.d("ADDPRODUCTO", "Nombre "+p.getNombre());
-
-                    Log.d("ADDPRODUCTO", "Num "+productos.size());
-                    Log.d("ADDPRODUCTO", "Num "+p.getImage());
-                    //ESTO NO DEBERÍA IR AQUÍ PERO SINO EL ADAPTER NO SE INICIA
+                    //ESTO ES UNA MIERDA
                     productosAdapter.setProductos(productos);
                 }
             }
@@ -183,32 +176,8 @@ public class ListaProductos extends AppCompatActivity {
 
             }
         });
-        Log.d("GETPRODUCTO","FIN");
+
 
     }
-    /*
-    public void abrirFragment(String tipoLista){
-        AniadirListaGrupal listaDialogFragment = new AniadirListaGrupal(nombreLista,idLista);
-        listaDialogFragment.show(getSupportFragmentManager(),"tag");
-
-        String ultB = listaDialogFragment.getUltBoton();
-        listaDialogFragment.getLifecycle().getCurrentState();
-        while(!listaDialogFragment.isCancelable()){
-
-        }
-        if(ultB.length() > 0){
-            if(ultB.equals("Aceptar")){
-                Intent intent = new Intent(this, ListaProductos.class);
-                intent.putExtra("nick",nick);
-                intent.putExtra("email",email);
-                intent.putExtra("nombreLista",nombreLista);
-                intent.putExtra("idLista",Lista.getContLista());
-                startActivity(intent);
-            }
-        }
-    }
-    */
-
-
 
 }

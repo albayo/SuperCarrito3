@@ -11,8 +11,8 @@
 
     <LinearLayout
         android:id="@+id/Linear_producto_entero"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:orientation="vertical"
         android:padding="6dp">
 
@@ -20,7 +20,7 @@
             android:id="@+id/fotoproducto_super"
             android:layout_width="60dp"
             android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
             android:layout_marginStart="16dp"
             android:layout_marginLeft="16dp"
             app:srcCompat="@mipmap/ic_producto" />
@@ -30,6 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/fotoproducto_super"
+            android:layout_gravity="center"
             android:layout_marginLeft="4dp"
             android:layout_marginRight="4dp"
             android:orientation="vertical"

@@ -49,6 +49,7 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
      * @param idLista Representa la lisa a la que añadiremos productos.
      */
     public TodosProductosAdapter(Activity a, int resource, List<Producto> l, String idLista) {
+        Log.d("ADAPTERRR", "CONSTRUCTOR");
         this.resource=resource;
         this.a = a;
         this.mProductos = l;
@@ -79,6 +80,7 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
     public void  onBindViewHolder(TodosProductosAdapter.TodosProductosHolder holder, int  position) {
         if  ( mProductos  !=  null || mProductos.get(position)!=null) {
 
+            Log.d("ADAPTERRR", "ON BINDDDDD");
             Producto current =  mProductos.get(position);
             String nomProd=current.getNombre();
             if(current.getNombre().contains(","))
