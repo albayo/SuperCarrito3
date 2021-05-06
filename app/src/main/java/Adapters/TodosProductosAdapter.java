@@ -91,9 +91,10 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
             if(current.getNombre().contains(","))
                 nomProd = current.getNombre().split(",")[1];
             //para poner la primera letra en MAY del nombre
-            if(nomProd.length()>40){
-                nomProd=nomProd.substring(0,20)+"...";
+            if(nomProd.length()>30){
+                nomProd=nomProd.substring(0,30)+"...";
             }
+
             char[] arr = nomProd.trim().toCharArray();
             arr[0] = Character.toUpperCase(arr[0]);
             nomProd = new String(arr);
