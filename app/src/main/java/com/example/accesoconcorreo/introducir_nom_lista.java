@@ -106,6 +106,7 @@ public class introducir_nom_lista extends DialogFragment {
                 if(nombreLista != null && nombreLista.trim().length() > 0) {
                     if (tipoLista.equals("grupal")) {
                         //crear la lista GRUPAL con nombre "nombre"
+
                     } else {
 
                         Log.d("Cont", "CrearLista:" +Lista.getContLista());

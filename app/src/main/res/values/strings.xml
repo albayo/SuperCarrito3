@@ -22,11 +22,13 @@
     <string name="aceptar">Aceptar</string>
     <string name="cancelar">Cancelar</string>
     <string name="title_activity_lista_productos">lista_productos</string>
+    <string name="nickCompartir">Nick para compartir lista</string>
 
 
     <string name="prefs_file">com.example.accesoconcorreo.PREFERENCE_FILE_KEY</string>
     <string name="nick">Introduzca su nick</string>
     <string name="introduzca_usuario_a_aniadir">Introduzca usuario a añadir</string>
+    <string name="seguir">Seguir añadiendo</string>
 
     <string-array name="supers_array">
         <item>Mercadona</item>
