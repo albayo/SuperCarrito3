@@ -124,6 +124,7 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
                             }
                         });
 
+
                     }
                     else{
                         mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).setValue(1);
