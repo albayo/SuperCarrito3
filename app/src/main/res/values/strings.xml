@@ -28,4 +28,13 @@
     <string name="nick">Introduzca su nick</string>
     <string name="introduzca_usuario_a_aniadir">Introduzca usuario a añadir</string>
 
+    <string-array name="supers_array">
+        <item>Mercadona</item>
+        <item>Eroski</item>
+        <item>Lidl</item>
+        <item>Alcampo</item>
+        <item>Aldi</item>
+        <item>Lupa</item>
+    </string-array>
+
 </resources>
