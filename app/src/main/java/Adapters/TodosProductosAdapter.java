@@ -99,7 +99,6 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
             arr[0] = Character.toUpperCase(arr[0]);
             nomProd = new String(arr);
 
-
             holder.nombreProductoView.setText(nomProd);
 
             if(!current.getImage().equals(""))
