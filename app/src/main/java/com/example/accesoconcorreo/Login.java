@@ -144,6 +144,7 @@ public class Login extends AppCompatActivity {
                 GoogleSignInClient googleclient = GoogleSignIn.getClient(Login.this, gso);
                 startActivityForResult(googleclient.getSignInIntent(), GOOGLE_SIGN_IN);
                 // googleclient.signOut();
+
             }
         });
         ImageButton mostrarContrasena = findViewById(R.id.imageButton_mostrarC);
