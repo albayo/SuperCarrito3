@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -113,26 +114,27 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
             holder.añadirProducto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).getKey()!=null){
-                        mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                if(task.isSuccessful()){
-                                    int i=Integer.parseInt(task.getResult().getValue().toString())+1;
-                                    mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).setValue(i);
+                    mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).get().addOnCompleteListener(
+                            new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if (task.isSuccessful()) {
+                                        if (task.getResult().getValue() == null) {
+                                            mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).setValue(1);
+                                        } else {
+                                            int i = Integer.parseInt(task.getResult().getValue().toString()) + 1;
+                                            mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).setValue(i);
+                                        }
+
+                                        Toast t=Toast.makeText(v.getContext(),"Se ha añadido el producto",Toast.LENGTH_LONG);
+                                        t.show();
+                                    }
                                 }
-                            }
-                        });
-
-
-
-                    }
-                    else{
-                        mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).setValue(1);
-                    }
-
+                            });
                 }
             });
+
+
 
         }  else  {
             // Covers the case of data not being ready yet.
