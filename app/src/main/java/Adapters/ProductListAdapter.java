@@ -14,11 +14,18 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accesoconcorreo.ListaProductos;
 import com.example.accesoconcorreo.R;
 import com.example.accesoconcorreo.ficha_producto;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.List;
 
@@ -38,16 +45,20 @@ import ModeloDominio.Producto;
         //Representa el siguiente activity al que iremos, para redirigir.
         private Activity a;
 
+        private String idLista;
+        private DatabaseReference mDatabase;
+
         /**
          * Constructor de un adapter de la lista de productos
          * @param resource Representa el contexto de la aplicacion
          * @param Productos Representa la lista de productos a mostrar
          */
-        public ProductListAdapter(Activity a, int resource, List<Producto> Productos) {
+        public ProductListAdapter(Activity a, int resource, List<Producto> Productos,String idLista) {
             this.resource=resource;
             this.mProductos = Productos;
             this.a=a;
-
+            mDatabase= FirebaseDatabase.getInstance().getReference();
+            this.idLista=idLista;
         }
 
         /**
@@ -91,6 +102,7 @@ import ModeloDominio.Producto;
                     holder.ProductoImageView.setImageResource(R.mipmap.pordefecto);
 
                 holder.ProductoSuperView.setText(current.getSupermercado());
+                holder.mContador.setText(current.getCantidad());
             }  else  {
                 // Covers the case of data not being ready yet.
 
@@ -152,6 +164,7 @@ import ModeloDominio.Producto;
                 botonMas=(ImageButton) itemView.findViewById(R.id.aniadir_mas);
                 botonMenos=(ImageButton) itemView.findViewById(R.id.quitar_menos);
                 mContador=(TextView) itemView.findViewById(R.id.numero_producto_pedido);
+
                 itemView.setOnClickListener(this);
                 botonMas.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -159,6 +172,9 @@ import ModeloDominio.Producto;
                         int i=Integer.valueOf(mContador.getText().toString());
                         i++;
                         mContador.setText(String.valueOf(i));
+                        int position = getLayoutPosition();
+                        Producto current =  mProductos.get(position);
+                        actualizarCantidad(current,i);
                     }
                 });
 
@@ -166,9 +182,13 @@ import ModeloDominio.Producto;
                     @Override
                     public void onClick(View v) {
                         int i=Integer.valueOf(mContador.getText().toString());
+
                         if(i>1){
                             i--;
                             mContador.setText(String.valueOf(i));
+                            int position = getLayoutPosition();
+                            Producto current =  mProductos.get(position);
+                            actualizarCantidad(current,i);
                         }
                     }
                 });
@@ -187,6 +207,10 @@ import ModeloDominio.Producto;
                 intent.putExtra("producto", current);
 
                 a.startActivity(intent);
+            }
+            public void actualizarCantidad(Producto p,int i){
+                 mDatabase.child("listas").child(idLista).child("productos").child(p.getIdProducto()).setValue(i);
+                 p.setCantidad(String.valueOf(i));
             }
         }
     }

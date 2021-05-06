@@ -88,7 +88,7 @@ public class TodosProductos extends AppCompatActivity {
                         String imgage = ds.child("image_url").getValue().toString();
                         String brand = ds.child("brand_owner").getValue().toString();
                         String gradoNutricion = ds.child("nutriscore_grade").getValue().toString();
-                        Producto p = new Producto(id, nombre, brand, "", ingredients, "Eroski", gradoNutricion);
+                        Producto p = new Producto(id, nombre, brand, "", ingredients, "Eroski", gradoNutricion,"1");
                         productos.add(p);
 
                     }

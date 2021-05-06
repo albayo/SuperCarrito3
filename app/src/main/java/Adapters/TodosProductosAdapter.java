@@ -11,12 +11,16 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accesoconcorreo.ListaProductos;
 import com.example.accesoconcorreo.R;
 import com.example.accesoconcorreo.TodosProductos;
 import com.example.accesoconcorreo.ficha_producto;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -109,7 +113,22 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
             holder.añadirProducto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).setValue(current.getIdProducto());
+                    if(mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).getKey()!=null){
+                        mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if(task.isSuccessful()){
+                                    int i=Integer.parseInt(task.getResult().getValue().toString())+1;
+                                    mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).setValue(i);
+                                }
+                            }
+                        });
+
+                    }
+                    else{
+                        mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).setValue(1);
+                    }
+
                 }
             });
 
@@ -192,6 +211,7 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
 
             a.startActivity(intent);
         }
+
     }
 
 

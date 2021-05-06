@@ -90,7 +90,6 @@ public class Home extends AppCompatActivity {
 
         Usuario u = new Usuario(nick, email);
 
-
         this.obtenerListasUsuario(u.getNick());
 
     }

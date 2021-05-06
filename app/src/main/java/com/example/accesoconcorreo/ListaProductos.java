@@ -125,11 +125,12 @@ public class ListaProductos extends AppCompatActivity {
                 if (snapshot.exists()) {
                     productos.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        String id=ds.getValue().toString();
-                        addProducto(id);
+                        String id=ds.getKey();
+                        String cantidad=ds.getValue().toString();
+                        addProducto(id,cantidad);
 
                     }
-                    productosAdapter= new ProductListAdapter(ListaProductos.this,R.layout.item_productos_lista,productos);
+                    productosAdapter= new ProductListAdapter(ListaProductos.this,R.layout.item_productos_lista,productos,listaid);
                     recyclerViewproductos.setAdapter(productosAdapter);
                 }
             }
@@ -146,7 +147,7 @@ public class ListaProductos extends AppCompatActivity {
      * Metodo que añade un producto a la lista con id "idProducto"
      * @param idProducto Representa el id del producto que quieres aadir a la lista
      */
-    public void addProducto(String idProducto){
+    public void addProducto(String idProducto, String cantidad){
         Log.d("GETPRODUCTO","INI");
 
         mDatabase.child("json").child("results").child(idProducto).addValueEventListener(new ValueEventListener() {
@@ -164,7 +165,7 @@ public class ListaProductos extends AppCompatActivity {
                     String imgage = ds.child("image_small_url").getValue().toString();
                     String brand = ds.child("brand_owner").getValue().toString();
                     String gradoNutricion= ds.child("nutriscore_grade").getValue().toString();
-                    Producto p = new Producto(idProducto, nombre, brand, imgage, ingredients, "",gradoNutricion);
+                    Producto p = new Producto(idProducto, nombre, brand, imgage, ingredients, "",gradoNutricion,cantidad);
                     productos.add(p);
                     //ESTO ES UNA MIERDA
                     productosAdapter.setProductos(productos);

@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @version: 02/05/2021
  */
 public class Producto implements Serializable {
-
+    private String cantidad;
     //Representa la id de un producto
     private String idProducto;
     //Representa el nombre de un producto
@@ -25,6 +25,14 @@ public class Producto implements Serializable {
     private String ingred; // Una string para ingredienteS ????
     //Representa la marca del supermercado
     private String supermercado;
+
+    public String getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(String cantidad) {
+        this.cantidad = cantidad;
+    }
 
     /**
      * Constructor vacío para un Producto
@@ -48,7 +56,7 @@ public class Producto implements Serializable {
      * @param ingred Representa los ingredientes del Producto
      * @param s Representa el supermercado en el que se puede comprar el Producto
      */
-    public Producto(String idProducto, String nombre, String brand, String image, String ingred,String s,String grade) {
+    public Producto(String idProducto, String nombre, String brand, String image, String ingred,String s,String grade,String cantidad) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.brand = brand;
@@ -56,6 +64,7 @@ public class Producto implements Serializable {
         this.ingred = ingred;
         this.supermercado=s;
         this.gradoNutrition=grade;
+        this.cantidad=cantidad;
     }
     /**
      * Método que devuelve el grado de nutricion del Producto
