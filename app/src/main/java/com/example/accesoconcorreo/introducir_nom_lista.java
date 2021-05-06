@@ -105,7 +105,13 @@ public class introducir_nom_lista extends DialogFragment {
                 String nombreLista = etNombre.getText().toString();
                 if(nombreLista != null && nombreLista.trim().length() > 0) {
                     if (tipoLista.equals("grupal")) {
-                        //crear la lista GRUPAL con nombre "nombre"
+                        fragment_crear_compartida fragment=new fragment_crear_compartida(email,nick,etNombre.getText().toString());
+                        fragment.show(getFragmentManager(),"tag");
+                        fragment.getLifecycle().getCurrentState();
+                        while(!fragment.isCancelable()){
+
+                        }
+                        cerrarFragment();
 
                     } else {
 

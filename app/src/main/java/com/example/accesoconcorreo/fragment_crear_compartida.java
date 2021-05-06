@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -60,15 +62,30 @@ public class fragment_crear_compartida extends DialogFragment {
         aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ReadAndWriteSnippets.insertarLista(nombreLista,nick);
-                cerrarFragment();
+                boolean b=false;
+                String usuario=nickCompartir.getText().toString();
+                if(usuario!=null || usuario.trim().length()>0){
+                    Iterable<DataSnapshot> it=mDatabase.child("users").get().getResult().getChildren();
+                    for (DataSnapshot dataSnapshot : it) {
+                        String n=dataSnapshot.getKey();
+                        if(n.equals(usuario)){
+                            b=true;
+                            break;
+                        }
+                    }
+                    if(b){
+                        usuarios.add(usuario);
+                        nickCompartir.setText("");
+                        Toast toast = Toast.makeText(getContext(), "Usuario añadido", Toast.LENGTH_LONG);
+                        toast.show();
+                    }else{
+                        Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);
+                        toast.show();
+                    }
+                }
 
-                Intent intent = new Intent(getContext(), ListaProductos.class);
-                intent.putExtra("nick",nick);
-                intent.putExtra("email",email);
-                intent.putExtra("nombreLista",nombreLista);
-                intent.putExtra("idLista",String.valueOf(Lista.getContLista()));
-                startActivity(intent);
+
+
             }
         });
 
@@ -91,6 +108,28 @@ public class fragment_crear_compartida extends DialogFragment {
                         nickCompartir.setText("");
                         Toast toast = Toast.makeText(getContext(), "Usuario añadido", Toast.LENGTH_LONG);
                         toast.show();
+                        ReadAndWriteSnippets.insertarLista(nombreLista,nick);
+                        for(String s :usuarios){
+                            mDatabase.child("users").child(s).child("email").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if(task.isSuccessful()){
+                                        String email=task.getResult().getValue().toString();
+                                        ReadAndWriteSnippets.aniadirUsuarioaList(nombreLista,s,String.valueOf(Lista.getContLista()),email);
+                                    }
+
+                                }
+                            });
+                        }
+
+                        cerrarFragment();
+
+                        Intent intent = new Intent(getContext(), ListaProductos.class);
+                        intent.putExtra("nick",nick);
+                        intent.putExtra("email",email);
+                        intent.putExtra("nombreLista",nombreLista);
+                        intent.putExtra("idLista",String.valueOf(Lista.getContLista()));
+                        startActivity(intent);
                     }else{
                         Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);
                         toast.show();
