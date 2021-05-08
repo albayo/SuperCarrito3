@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -149,6 +150,9 @@ import ModeloDominio.Producto;
             private final ImageButton botonMenos;
             //Representa un TextView en el cual mostraremos el contador de productos que queremos
             private final TextView mContador;
+
+            private final CheckBox checkbox;
+
             /**
              * Esta clase define el ViewHolder necesario para utilizar en nuestro ListAdapter, obteniendo los datos de un View
              * con las id que los representa en esta.
@@ -164,8 +168,9 @@ import ModeloDominio.Producto;
                 botonMas=(ImageButton) itemView.findViewById(R.id.aniadir_mas);
                 botonMenos=(ImageButton) itemView.findViewById(R.id.quitar_menos);
                 mContador=(TextView) itemView.findViewById(R.id.numero_producto_pedido);
-
+                checkbox=(CheckBox) itemView.findViewById(R.id.checkBox_seleccionar);
                 itemView.setOnClickListener(this);
+
                 botonMas.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -190,6 +195,15 @@ import ModeloDominio.Producto;
                             Producto current =  mProductos.get(position);
                             actualizarCantidad(current,i);
                         }
+                    }
+                });
+                checkbox.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int position = getLayoutPosition();
+                        Producto current =  mProductos.get(position);
+                        if(current.getCheckbox()) current.setCheckbox(false);
+                        else current.setCheckbox(true);
                     }
                 });
             }

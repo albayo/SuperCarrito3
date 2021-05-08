@@ -106,6 +106,19 @@ public class ListaProductos extends AppCompatActivity {
                     //hacer insert en el usuario internamente
                 }
             });
+            FloatingActionButton fabEliminarProductos=findViewById(R.id.fabeliminarProductos);
+            fabEliminarProductos.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    for(Producto p: productos){
+                        if(p.getCheckbox()){
+                            //ELIMINAMOS DE LA LISTA
+
+                            mDatabase.child("listas").child(idLista).child("productos").child(p.getIdProducto()).removeValue();
+                        }
+                    }
+                }
+            });
 
         }
 

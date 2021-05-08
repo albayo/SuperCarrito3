@@ -26,6 +26,16 @@ public class Producto implements Serializable {
     //Representa la marca del supermercado
     private String supermercado;
 
+    private boolean checkbox;
+
+    public boolean getCheckbox() {
+        return checkbox;
+    }
+
+    public void setCheckbox(boolean checkbox) {
+        this.checkbox = checkbox;
+    }
+
     public String getCantidad() {
         return cantidad;
     }
@@ -65,6 +75,7 @@ public class Producto implements Serializable {
         this.supermercado=s;
         this.gradoNutrition=grade;
         this.cantidad=cantidad;
+        this.checkbox=false;
     }
     /**
      * Método que devuelve el grado de nutricion del Producto
