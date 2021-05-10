@@ -1,21 +1,26 @@
 package com.example.accesoconcorreo;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -46,6 +51,13 @@ public class Home extends AppCompatActivity {
     private DatabaseReference mDatabaseReference;
     //Representa un adapter de tipo lista para poder mostrar las listas del usuario
     private ListaListAdapter mListaAdapter;
+    //
+    private DrawerLayout drawerLayout;
+
+    private NavigationView navigationView;
+
+    private Toolbar toolbar;
+
 
     /**
      * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
@@ -68,6 +80,23 @@ public class Home extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         FloatingActionButton fabAñadirLista = findViewById(R.id.fabAniadir_lista);
 
+        //NAVIGATION
+        //--------------------------------------------------------------------------------------------------------
+        //HOOKS AL MENU
+
+        drawerLayout= findViewById(R.id.drawe_layout_home);
+        navigationView= findViewById(R.id.nav_view);
+        toolbar=findViewById(R.id.homeToolbar);
+        navigationView.bringToFront();
+
+        ActionBarDrawerToggle toggle= new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+
+
+
+        //--------------------------------------------------------------------------------------------------------
         /**
          * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
          *  "activity_crear_lista" que sirve para que un usario añade una lista
@@ -93,11 +122,19 @@ public class Home extends AppCompatActivity {
         this.obtenerListasUsuario(u.getNick());
 
     }
+
+
     /**
      * Método que sirve para volver a la activity anterior
      */
     @Override
     public void onBackPressed() {
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }
+        else{
+
+
         AlertDialog.Builder b= new AlertDialog.Builder(this);
         b.setTitle("Confirmación");
         b.setMessage("¿Está seguro/a de que desea cerrar sesión?");
@@ -130,6 +167,7 @@ public class Home extends AppCompatActivity {
         AlertDialog alert=b.create();
         alert.show();
         //super.onBackPressed();
+        }
     }
 
     /*@Override
@@ -171,4 +209,6 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+
+
 }

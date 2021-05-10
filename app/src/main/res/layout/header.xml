@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/color"
+    android:layout_width="match_parent"
+    android:layout_height="200dp"
+    android:background="@mipmap/fondo_triangulos_negros"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <ImageView
+        android:id="@+id/imagen_menu_carro"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:src="@mipmap/carro" />
+
+    <TextView
+        android:id="@+id/textview_header_menu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/baloo"
+        android:text="@string/supercarrito"
+        android:textColor="#BCFF9800"
+        android:textSize="20sp"
+        android:textStyle="bold|italic" />
+
+
+</LinearLayout>
