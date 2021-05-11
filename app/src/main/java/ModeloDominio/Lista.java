@@ -18,6 +18,10 @@ import java.util.Map;
 public class Lista implements Serializable {
     //Representa el número de listas creadas
     private static int contLista=0;
+
+
+
+    private boolean checkboxEliminar;
     //Representa el tipo de la lista
     private String tipolista;
     //Representa el identificador de la lista (es único)
@@ -47,14 +51,27 @@ public class Lista implements Serializable {
      * @param u Representa los usuarios que participan en la Lista
      */
     public Lista(String nombre, List<String> u){
-        ReadAndWriteSnippets.actualizaContadorListas();
-        contLista++;
+        //ReadAndWriteSnippets.actualizaContadorListas();
+        //contLista++;
         this.idLista=contLista;
         this.usuarios=u;
         this.nombre=nombre;
         this.productos=new java.util.ArrayList<Producto>();
     }
+    public Lista(String nombre,String id){
+        this.idLista=Integer.parseInt(id);
+        this.usuarios=new ArrayList<>();
+        this.nombre=nombre;
+        this.checkboxEliminar=false;
+        this.productos=new java.util.ArrayList<Producto>();
+    }
+    public boolean isCheckboxEliminar() {
+        return checkboxEliminar;
+    }
 
+    public void setCheckboxEliminar(boolean checkboxEliminar) {
+        this.checkboxEliminar = checkboxEliminar;
+    }
 
     /**
      * Método que devuelve el identificador de la Lista

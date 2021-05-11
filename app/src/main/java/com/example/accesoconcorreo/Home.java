@@ -65,6 +65,8 @@ public class Home extends AppCompatActivity {
 
     private NavigationView navigationView;
 
+    private List<Lista> listas;
+
     private Toolbar toolbar;
     private String email;
     private String nick;
@@ -130,6 +132,7 @@ public class Home extends AppCompatActivity {
                 Intent replyIntent = new Intent();
                 Lista l = (Lista) intent.getSerializableExtra("lista");
                 //hacer insert en el usuario internamente
+                listas.add(l);
             }
         });
 
@@ -155,7 +158,12 @@ public class Home extends AppCompatActivity {
     }
 
     public void removeLista() {
-
+        for(Lista l:listas){
+            if(l.isCheckboxEliminar()){
+                mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).removeValue();
+                mDatabaseReference.child("users").child(nick).child("listas").child(String.valueOf(l.getIdLista())).removeValue();
+            }
+        }
 
     }
 
@@ -217,8 +225,9 @@ public class Home extends AppCompatActivity {
      * @param nick
      */
     public void obtenerListasUsuario(String nick) {
-        List<String> llistas = new ArrayList<>();
-        List<String> lListaid=new ArrayList<>();
+        listas=new ArrayList<>();
+       // List<String> llistas = new ArrayList<>();
+        //List<String> lListaid=new ArrayList<>();
         mDatabaseReference.child("users").child(nick).child("listas").addValueEventListener(new ValueEventListener() {
             /**
              * Método que cuando cambia un objeto en la base de datos se ejecuta para mostrar las listas de manera actualizada
@@ -227,15 +236,17 @@ public class Home extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    llistas.clear();
-                    lListaid.clear();
+                   listas.clear();
+
                     for (DataSnapshot ds : snapshot.getChildren()) {
+
                         String id=ds.getKey();
+                        Log.d("Obtener",id);
                         String nombre = ds.getValue().toString();
-                        llistas.add(nombre);
-                        lListaid.add(id);
+                        Lista l =new Lista(nombre,id);
+                        listas.add(l);
                     }
-                    mListaAdapter = new ListaListAdapter(Home.this,R.layout.pantalla_listas_list, llistas,lListaid);
+                    mListaAdapter = new ListaListAdapter(Home.this,R.layout.pantalla_listas_list,listas);
                     recyclerView.setAdapter(mListaAdapter);
                 }
             }

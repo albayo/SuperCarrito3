@@ -179,7 +179,7 @@ public class ListaProductos extends AppCompatActivity {
      * @param listaid Representa el id de la lista de la que queremos
      */
     public void obtenerProductosLista(String listaid) {
-
+        productos.clear();
         mDatabase.child("listas").child(listaid).child("productos").addValueEventListener(new ValueEventListener() {
                                                                                               /**
                                                                                                * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.

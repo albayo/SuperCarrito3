@@ -36,9 +36,9 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
 
     //
     //Representa las listas que se representarán
-    private List<String> mListas;  // Cached copy of Listas
+    private List<Lista> mListas;  // Cached copy of Listas
     //Represente los ids de las listas , se cambiará por un Map.
-    private List<String> mListasId; //
+   // private List<String> mListasId; //
     //Representa el objeto necesario para la instanciacion en forma de View del layout necesario en este caso(item:prod_list)
     private int resource;
     //Representa el siguiente activity al que iremos, para redirigir.
@@ -48,14 +48,14 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
      * Constructor de la clase
      * @param resource Representa el contexto de la aplicación
      * @param l Representa la lista de Listas que se dispondrá
-     * @param lid Representa la lista con los ids de cada Lista
+     *
      * @param a Representa el Activity siguiente al que queremos ir
      */
-    public ListaListAdapter(Activity a, int resource, List<String> l,List<String> lid) {
+    public ListaListAdapter(Activity a, int resource, List<Lista> l) {
         this.resource=resource;
         this.a = a;
         this.mListas = l;
-        this.mListasId=lid;
+        //this.mListasId=lid;
     }
 
 
@@ -80,9 +80,9 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
     @Override
     public void  onBindViewHolder(ListaListAdapter.ListaViewHolder holder, int  position) {
         if  ( mListas  !=  null || mListas.get(position)!=null) {
-            String current =  mListas.get(position);
+            String current =  mListas.get(position).getNombre();
             holder.ListaNombreView.setText(current);
-            holder.idLista.setText(mListasId.get(position));
+            holder.idLista.setText(String.valueOf(mListas.get(position).getIdLista()));
         }  else  {
             // Covers the case of data not being ready yet.
             holder. ListaNombreView .setText( "No hay listas" );
@@ -93,7 +93,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
      * Método que establece como lista de Listas la lista pasada por parámetro
      * @param Listas Representa la lista de Listas que se quiere asignar
      */
-    public void  setListas(List<String> Listas){
+    public void  setListas(List<Lista> Listas){
         mListas  = Listas;
         notifyDataSetChanged();
     }
@@ -147,8 +147,9 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
                 @Override
                 public void onClick(View v) {
                     int position = getLayoutPosition();
-                    String current =  mListas.get(position);
-
+                    Lista current =  mListas.get(position);
+                    if(current.isCheckboxEliminar()) current.setCheckboxEliminar(false);
+                    else current.setCheckboxEliminar(true);
                 }
             });
         }
@@ -161,11 +162,11 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
         public void onClick(View v) {
             //Se obtiene la posicion del item que ha sido clickado
             int mPosicion = getLayoutPosition();
-            String lista = mListas.get(mPosicion);
-            String id = mListasId.get(mPosicion);
+            String nombrelista = mListas.get(mPosicion).getNombre();
+            String id =String.valueOf( mListas.get(mPosicion).getIdLista());
 
             Intent intent = new Intent(a, ListaProductos.class);
-            intent.putExtra("nombreLista", lista);
+            intent.putExtra("nombreLista", nombrelista);
             intent.putExtra("idLista", id);
 
             a.startActivity(intent);

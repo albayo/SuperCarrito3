@@ -100,7 +100,7 @@ public class ReadAndWriteSnippets {
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("productos").setValue("pr1");
         mDatabase.child("users").child(nick).child("listas").child(String.valueOf(list.getIdLista())).setValue(nombrelista);
 
-       insertContadorListas(Lista.getContLista());
+       insertContadorListas(Lista.getContLista()+1);
     }
 
     public static void solicitudLista(String usuarioActual, String nick, String idLista, String nombreLista){
