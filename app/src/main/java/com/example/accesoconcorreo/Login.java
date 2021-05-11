@@ -183,9 +183,6 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 String nick = persistencia.getNick(usuarioET.getText().toString());
-                                if(nick == null){
-                                    nick = usuarioET.getText().toString().split("@")[0];
-                                }
                                 showHome(nick, usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
                             } else {
                                 showAlert();
