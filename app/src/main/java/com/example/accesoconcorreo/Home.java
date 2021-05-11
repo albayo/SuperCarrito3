@@ -88,6 +88,21 @@ public class Home extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.homeToolbar);
 
         myToolbar.setTitle("SuperCarrito-" + nick);
+        myToolbar.inflateMenu(R.menu.menu_lista_prod);
+        myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.carrito_productos) {
+                    showPerfil(nick,email);
+
+                    return true;
+                }
+                return false;
+            }
+        });
         recyclerView = (RecyclerView) findViewById(R.id.recycler_lista_super_prod);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         FloatingActionButton fabAñadirLista = findViewById(R.id.fabAniadir_lista);
@@ -118,6 +133,12 @@ public class Home extends AppCompatActivity {
 
         this.setNavigationView();
 
+    }
+
+    private void showPerfil(String nick, String email) {
+        Intent homeIntent = new Intent(Home.this, Home.class); //debería ir la clase del Perfil
+        homeIntent.putExtra("email", email);
+        homeIntent.putExtra("nick", nick);
     }
 
 
