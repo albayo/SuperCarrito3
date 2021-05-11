@@ -2,22 +2,48 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item
-        android:id="@+id/nav_home"
-        android:title="Home"
-        android:icon="@drawable/ic_home" />
+        <item android:title="General">
 
-        <item
-            android:id="@+id/nav_amigos"
-            android:title="Amigos"
-            android:icon="@drawable/ic_amigos_1" />
+            <item
+                android:id="@+id/nav_home"
+                android:icon="@drawable/ic_home"
+                android:title="Home" />
 
-        <item
-            android:id="@+id/nav_listas"
-            android:title="Listas"
-            android:icon="@drawable/ic_carromen" />
+            <item
+                android:id="@+id/nav_amigos"
+                android:icon="@drawable/ic_amigos_1"
+                android:title="Amigos" />
 
+            <item
+                android:id="@+id/nav_listas"
+                android:icon="@drawable/ic_carromen"
+                android:title="Listas" />
 
+        </item>
     </group>
+
+    <item android:title="Perfil">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_profile"
+                    android:icon="@drawable/ic_profile_menu"
+                    android:title="Home" />
+
+                <item
+                    android:id="@+id/nav_logout"
+                    android:icon="@drawable/ic_baseline_arrow_back_24"
+                    android:title="Cerrar sesion" />
+
+            </group>
+
+        </menu>
+
+
+    </item>
+
+
+
+
 
 </menu>

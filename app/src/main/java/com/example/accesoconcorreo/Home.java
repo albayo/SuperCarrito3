@@ -10,8 +10,11 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Application;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
@@ -21,6 +24,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -57,6 +61,9 @@ public class Home extends AppCompatActivity {
     private NavigationView navigationView;
 
     private Toolbar toolbar;
+    private String email;
+    private String nick;
+
 
 
     /**
@@ -71,32 +78,17 @@ public class Home extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         database = FirebaseDatabase.getInstance();
         mDatabaseReference = database.getReference();
-        String email = getIntent().getExtras().get("email").toString();
-        String nick = getIntent().getStringExtra("nick");
+        email = getIntent().getExtras().get("email").toString();
+        //cambiar esto al user normal
+        nick = getIntent().getStringExtra("nick");
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.homeToolbar);
+
         myToolbar.setTitle("SuperCarrito-" + nick);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_lista_super_prod);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         FloatingActionButton fabAñadirLista = findViewById(R.id.fabAniadir_lista);
 
-        //NAVIGATION
-        //--------------------------------------------------------------------------------------------------------
-        //HOOKS AL MENU
-
-        drawerLayout= findViewById(R.id.drawe_layout_home);
-        navigationView= findViewById(R.id.nav_view);
-        toolbar=findViewById(R.id.homeToolbar);
-        navigationView.bringToFront();
-
-        ActionBarDrawerToggle toggle= new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-
-
-
-        //--------------------------------------------------------------------------------------------------------
         /**
          * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
          *  "activity_crear_lista" que sirve para que un usario añade una lista
@@ -120,6 +112,8 @@ public class Home extends AppCompatActivity {
         Usuario u = new Usuario(nick, email);
 
         this.obtenerListasUsuario(u.getNick());
+
+        this.setNavigationView();
 
     }
 
@@ -209,6 +203,63 @@ public class Home extends AppCompatActivity {
             }
         });
     }
+
+    public void setNavigationView(){
+
+        //NAVIGATION
+        //--------------------------------------------------------------------------------------------------------
+        //HOOKS AL MENU
+
+        drawerLayout= findViewById(R.id.drawer_layout_home);
+        navigationView= findViewById(R.id.nav_view);
+        toolbar=findViewById(R.id.homeToolbar);
+        navigationView.bringToFront();
+
+        ActionBarDrawerToggle toggle= new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
+
+
+        //LISTENERS
+        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()){
+                    case R.id.nav_home:
+                    case R.id.nav_amigos:
+                        // Intent intent = new Intent(etApplicationContext(),Amigos.class);
+                        // startActivity(intent);
+
+                    case R.id.nav_listas:
+                        showHome(nick,email,ProviderType.Basic);
+                        break;
+                    case R.id.nav_logout:
+                        Intent intentlogout=new Intent(getApplicationContext(),Login.class);
+                        startActivity(intentlogout);
+                }
+                drawerLayout.closeDrawer(GravityCompat.START);
+                return true;
+            }
+        });
+
+
+
+
+
+
+
+
+            //--------------------------------------------------------------------------------------------------------
+    }
+    private void showHome(String nick, String email, ProviderType provider) {
+        Intent homeIntent = new Intent(this, Home.class);
+        homeIntent.putExtra("email", email);
+        homeIntent.putExtra("nick", nick);
+        homeIntent.putExtra("provider", provider.name());
+        startActivity(homeIntent);
+    }
+
 
 
 }
