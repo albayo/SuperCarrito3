@@ -74,14 +74,11 @@ public class TodosProductos extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     Iterable<DataSnapshot> dataSnapshots = snapshot.getChildren();
-                    /*for(int i=0;i<40;i++){
-                        String id=dataSnapshots.iterator().next().getKey();
-                        Log.d("ID",id);
-
-                            addProducto(id);
-
-                    }*/
                     for (DataSnapshot ds : snapshot.getChildren()) {
+                        Log.d("SIZEE",""+productos.size());
+                        if(productos.size()>50){
+                            break;
+                        }
                         String id = ds.getKey();
                         String nombre = ds.child("product_name").getValue().toString();
                         String ingredients = ds.child("ingredients_text").getValue().toString();

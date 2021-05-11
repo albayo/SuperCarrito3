@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class activity_solicitudes extends AppCompatActivity {
+public class Solicitudes extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

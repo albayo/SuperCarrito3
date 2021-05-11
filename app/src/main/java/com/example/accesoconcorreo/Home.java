@@ -16,10 +16,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -228,11 +231,20 @@ public class Home extends AppCompatActivity {
                 switch (item.getItemId()){
                     case R.id.nav_home:
                     case R.id.nav_amigos:
-                        // Intent intent = new Intent(etApplicationContext(),Amigos.class);
-                        // startActivity(intent);
+                        Log.d("NAVIGATOR","A AMIGOS");
+                        Intent intent = new Intent(Home.this,ListaAmigos.class);
+                        intent.putExtra("email", email);
+                        intent.putExtra("nick", nick);
+                        Toast t= Toast.makeText(getApplicationContext(),"A amigos",Toast.LENGTH_LONG);
+                        t.show();
+                        startActivity(intent);
 
                     case R.id.nav_listas:
-                        showHome(nick,email,ProviderType.Basic);
+                        Intent homeIntent = new Intent(Home.this, Home.class);
+                        homeIntent.putExtra("email", email);
+                        homeIntent.putExtra("nick", nick);
+                       // homeIntent.putExtra("provider", provider.name());
+                        startActivity(homeIntent);
                         break;
                     case R.id.nav_logout:
                         Intent intentlogout=new Intent(getApplicationContext(),Login.class);
@@ -245,19 +257,13 @@ public class Home extends AppCompatActivity {
 
 
 
-
-
-
-
-
             //--------------------------------------------------------------------------------------------------------
     }
     private void showHome(String nick, String email, ProviderType provider) {
-        Intent homeIntent = new Intent(this, Home.class);
+        Intent homeIntent = new Intent(Home.this, Home.class);
         homeIntent.putExtra("email", email);
         homeIntent.putExtra("nick", nick);
-        homeIntent.putExtra("provider", provider.name());
-        startActivity(homeIntent);
+        // homeIntent.putExtra("provider", provider.name());
     }
 
 

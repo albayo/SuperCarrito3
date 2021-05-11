@@ -272,7 +272,7 @@ public class Login extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 persistencia.insertarUsuario(account.getDisplayName(), account.getEmail());
-                                showHome(account.getDisplayName(), account.getEmail(), ProviderType.google);
+                                showHome(account.getDisplayName(),account.getEmail(), ProviderType.google);
                             } else {
                                 showAlert();
                             }
