@@ -150,7 +150,7 @@ import ModeloDominio.Producto;
             private final ImageButton botonMenos;
             //Representa un TextView en el cual mostraremos el contador de productos que queremos
             private final TextView mContador;
-
+            //Representa el Checkbox que indicará si este producto se quiere elminiar o no
             private final CheckBox checkbox;
 
             /**

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,6 +21,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import ModeloDominio.Lista;
+import ModeloDominio.Producto;
 import ModeloDominio.Usuario;
 
 /**
@@ -123,6 +125,8 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
         private final TextView idLista;
         //Representa una copia del adapter
         final ListaListAdapter adapter;
+        //Representa el Checkbox que indicará si esta lista se quiere elminiar o no
+        private final CheckBox checkbox;
         /**
          * Constructor de la clase
          * @param itemView View en el cual se busca el TextView en el cual se representará la información
@@ -134,9 +138,19 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
             this.view=itemView;
             this.ListaNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
             this.idLista=(TextView)itemView.findViewById(R.id.text_id_lista);
+            checkbox=(CheckBox) itemView.findViewById(R.id.checkBox_eliminar);
 
             this.adapter = adapter;
             itemView.setOnClickListener(this);
+
+            checkbox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    int position = getLayoutPosition();
+                    String current =  mListas.get(position);
+
+                }
+            });
         }
 
         /**

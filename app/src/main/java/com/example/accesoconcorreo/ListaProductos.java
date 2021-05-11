@@ -141,7 +141,7 @@ public class ListaProductos extends AppCompatActivity {
                 mDatabase.child("listas").child(idLista).child("productos").child(p.getIdProducto()).removeValue();
             }
         }
-       // onBackPressed();
+        // onBackPressed();
     }
 
     @Override
@@ -163,12 +163,12 @@ public class ListaProductos extends AppCompatActivity {
             removeProds();
 
             return true;
-        } else {
-            if (id == R.id.opciones_productos) {
-
-                return true;
-            }
         }
+        if (id == R.id.opciones_productos) {
+
+            return true;
+        }
+
 
         return super.onOptionsItemSelected(item);
     }

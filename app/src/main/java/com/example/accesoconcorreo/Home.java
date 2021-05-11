@@ -40,6 +40,7 @@ import java.util.List;
 
 import Adapters.ListaListAdapter;
 import ModeloDominio.Lista;
+import ModeloDominio.Producto;
 import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Usuario;
 
@@ -89,7 +90,7 @@ public class Home extends AppCompatActivity {
         Toolbar myToolbar = (Toolbar) findViewById(R.id.homeToolbar);
 
         myToolbar.setTitle("SuperCarrito-" + nick);
-        myToolbar.inflateMenu(R.menu.menu_lista_prod);
+        myToolbar.inflateMenu(R.menu.menu_home_toolbar);
         myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
 
             @Override
@@ -98,6 +99,12 @@ public class Home extends AppCompatActivity {
 
                 if (id == R.id.carrito_productos) {
                     showPerfil(nick,email);
+
+                    return true;
+                }
+
+                if(id == R.id.borrar_lista){
+                    removeLista();
 
                     return true;
                 }
@@ -147,6 +154,10 @@ public class Home extends AppCompatActivity {
         homeIntent.putExtra("nick", nick);
     }
 
+    public void removeLista() {
+
+
+    }
 
     /**
      * Método que sirve para volver a la activity anterior
