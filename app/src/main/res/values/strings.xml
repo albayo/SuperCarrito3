@@ -33,6 +33,8 @@
 
     <string name="navigation_drawer_close">Close</string>
     <string name="navigation_drawer_open">Open</string>
+    <string name="tipo_sol">Tipo de solicitud</string>
+    <string name="remitente">usuario</string>
 
     <string-array name="supers_array">
         <item>Mercadona</item>
