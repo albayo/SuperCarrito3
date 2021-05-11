@@ -182,8 +182,8 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                //String nick = usuarioET.getText().toString().split("@")[0];//persistencia.getNick(usuarioET.getText().toString());
-                                showHome(usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
+                                String nick = usuarioET.getText().toString().split("@")[0];//persistencia.getNick(usuarioET.getText().toString());
+                                showHome(nick, usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
                             } else {
                                 showAlert();
                             }
@@ -218,17 +218,17 @@ public class Login extends AppCompatActivity {
      * @param email Representa el email que tiene el email logueado
      * @param provider Representa la forma en la que se ha logueado el usuario
      */
-    private void showHome(String email, ProviderType provider) {
+    private void showHome(String nick, String email, ProviderType provider) {
         Intent homeIntent = new Intent(this, Home.class);
         homeIntent.putExtra("email", email);
         //GUARDAR DATOS
 
         SharedPreferences pref = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
         pref.edit().putString("email", usuarioET.toString());
-        //pref.edit().putString("nick", nick);
+        pref.edit().putString("nick", nick);
         pref.edit().putString("provider", provider.toString());
         pref.edit().apply();
-        //homeIntent.putExtra("nick", nick);
+        homeIntent.putExtra("nick", nick);
         homeIntent.putExtra("provider", provider.name());
         startActivity(homeIntent);
     }
