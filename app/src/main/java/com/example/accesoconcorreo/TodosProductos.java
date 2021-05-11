@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Spinner;
 
 import androidx.appcompat.widget.Toolbar;
@@ -56,6 +57,21 @@ public class TodosProductos extends AppCompatActivity {
         recyclerViewproductos.setLayoutManager(new LinearLayoutManager(this));
         toolbar = findViewById(R.id.toolbar_lista_super_prod);
         toolbar.setTitle(nombreLista);
+        toolbar.inflateMenu(R.menu.menu_todos_prod);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.opciones_productosSuper) {
+
+                    return true;
+                }
+                return false;
+            }
+        });
+
         spinnerProd=findViewById(R.id.spinner_productos);
         spinnerSuper=findViewById(R.id.spinner_super);
         mDatabase = FirebaseDatabase.getInstance().getReference();
