@@ -31,6 +31,8 @@ import ModeloDominio.Usuario;
 
 public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.ListaViewHolder>{
 
+
+    //
     //Representa las listas que se representarán
     private List<String> mListas;  // Cached copy of Listas
     //Represente los ids de las listas , se cambiará por un Map.
