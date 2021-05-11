@@ -103,5 +103,7 @@ public class CrearLista extends AppCompatActivity {
         */
     }
 
+    public String getNick(){return nick;}
+
 
 }

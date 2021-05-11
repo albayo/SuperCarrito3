@@ -79,8 +79,10 @@ public class fragment_crear_compartida extends DialogFragment {
                                 toast.show();
 
                                 ReadAndWriteSnippets.insertarLista(nombreLista,nick);
+                                String idLista=String.valueOf(Lista.getContLista());
                                 for(String s: usuarios){
-                                    ReadAndWriteSnippets.aniadirUsuarioaList(nombreLista,s,String.valueOf(Lista.getContLista()));
+                                    //ReadAndWriteSnippets.aniadirUsuarioaList(nombreLista,s,String.valueOf(Lista.getContLista()));
+                                    ReadAndWriteSnippets.solicitudLista(nick,s,idLista,nombreLista);
                                 }
                                 cerrarFragment();
 
@@ -114,7 +116,7 @@ public class fragment_crear_compartida extends DialogFragment {
                                 nickCompartir.setText("");
                                 Toast toast = Toast.makeText(getContext(), "Usuario añadido", Toast.LENGTH_LONG);
                                 toast.show();
-                                
+
                             } else{
                                 Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);
                                 toast.show();

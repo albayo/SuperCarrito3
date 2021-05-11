@@ -31,6 +31,8 @@ public class ReadAndWriteSnippets {
     // [START declare_database_ref]
     private static DatabaseReference mDatabase;
 
+    private static String usuario;
+
     // [END declare_database_ref]
 
     public ReadAndWriteSnippets() {
@@ -84,6 +86,15 @@ public class ReadAndWriteSnippets {
 
        insertContadorListas(Lista.getContLista());
     }
+
+    public static void solicitudLista(String usuarioActual, String nick, String idLista, String nombreLista){
+        mDatabase.child("users").child(nick).child("solicitudes").child("listas").child(usuarioActual).child(idLista).setValue(nombreLista);
+    }
+
+    public static void solicitudAmistad(String usuarioActual, String nick){
+        mDatabase.child("users").child(nick).child("solicitudes").child("amistad").child(usuarioActual).setValue("pendiente");
+    }
+
 
 
 
