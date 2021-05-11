@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.supercarrito.MainActivity">
+
+    <item
+        android:id="@+id/carrito_productos"
+        android:icon="@drawable/ic_aniadir_circulo_blanco"
+        android:orderInCategory="10"
+        android:title="@string/aniadir_productos"
+        app:showAsAction="ifRoom"/>
+    <item
+        android:id="@+id/opciones_productos"
+        android:icon="@drawable/ic_opciones_blanco"
+        android:orderInCategory="20"
+        android:title="@string/opciones"
+        app:showAsAction="ifRoom" />
+
+</menu>

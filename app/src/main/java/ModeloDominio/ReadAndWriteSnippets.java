@@ -53,16 +53,6 @@ public class ReadAndWriteSnippets {
 
     }
 
-    public String getNick(String email){
-        Usuario user = new Usuario(email);
-        String nick = mDatabase.child("users").
-        if(nick == null){
-            nick = email.split("@")[0];
-        }
-
-        return nick;
-    }
-
     public static void actualizaContadorListas(){
 
         mDatabase.child("contadorLista").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
