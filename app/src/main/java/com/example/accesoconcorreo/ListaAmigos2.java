@@ -33,7 +33,7 @@ import ModeloDominio.Lista;
 
 import static android.widget.Toast.makeText;
 
-public class ListaAmigos extends AppCompatActivity {
+public class ListaAmigos2 extends AppCompatActivity {
     private RecyclerView recyclerView;
     //Representa la base de datos
     private FirebaseDatabase database;
@@ -61,11 +61,11 @@ public class ListaAmigos extends AppCompatActivity {
         //cambiar esto al user normal
         nick = getIntent().getStringExtra("nick");
         if(nick==null) nick="nick";
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.amigosToolbar);
+       // Toolbar myToolbar = (Toolbar) findViewById(R.id.amigosToolbar);
 
-        myToolbar.setTitle("SuperCarrito-"+nick );
+        //myToolbar.setTitle("SuperCarrito-"+nick );
         recyclerView = (RecyclerView) findViewById(R.id.recycler_lista_amigos);
-        recyclerView.setLayoutManager(new LinearLayoutManager(ListaAmigos.this));
+        recyclerView.setLayoutManager(new LinearLayoutManager(ListaAmigos2.this));
         FloatingActionButton fabAñadirLista = findViewById(R.id.fabAniadir_Amigo);
         fabAñadirLista.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,7 +96,7 @@ public class ListaAmigos extends AppCompatActivity {
                         lAmigos.add(nombre);
                         lCorreos.add(correo);
                     }
-                    adapter= new ListaAmigosAdapter(ListaAmigos.this,R.layout.pantalla_listas_list, lAmigos,lCorreos);
+                    adapter= new ListaAmigosAdapter(ListaAmigos2.this,R.layout.pantalla_listas_list, lAmigos,lCorreos);
                     recyclerView.setAdapter(adapter);
                 }
             }
@@ -131,7 +131,7 @@ public class ListaAmigos extends AppCompatActivity {
                     case R.id.nav_home:
                     case R.id.nav_amigos:
                         Log.d("NAVIGATOR","A VECINOOOOS");
-                        Intent intent = new Intent(ListaAmigos.this,ListaAmigos.class);
+                        Intent intent = new Intent(ListaAmigos2.this,ListaAmigos.class);
                         intent.putExtra("email", email);
                         intent.putExtra("nick", nick);
                         Toast t= Toast.makeText(getApplicationContext(),"A VECINOS",Toast.LENGTH_LONG);
@@ -139,7 +139,7 @@ public class ListaAmigos extends AppCompatActivity {
                         startActivity(intent);
 
                     case R.id.nav_listas:
-                        Intent homeIntent = new Intent(ListaAmigos.this, Home.class);
+                        Intent homeIntent = new Intent(ListaAmigos2.this, Home.class);
                         homeIntent.putExtra("email", email);
                         homeIntent.putExtra("nick", nick);
                         //homeIntent.putExtra("provider", provider.name());

@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 
 import com.example.accesoconcorreo.Home;
 import com.example.accesoconcorreo.ListaAmigos;
+import com.example.accesoconcorreo.ListaAmigos2;
 import com.example.accesoconcorreo.Login;
 import com.example.accesoconcorreo.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -133,7 +134,7 @@ public class ReadAndWriteSnippets {
                     case R.id.nav_home:
                     case R.id.nav_amigos:
                         Log.d("NAVIGATOR","A AMIGOS");
-                        Intent intent = new Intent(context, ListaAmigos.class);
+                        Intent intent = new Intent(context, ListaAmigos2.class);
                         intent.putExtra("email", email);
                         intent.putExtra("nick", nick);
                         intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
