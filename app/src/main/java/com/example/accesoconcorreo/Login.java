@@ -101,9 +101,9 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (usuarioET.getText().toString().trim().length() > 0 && contraseniaET.getText().toString().trim().length() > 0) {
-                    /* introducir_nick nickDialogFragment = new introducir_nick(usuarioET.getText().toString(),contraseniaET.getText().toString());
-                    nickDialogFragment.show(getSupportFragmentManager(),"tag");*/
-                    Task<AuthResult> authResultTask = FirebaseAuth.getInstance().createUserWithEmailAndPassword(usuarioET.getText().toString(), contraseniaET.getText().toString())
+                    introducir_nick nickDF = new introducir_nick(usuarioET.getText().toString(),contraseniaET.getText().toString());
+                    nickDF.show(getSupportFragmentManager(),"tag");
+                   /* Task<AuthResult> authResultTask = FirebaseAuth.getInstance().createUserWithEmailAndPassword(usuarioET.getText().toString(), contraseniaET.getText().toString())
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -116,7 +116,7 @@ public class Login extends AppCompatActivity {
                                     }
                                 }
 
-                            });
+                            });*/
 
                 } else {
                     Toast toast = Toast.makeText(getApplicationContext(), "Error, debe rellenar los campos", Toast.LENGTH_LONG);
@@ -182,8 +182,11 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                String nick[] = usuarioET.getText().toString().split("@");
-                                showHome(nick[0], usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
+                                String nick = persistencia.getNick(usuarioET.getText().toString());
+                                if(nick == null){
+                                    nick = usuarioET.getText().toString().split("@")[0];
+                                }
+                                showHome(nick, usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
                             } else {
                                 showAlert();
                             }

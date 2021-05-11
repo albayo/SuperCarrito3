@@ -15,10 +15,6 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="Theme.Supercarrito.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
-        <item name="colorOnPrimary">@color/white</item>
-    </style>
-
 
 
     <style name="Theme.Supercarrito.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />

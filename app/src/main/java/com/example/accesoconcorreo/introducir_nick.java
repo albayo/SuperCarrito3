@@ -52,8 +52,6 @@ public class introducir_nick extends DialogFragment {
     private String email;
     private String pwd;
     private String nick = "";
-    //Representa una referencia a la base de datos
-    private DatabaseReference mDatabase;
     //Representa la clase de Lógica de Negocio la cuál será necesaria para comprobar información con la BD
     private ReadAndWriteSnippets persistencia;
 
@@ -93,7 +91,6 @@ public class introducir_nick extends DialogFragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mDatabase = FirebaseDatabase.getInstance().getReference();
         persistencia = new ReadAndWriteSnippets();
         etNick = (EditText) view.findViewById(R.id.etNick);
         btnAceptar = (Button) view.findViewById(R.id.btnAceptar);
@@ -110,12 +107,12 @@ public class introducir_nick extends DialogFragment {
                 nick = etNick.getText().toString();
                 if (nick != null && nick.trim().length() > 0) {
 
-                    Task<AuthResult> authResultTask = FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pwd)
-                            .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    Task<AuthResult> authResultTask = FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
                                         persistencia.insertarUsuario(nick, email);
+                                        cerrarFragment();
                                         showHome(nick, email, ProviderType.Basic); //MEJOR CON ?: ""
                                     } else {
                                         showAlert();
@@ -124,14 +121,6 @@ public class introducir_nick extends DialogFragment {
 
                             });
 
-                    //añadir nick al usuario
-
-                    cerrarFragment();
-
-                    Intent intent = new Intent(getContext(), Home.class);
-                    intent.putExtra("nick", nick);
-                    intent.putExtra("email", email);
-                    startActivity(intent);
                 } else {
                     Toast.makeText(getActivity(), "Error, se debe introducir un nick para poder registrarse correctamente", Toast.LENGTH_SHORT).show();
                 }

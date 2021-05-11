@@ -53,6 +53,11 @@ public class ReadAndWriteSnippets {
 
     }
 
+    public String getNick(String email){
+        Usuario user = new Usuario(email);
+        mDatabase.child("users").
+    }
+
     public static void actualizaContadorListas(){
 
         mDatabase.child("contadorLista").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
