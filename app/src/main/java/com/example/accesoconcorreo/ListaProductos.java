@@ -84,6 +84,27 @@ public class ListaProductos extends AppCompatActivity {
         String nombreLista = getIntent().getStringExtra("nombreLista");
 
         myToolbar.setTitle(nombreLista); // establece el titulo del appBar al nombre de la lista
+        myToolbar.inflateMenu(R.menu.menu_lista_prod);
+        myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                int id = item.getItemId();
+
+                if (id == R.id.carrito_productos) {
+                    removeProds();
+
+                    return true;
+                } else {
+                    if (id == R.id.opciones_productos) {
+
+                        return true;
+                    }
+                }
+
+                return false;
+            }
+        });
 
         String idLista = getIntent().getStringExtra("idLista");
 
@@ -99,34 +120,28 @@ public class ListaProductos extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                aniadirProd();
+                Intent intent = new Intent(ListaProductos.this,
+                        TodosProductos.class);
+                intent.putExtra("idLista", idLista);
+                intent.putExtra("nombreLista", nombreLista);
+                //intent.putExtra("email", email);
+                startActivity(intent);
                 //Intent replyIntent = new Intent();
                 //Lista l = (Lista) intent.getSerializableExtra("lista");
                 //hacer insert en el usuario internamente
             }
         });
-        FloatingActionButton fabEliminarProductos = findViewById(R.id.fabeliminarProductos);
-        fabEliminarProductos.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                for (Producto p : productos) {
-                    if (p.getCheckbox()) {
-                        //ELIMINAMOS DE LA LISTA
-
-                        mDatabase.child("listas").child(idLista).child("productos").child(p.getIdProducto()).removeValue();
-                    }
-                }
-            }
-        });
-
     }
 
-    private void aniadirProd() {
-        Intent intent = new Intent(ListaProductos.this, TodosProductos.class);
-        intent.putExtra("idLista", idLista);
-        intent.putExtra("nombreLista", nombreLista);
-        //intent.putExtra("email", email);
-        startActivity(intent);
+    public void removeProds() {
+        for (Producto p : productos) {
+            if (p.getCheckbox()) {
+                //ELIMINAMOS DE LA LISTA
+
+                mDatabase.child("listas").child(idLista).child("productos").child(p.getIdProducto()).removeValue();
+            }
+        }
+       // onBackPressed();
     }
 
     @Override
@@ -145,7 +160,8 @@ public class ListaProductos extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.carrito_productos) {
-            aniadirProd();
+            removeProds();
+
             return true;
         } else {
             if (id == R.id.opciones_productos) {
