@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -131,7 +132,12 @@ public class Home extends AppCompatActivity {
 
         this.obtenerListasUsuario(u.getNick());
 
-        this.setNavigationView();
+        drawerLayout= findViewById(R.id.drawer_layout_home);
+        navigationView= findViewById(R.id.nav_view);
+        toolbar=findViewById(R.id.homeToolbar);
+        Activity activity=this;
+
+        ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,toolbar,nick,email,activity,getApplicationContext());
 
     }
 
@@ -228,64 +234,6 @@ public class Home extends AppCompatActivity {
         });
     }
 
-    public void setNavigationView(){
-
-        //NAVIGATION
-        //--------------------------------------------------------------------------------------------------------
-        //HOOKS AL MENU
-
-        drawerLayout= findViewById(R.id.drawer_layout_home);
-        navigationView= findViewById(R.id.nav_view);
-        toolbar=findViewById(R.id.homeToolbar);
-        navigationView.bringToFront();
-
-        ActionBarDrawerToggle toggle= new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close);
-        drawerLayout.addDrawerListener(toggle);
-        toggle.syncState();
-
-
-        //LISTENERS
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()){
-                    case R.id.nav_home:
-                    case R.id.nav_amigos:
-                        Log.d("NAVIGATOR","A AMIGOS");
-                        Intent intent = new Intent(Home.this,ListaAmigos.class);
-                        intent.putExtra("email", email);
-                        intent.putExtra("nick", nick);
-                        Toast t= Toast.makeText(getApplicationContext(),"A amigos",Toast.LENGTH_LONG);
-                        t.show();
-                        startActivity(intent);
-
-                    case R.id.nav_listas:
-                        Intent homeIntent = new Intent(Home.this, Home.class);
-                        homeIntent.putExtra("email", email);
-                        homeIntent.putExtra("nick", nick);
-                       // homeIntent.putExtra("provider", provider.name());
-                        startActivity(homeIntent);
-                        break;
-                    case R.id.nav_logout:
-                        Intent intentlogout=new Intent(getApplicationContext(),Login.class);
-                        startActivity(intentlogout);
-                }
-                drawerLayout.closeDrawer(GravityCompat.START);
-                return true;
-            }
-        });
-
-
-
-            //--------------------------------------------------------------------------------------------------------
-    }
-    private void showHome(String nick, String email, ProviderType provider) {
-        Intent homeIntent = new Intent(Home.this, Home.class);
-        homeIntent.putExtra("email", email);
-        homeIntent.putExtra("nick", nick);
-        // homeIntent.putExtra("provider", provider.name());
-    }
 
 
 
