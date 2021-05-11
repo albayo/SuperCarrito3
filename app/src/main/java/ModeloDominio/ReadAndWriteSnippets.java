@@ -39,8 +39,7 @@ public class ReadAndWriteSnippets {
         // [END initialize_database_ref]
     }
 
-    public static void aniadirUsuarioaList(String nombreLista, String nick, String idLista,String email){
-        mDatabase.child("listas").child(idLista).child("usuarios").child(nick).setValue(email);
+    public static void aniadirUsuarioaList(String nombreLista, String nick, String idLista){
         mDatabase.child("users").child(nick).child("listas").child(idLista).setValue(nombreLista);
     }
 

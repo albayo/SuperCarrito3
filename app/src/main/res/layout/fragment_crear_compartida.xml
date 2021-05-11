@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -14,47 +16,45 @@
         android:inputType="textLongMessage"
         android:padding="6dp" />
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/et_aniadidos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/btAceptar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:text="@string/aceptar" />
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btCancelar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="0dp"
-            android:layout_marginEnd="0dp"
-            android:layout_marginRight="0dp"
-            android:text="@string/cancelar" />
+            android:text="@string/cancelar"
+            app:layout_constraintBottom_toBottomOf="@+id/btSeguir"
+            app:layout_constraintEnd_toStartOf="@+id/btSeguir"
+            app:layout_constraintHorizontal_bias="0.181"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btSeguir"
+            android:layout_width="99dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/seguir"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/btAceptar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="29dp"
-            android:layout_marginTop="-1dp"
-            android:layout_marginEnd="35dp"
-            android:layout_toStartOf="@+id/btCancelar"
-            android:layout_toEndOf="@+id/btAceptar"
-            android:text="@string/seguir" />
-    </RelativeLayout>
+            android:text="@string/aceptar"
+            app:layout_constraintBottom_toBottomOf="@+id/btSeguir"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/btSeguir" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </LinearLayout>

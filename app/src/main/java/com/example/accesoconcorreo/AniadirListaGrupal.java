@@ -95,7 +95,7 @@ public class AniadirListaGrupal extends DialogFragment {
                     String nick = etNombre.getText().toString();
                     if(nick != null && nick.trim().length() > 0) {
                             email=mDatabase.child("users").child(nick).child("email").get().getResult().getValue().toString();
-                            ReadAndWriteSnippets.aniadirUsuarioaList(nombreLista,nick,idLista,email);
+//                            ReadAndWriteSnippets.aniadirUsuarioaList(nombreLista,nick,idLista,email);
                             cerrarFragment();
 
                             Intent intent = new Intent(getContext(), ListaProductos.class);

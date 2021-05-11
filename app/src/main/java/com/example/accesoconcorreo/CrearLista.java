@@ -84,6 +84,7 @@ public class CrearLista extends AppCompatActivity {
         introducir_nom_lista listaDialogFragment = new introducir_nom_lista(tipoLista,email,nick);
         listaDialogFragment.show(getSupportFragmentManager(),"tag");
 
+        /*
         String ultB = listaDialogFragment.getUltBoton();
         listaDialogFragment.getLifecycle().getCurrentState();
         while(!listaDialogFragment.isCancelable()){
@@ -99,6 +100,7 @@ public class CrearLista extends AppCompatActivity {
                 startActivity(intent);
             }
         }
+        */
     }
 
 

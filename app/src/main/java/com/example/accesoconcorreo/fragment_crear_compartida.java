@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -34,6 +35,7 @@ import ModeloDominio.Usuario;
 public class fragment_crear_compartida extends DialogFragment {
 
     private EditText nickCompartir;
+    private TextView aniadidos;
     private Button aceptar;
     private Button cancelar;
     private Button seguir;
@@ -58,83 +60,68 @@ public class fragment_crear_compartida extends DialogFragment {
         aceptar=(Button)view.findViewById(R.id.btAceptar);
         cancelar=(Button)view.findViewById(R.id.btCancelar);
         seguir=(Button)view.findViewById(R.id.btSeguir);
+        aniadidos=(TextView)view.findViewById(R.id.et_aniadidos);
+
 
         aceptar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean b=false;
                 String usuario=nickCompartir.getText().toString();
-                if(usuario!=null || usuario.trim().length()>0){
-                    Iterable<DataSnapshot> it=mDatabase.child("users").get().getResult().getChildren();
-                    for (DataSnapshot dataSnapshot : it) {
-                        String n=dataSnapshot.getKey();
-                        if(n.equals(usuario)){
-                            b=true;
-                            break;
+
+                mDatabase.child("users").child(usuario).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if(task.getResult().getValue()!=null){
+                                usuarios.add(usuario);
+                                nickCompartir.setText("");
+                                Toast toast = Toast.makeText(getContext(), "Usuario añadido", Toast.LENGTH_LONG);
+                                toast.show();
+
+                                ReadAndWriteSnippets.insertarLista(nombreLista,nick);
+                                for(String s: usuarios){
+                                    ReadAndWriteSnippets.aniadirUsuarioaList(nombreLista,s,String.valueOf(Lista.getContLista()));
+                                }
+                                cerrarFragment();
+
+                                Intent intent = new Intent(getContext(), ListaProductos.class);
+                                intent.putExtra("nick",nick);
+                                intent.putExtra("email",email);
+                                intent.putExtra("nombreLista",nombreLista);
+                                intent.putExtra("idLista",String.valueOf(Lista.getContLista()));
+                                startActivity(intent);
+                            } else{
+                                Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);
+                                toast.show();
+                            }
                         }
                     }
-                    if(b){
-                        usuarios.add(usuario);
-                        nickCompartir.setText("");
-                        Toast toast = Toast.makeText(getContext(), "Usuario añadido", Toast.LENGTH_LONG);
-                        toast.show();
-                    }else{
-                        Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);
-                        toast.show();
-                    }
+                });
                 }
-
-
-
-            }
         });
+
 
         seguir.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean b=false;
                 String usuario=nickCompartir.getText().toString();
-                if(usuario!=null || usuario.trim().length()>0){
-                    Iterable<DataSnapshot> it=mDatabase.child("users").get().getResult().getChildren();
-                    for (DataSnapshot dataSnapshot : it) {
-                        String n=dataSnapshot.getKey();
-                        if(n.equals(usuario)){
-                            b=true;
-                            break;
+                mDatabase.child("users").child(usuario).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            if(task.getResult().getValue()!=null){
+                                usuarios.add(usuario);
+                                nickCompartir.setText("");
+                                Toast toast = Toast.makeText(getContext(), "Usuario añadido", Toast.LENGTH_LONG);
+                                toast.show();
+                                
+                            } else{
+                                Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);
+                                toast.show();
+                            }
                         }
                     }
-                    if(b){
-                        usuarios.add(usuario);
-                        nickCompartir.setText("");
-                        Toast toast = Toast.makeText(getContext(), "Usuario añadido", Toast.LENGTH_LONG);
-                        toast.show();
-                        ReadAndWriteSnippets.insertarLista(nombreLista,nick);
-                        for(String s :usuarios){
-                            mDatabase.child("users").child(s).child("email").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    if(task.isSuccessful()){
-                                        String email=task.getResult().getValue().toString();
-                                        ReadAndWriteSnippets.aniadirUsuarioaList(nombreLista,s,String.valueOf(Lista.getContLista()),email);
-                                    }
-
-                                }
-                            });
-                        }
-
-                        cerrarFragment();
-
-                        Intent intent = new Intent(getContext(), ListaProductos.class);
-                        intent.putExtra("nick",nick);
-                        intent.putExtra("email",email);
-                        intent.putExtra("nombreLista",nombreLista);
-                        intent.putExtra("idLista",String.valueOf(Lista.getContLista()));
-                        startActivity(intent);
-                    }else{
-                        Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);
-                        toast.show();
-                    }
-                }
+                });
             }
         });
         cancelar.setOnClickListener(new View.OnClickListener() {

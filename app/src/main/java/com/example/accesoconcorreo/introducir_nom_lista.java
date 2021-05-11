@@ -107,25 +107,18 @@ public class introducir_nom_lista extends DialogFragment {
                 String nombreLista = etNombre.getText().toString();
                 if(nombreLista != null && nombreLista.trim().length() > 0) {
                     if (tipoLista.equals("grupal")) {
-                        ////NI PUTA IDEA
+
                         fragment_crear_compartida fragment=new fragment_crear_compartida(email,nick,etNombre.getText().toString());
-                        // Obtener el administrador de fragmentos a través de la actividad
-                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                        // Definir una transacción
-                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-                        // Remplazar el contenido principal por el fragmento
-                        fragmentTransaction.replace(R.id.fragment_container_view_tag, fragment);
-                        fragmentTransaction.addToBackStack(null);
-                        // Cambiar
-                        fragmentTransaction.commit();
-                        /*fragment.show(getActivity().getSupportFragmentManager(),"tag");
+
+                        FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frame, fragment);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+
+                        /*
+                        fragment.show(getActivity().getSupportFragmentManager(),"tag");
                         fragment.getLifecycle().getCurrentState();
-                        while(!fragment.isCancelable()){
-
-                        }
                         */
-
-                        cerrarFragment();
 
                     } else {
 
