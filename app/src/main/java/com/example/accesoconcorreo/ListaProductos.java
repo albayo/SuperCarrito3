@@ -137,7 +137,6 @@ public class ListaProductos extends AppCompatActivity {
         for (Producto p : productos) {
             if (p.getCheckbox()) {
                 //ELIMINAMOS DE LA LISTA
-
                 mDatabase.child("listas").child(idLista).child("productos").child(p.getIdProducto()).removeValue();
             }
         }
