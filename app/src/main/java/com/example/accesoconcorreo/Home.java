@@ -26,6 +26,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseUser;
@@ -162,8 +164,10 @@ public class Home extends AppCompatActivity {
             if(l.isCheckboxEliminar()){
                 mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).removeValue();
                 mDatabaseReference.child("users").child(nick).child("listas").child(String.valueOf(l.getIdLista())).removeValue();
+
             }
         }
+        obtenerListasUsuario(nick);
 
     }
 
@@ -226,8 +230,23 @@ public class Home extends AppCompatActivity {
      */
     public void obtenerListasUsuario(String nick) {
         listas=new ArrayList<>();
-       // List<String> llistas = new ArrayList<>();
-        //List<String> lListaid=new ArrayList<>();
+
+        //PARA BORRAR LA ULTIMA LISTA
+        mDatabaseReference.child("users").child(nick).child("listas").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull  Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().getValue()==null){
+                        listas.clear();
+                        mListaAdapter = new ListaListAdapter(Home.this,R.layout.pantalla_listas_list,listas);
+                        recyclerView.setAdapter(mListaAdapter);
+                    }
+                }
+            }
+        });
+
+
+
         mDatabaseReference.child("users").child(nick).child("listas").addValueEventListener(new ValueEventListener() {
             /**
              * Método que cuando cambia un objeto en la base de datos se ejecuta para mostrar las listas de manera actualizada
@@ -246,6 +265,8 @@ public class Home extends AppCompatActivity {
                         Lista l =new Lista(nombre,id);
                         listas.add(l);
                     }
+                    Log.d("Adapter","LISta");
+
                     mListaAdapter = new ListaListAdapter(Home.this,R.layout.pantalla_listas_list,listas);
                     recyclerView.setAdapter(mListaAdapter);
                 }

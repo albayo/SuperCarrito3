@@ -150,8 +150,10 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
                     Lista current =  mListas.get(position);
                     if(current.isCheckboxEliminar()) current.setCheckboxEliminar(false);
                     else current.setCheckboxEliminar(true);
+                    Log.d("ONCLICK",""+current.isCheckboxEliminar());
                 }
             });
+            Log.d("Adapterr","constructor");
         }
 
         /**
