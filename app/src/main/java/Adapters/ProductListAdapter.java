@@ -43,7 +43,7 @@ import ModeloDominio.Producto;
         private int resource;
         //Representa una lista de los productos que obtendremos de la base de datos para mostrarlos.
         private List<Producto> mProductos;  // Cached copy of Productos
-        //Representa el siguiente activity al que iremos, para redirigir.
+        //Representa el activity desde la que se construye el adapater, para redirigir.
         private Activity a;
 
         private String idLista;

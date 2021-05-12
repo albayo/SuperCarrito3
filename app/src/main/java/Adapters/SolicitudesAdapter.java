@@ -1,5 +1,6 @@
 package Adapters;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -9,10 +10,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ModeloDominio.Solicitud;
+
 public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.SolicitudViewHolder> {
 
     //No puede ser de lista de Strings
-    private List<String> mSolicitudes=new ArrayList<>();
+    private List<Solicitud> mSolicitudes=new ArrayList<>();
+    private Activity activity;
+    private int resource;
+    private String nick;
+
+    public SolicitudesAdapter(Activity a,int resource,List<Solicitud> l,String nick){
+        this.activity=a;
+        this.resource=resource;
+        this.mSolicitudes=l;
+        this.nick=nick;
+    }
 
 
     @NonNull
