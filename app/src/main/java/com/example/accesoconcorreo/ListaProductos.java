@@ -72,8 +72,7 @@ public class ListaProductos extends AppCompatActivity {
 
         idLista = getIntent().getStringExtra("idLista");
         nombreLista = getIntent().getStringExtra("nombreLista");
-        //idLista
-        //nombreLista
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         productos = new ArrayList<>();
