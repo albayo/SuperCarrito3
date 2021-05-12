@@ -22,6 +22,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -140,6 +142,7 @@ public class ListaProductos extends AppCompatActivity {
                 mDatabase.child("listas").child(idLista).child("productos").child(p.getIdProducto()).removeValue();
             }
         }
+        obtenerProductosLista(idLista);// NECESARIO PARA BORRAR EL ÚLTIMO
         // onBackPressed();
     }
 
@@ -178,7 +181,21 @@ public class ListaProductos extends AppCompatActivity {
      * @param listaid Representa el id de la lista de la que queremos
      */
     public void obtenerProductosLista(String listaid) {
-        productos.clear();
+
+        //NECESARIO PARA BORRAR EL ÚLTIMO
+        mDatabase.child("listas").child(listaid).child("productos").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().getValue()==null){
+                        productos.clear();
+                        productosAdapter = new ProductListAdapter(ListaProductos.this, R.layout.item_productos_lista, productos, listaid);
+                        recyclerViewproductos.setAdapter(productosAdapter);
+                    }
+                }
+            }
+        });
+
         mDatabase.child("listas").child(listaid).child("productos").addValueEventListener(new ValueEventListener() {
                                                                                               /**
                                                                                                * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.
