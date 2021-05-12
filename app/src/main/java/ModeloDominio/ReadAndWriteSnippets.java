@@ -18,6 +18,7 @@ import com.example.accesoconcorreo.ListaAmigos;
 import com.example.accesoconcorreo.ListaAmigos2;
 import com.example.accesoconcorreo.Login;
 import com.example.accesoconcorreo.R;
+import com.example.accesoconcorreo.Solicitudes;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -155,6 +156,11 @@ public class ReadAndWriteSnippets {
                         intentlogout.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intentlogout);
                         break;
+                    case R.id.nav_solicitudes:
+                        Intent solIntent = new Intent(context, Solicitudes.class);
+                        solIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                        solIntent.putExtra("nick",nick);
+                        context.startActivity(solIntent);
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;
