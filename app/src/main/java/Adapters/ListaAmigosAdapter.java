@@ -1,15 +1,19 @@
 package Adapters;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.accesoconcorreo.Home;
 import com.example.accesoconcorreo.ListaProductos;
 import com.example.accesoconcorreo.R;
 
@@ -77,7 +81,7 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
      * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
      * @version: 02/05/2021
      */
-    public class  AmigosViewHolder  extends  RecyclerView.ViewHolder implements View.OnClickListener{
+    public class  AmigosViewHolder  extends  RecyclerView.ViewHolder{
         //Representa el View donde se dispondrán los nombres de las listas
         public View view;
         //Representa el TextView donde sale el nombre de la lista
@@ -86,6 +90,7 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
         private final TextView idLista;
         //Representa una copia del adapter
         final ListaAmigosAdapter adapter;
+        private final ImageButton btELiminarAmigo;
         /**
          * Constructor de la clase
          * @param itemView View en el cual se busca el TextView en el cual se representará la información
@@ -97,16 +102,46 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
             this.view=itemView;
             this.ListaNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
             this.idLista=(TextView)itemView.findViewById(R.id.text_id_lista);
-
+            this.btELiminarAmigo=(ImageButton)itemView.findViewById(R.id.btEliminarAmigo);
             this.adapter = adapter;
-            itemView.setOnClickListener(this);
+            //itemView.setOnClickListener(this);
+
+            /*btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                    androidx.appcompat.app.AlertDialog.Builder b= new androidx.appcompat.app.AlertDialog.Builder(this);
+                    b.setTitle("Confirmación");
+                    b.setMessage("¿Está seguro/a de que desea cerrar sesión?");
+                    b.setPositiveButton("Aceptar",new DialogInterface.OnClickListener() {
+
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            Home.super.onBackPressed();
+                        }
+                    });
+
+                    b.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            onResume();
+                        }
+                    });
+                    AlertDialog alert=b.create();
+                    alert.show();
+                }
+            });*/
         }
 
         /**
          * Método que representa el clickado en un item de la view
          * @param v View en el cual se ha clickado
          */
-        @Override
+        /*@Override
         public void onClick(View v) {
             //Se obtiene la posicion del item que ha sido clickado
             int mPosicion = getLayoutPosition();
@@ -118,6 +153,6 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
             intent.putExtra("idLista", id);
 
             a.startActivity(intent);
-        }
+        }*/
     }
 }

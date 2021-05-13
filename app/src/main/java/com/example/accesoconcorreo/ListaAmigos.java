@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -53,7 +55,13 @@ public class ListaAmigos extends AppCompatActivity {
 
         toolbar.setTitle(title);
         obtenerAmigosUsuario(nick);
-
+        FloatingActionButton fab=findViewById(R.id.fab_Aniadir_Amigos);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //CREAR FUNCIONALIDAD
+            }
+        });
 
     }
 
@@ -76,7 +84,7 @@ public class ListaAmigos extends AppCompatActivity {
                         lAmigos.add(nombre);
                         lCorreos.add(correo);
                     }
-                    listaAmigosAdapter= new ListaAmigosAdapter(ListaAmigos.this,R.layout.pantalla_listas_list, lAmigos,lCorreos);
+                    listaAmigosAdapter= new ListaAmigosAdapter(ListaAmigos.this,R.layout.amigos_recycler, lAmigos,lCorreos);
                     recyclerViewAmigos.setAdapter(listaAmigosAdapter);
                 }
             }
