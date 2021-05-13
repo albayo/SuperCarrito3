@@ -33,6 +33,7 @@
             android:id="@+id/spinner_super"
             android:layout_width="141dp"
             android:layout_height="0dp"
+            android:prompt="@string/supermercados"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -41,6 +42,7 @@
             android:id="@+id/spinner_productos"
             android:layout_width="136dp"
             android:layout_height="0dp"
+            android:prompt="@string/productos"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/spinner_super"
             app:layout_constraintTop_toTopOf="parent" />

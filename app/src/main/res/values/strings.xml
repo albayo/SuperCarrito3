@@ -35,6 +35,8 @@
     <string name="navigation_drawer_open">Open</string>
     <string name="tipo_sol">Tipo de solicitud</string>
     <string name="remitente">usuario</string>
+    <string name="productos">Productos</string>
+    <string name="supermercados">Supermercados</string>
 
     <string-array name="supers_array">
         <item>Mercadona</item>

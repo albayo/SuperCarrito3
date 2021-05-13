@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -80,9 +81,15 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
     @Override
     public void  onBindViewHolder(ListaListAdapter.ListaViewHolder holder, int  position) {
         if  ( mListas  !=  null || mListas.get(position)!=null) {
-            String current =  mListas.get(position).getNombre();
+            Lista l = mListas.get(position);
+            String current =  l.getNombre();
+            if(l.isGrupal()){
+                holder.imgGrupal.setVisibility(View.VISIBLE);
+            }else{
+                holder.imgGrupal.setVisibility(View.INVISIBLE);
+            }
             holder.ListaNombreView.setText(current);
-            holder.idLista.setText(String.valueOf(mListas.get(position).getIdLista()));
+            holder.idLista.setText(String.valueOf(l.getIdLista()));
         }  else  {
             // Covers the case of data not being ready yet.
             holder. ListaNombreView .setText( "No hay listas" );
@@ -125,6 +132,8 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
         private final TextView idLista;
         //Representa una copia del adapter
         final ListaListAdapter adapter;
+        //Representa la imagen que indica si una lista es grupal
+        private final ImageView imgGrupal;
         //Representa el Checkbox que indicará si esta lista se quiere elminiar o no
         private final CheckBox checkbox;
         /**
@@ -136,9 +145,13 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
         private  ListaViewHolder(View itemView, ListaListAdapter adapter) {
             super (itemView);
             this.view=itemView;
-            this.ListaNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
-            this.idLista=(TextView)itemView.findViewById(R.id.text_id_lista);
-            checkbox=(CheckBox) itemView.findViewById(R.id.checkBox_eliminar);
+            this.ListaNombreView = (TextView) itemView.findViewById(R.id.text_lista_usuario);
+            this.idLista = (TextView)itemView.findViewById(R.id.text_id_lista);
+            checkbox = (CheckBox) itemView.findViewById(R.id.checkBox_eliminar);
+            imgGrupal = (ImageView) itemView.findViewById(R.id.imgGrupal);
+            /*if(true){
+                imgGrupal.setVisibility(View.INVISIBLE);
+            }*/
 
             this.adapter = adapter;
             itemView.setOnClickListener(this);

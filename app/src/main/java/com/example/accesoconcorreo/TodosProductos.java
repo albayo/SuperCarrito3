@@ -34,6 +34,8 @@ import ModeloDominio.Producto;
 public class TodosProductos extends AppCompatActivity {
     private String idLista;
     private List<Producto> productos;
+    private List<String> nombresSuper;
+    private List<String> categoriasProd;
     private DatabaseReference mDatabase;
     private RecyclerView recyclerViewproductos;
     private TodosProductosAdapter todosProductosAdapter;
@@ -74,6 +76,8 @@ public class TodosProductos extends AppCompatActivity {
 
         spinnerProd=findViewById(R.id.spinner_productos);
         spinnerSuper=findViewById(R.id.spinner_super);
+        //categoriasProd = ;
+        nombresSuper = new ArrayList<>();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         productos = new ArrayList<>();
         obtenerTodosProductos();
@@ -117,4 +121,29 @@ public class TodosProductos extends AppCompatActivity {
         );
 
     }
+
+    /***
+     *
+     * @return
+     */
+    //habrá que hacerlo para que si tuviesemos bien la BD funcionase y fuese escalable
+    //habrá que modificar la BD para que algunos de los productos tengan esta funcionalidad (habrá que añadirles foto, supermercado y categoría)
+    /*public List<String> getNombresSuper(){
+        List<String> nombres = new ArrayList<>();
+
+
+
+        return nombres;
+    }*/
+
+    /***
+     *
+     * @return
+     */
+    /*public List<String> getCategoriasProd{
+        List<String> categorias = new ArrayList<>();
+
+
+        return categorias;
+    }*/
 }

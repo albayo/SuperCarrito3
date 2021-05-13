@@ -34,6 +34,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import ModeloDominio.Lista;
 import ModeloDominio.ReadAndWriteSnippets;
 
+//Habrá que explicar que hemos tenido problemas con la API y especificar la arquitectura de la BD
 
 /**
  * Esta clase define la actividad (llamada "activity_login") que servirá para el logueo del Usuario

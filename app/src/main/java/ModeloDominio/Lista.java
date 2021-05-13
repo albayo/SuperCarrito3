@@ -30,6 +30,8 @@ public class Lista implements Serializable {
     private String nombre;
     //Representa el/los usario/s que participan en la lista (este atributo no podrá ser nulo)
     private List<String> usuarios;
+    //Representa si la lista es grupal en caso de ser verdadero y en caso de ser falso es una lista personal
+    private boolean grupal;
     //Representa los productos que contiene la lista
     private List<Producto> productos;
 
@@ -56,12 +58,14 @@ public class Lista implements Serializable {
         this.idLista=contLista;
         this.usuarios=u;
         this.nombre=nombre;
+        this.grupal = true;
         this.productos=new java.util.ArrayList<Producto>();
     }
     public Lista(String nombre,String id){
         this.idLista=Integer.parseInt(id);
         this.usuarios=new ArrayList<>();
         this.nombre=nombre;
+        this.grupal = false;
         this.checkboxEliminar=false;
         this.productos=new java.util.ArrayList<Producto>();
     }
@@ -135,6 +139,7 @@ public class Lista implements Serializable {
      */
     public void setUsuarios(List<String> u){
         this.usuarios=u;
+        this.grupal = true;
     }
 
     /**
@@ -154,6 +159,15 @@ public class Lista implements Serializable {
      */
     public void setTipolista(String tipolista) {
         this.tipolista = tipolista;
+    }
+
+    /***
+     * Método que devuelve el valor del atributo de la lista grupal, el cual indica si la lista es grupal
+     *      o personal
+     * @return
+     */
+    public boolean isGrupal(){
+        return this.grupal;
     }
 
     /**
