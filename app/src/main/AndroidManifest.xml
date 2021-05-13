@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AccesoConCorreo">
         <activity android:name=".Perfil"></activity>
-        <activity android:name=".ListaAmigos2" />
         <activity android:name=".ListaAmigos" />
         <activity android:name=".Solicitudes" />
         <activity android:name=".TodosProductos" />

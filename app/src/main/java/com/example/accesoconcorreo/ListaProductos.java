@@ -136,13 +136,21 @@ public class ListaProductos extends AppCompatActivity {
     }
 
     public void removeProds() {
+        List<Producto> l=new ArrayList<>(productos);
         for (Producto p : productos) {
             if (p.getCheckbox()) {
                 //ELIMINAMOS DE LA LISTA
                 mDatabase.child("listas").child(idLista).child("productos").child(p.getIdProducto()).removeValue();
+                l.remove(p);
+                productosAdapter = new ProductListAdapter(ListaProductos.this, R.layout.item_productos_lista, l, idLista);
+                recyclerViewproductos.setAdapter(productosAdapter);
             }
         }
-        obtenerProductosLista(idLista);// NECESARIO PARA BORRAR EL ÚLTIMO
+        productos=l;
+        //productosAdapter = new ProductListAdapter(ListaProductos.this, R.layout.item_productos_lista, l, idLista);
+        //recyclerViewproductos.setAdapter(productosAdapter);
+
+        //obtenerProductosLista(idLista);// NECESARIO PARA BORRAR EL ÚLTIMO
         // onBackPressed();
     }
 
@@ -197,29 +205,30 @@ public class ListaProductos extends AppCompatActivity {
         });
 
         mDatabase.child("listas").child(listaid).child("productos").addValueEventListener(new ValueEventListener() {
-                                                                                              /**
-                                                                                               * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.
-                                                                                               * @param snapshot Representa el nodo de la base de datos a actualizar.
-                                                                                               */
-                                                                                              @Override
-                                                                                              public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                                                                                  if (snapshot.exists()) {
-                                                                                                      productos.clear();
-                                                                                                      for (DataSnapshot ds : snapshot.getChildren()) {
-                                                                                                          String id = ds.getKey();
-                                                                                                          String cantidad = ds.getValue().toString();
-                                                                                                          addProducto(id, cantidad);
+            /**
+             * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.
+             * @param snapshot Representa el nodo de la base de datos a actualizar.
+             */
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
 
-                                                                                                      }
-                                                                                                      productosAdapter = new ProductListAdapter(ListaProductos.this, R.layout.item_productos_lista, productos, listaid);
-                                                                                                      recyclerViewproductos.setAdapter(productosAdapter);
-                                                                                                  }
-                                                                                              }
+                    for (DataSnapshot ds : snapshot.getChildren()) {
+                        String id = ds.getKey();
+                        String cantidad = ds.getValue().toString();
+                        if(!productoYaEnLista(id)){
+                            addProducto(id, cantidad);
+                        }
 
-                                                                                              @Override
-                                                                                              public void onCancelled(@NonNull DatabaseError error) {
-                                                                                              }
-                                                                                          }
+                    }
+                    productosAdapter = new ProductListAdapter(ListaProductos.this, R.layout.item_productos_lista, productos, listaid);
+                    recyclerViewproductos.setAdapter(productosAdapter);
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+            }
+        }
         );
 
 
@@ -231,7 +240,7 @@ public class ListaProductos extends AppCompatActivity {
      * @param idProducto Representa el id del producto que quieres aadir a la lista
      */
     public void addProducto(String idProducto, String cantidad) {
-        Log.d("GETPRODUCTO", "INI");
+
 
         mDatabase.child("json").child("results").child(idProducto).addValueEventListener(new ValueEventListener() {
 
@@ -261,7 +270,12 @@ public class ListaProductos extends AppCompatActivity {
             }
         });
 
-
+    }
+    public boolean productoYaEnLista(String idProducto){
+        for(Producto p:productos){
+            if(p.getIdProducto().equals(idProducto)) return true;
+        }
+        return false;
     }
 
 }

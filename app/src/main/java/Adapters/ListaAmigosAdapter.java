@@ -2,6 +2,7 @@ package Adapters;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,17 +26,19 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
     private Activity a;
 
     public ListaAmigosAdapter(Activity a, int resource, List<String> l,List<String> lid) {
+        Log.d("Construcor","ConstructorLanzado");
         this.resource=resource;
         this.a = a;
         this.mListas = l;
         this.mListasId=lid;
     }
-    public ListaAmigosAdapter.AmigosViewHolder onCreateViewHolder(ViewGroup parent, int  viewType) {
+    public AmigosViewHolder onCreateViewHolder(ViewGroup parent, int  viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
-        return new ListaAmigosAdapter.AmigosViewHolder(itemView, this);
+        return new ListaAmigosAdapter.AmigosViewHolder(itemView,this);
     }
     @Override
     public void  onBindViewHolder(ListaAmigosAdapter.AmigosViewHolder holder, int  position) {
+        Log.d("Holder","HolderLanzado");
         if  ( mListas  !=  null || mListas.get(position)!=null) {
             String current =  mListas.get(position);
             holder.ListaNombreView.setText(current);

@@ -1,68 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout style="@style/Theme.AccesoConCorreo"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawe_layout_amigos"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:fitsSystemWindows="true"
-    tools:openDrawer="start"
-    xmlns:tools="http://schemas.android.com/tools">
+    tools:context=".ListaAmigos">
 
-    <com.google.android.material.navigation.NavigationView
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/amigos_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/nav_view"
-        app:headerLayout="@layout/header"
-        app:menu="@menu/main_menu"
-        android:layout_gravity="start"/>
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginEnd="0dp"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:titleTextColor="@color/white" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        style="@style/Theme.AccesoConCorreo"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/amigos_recycler"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/amigosToolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:elevation="4dp"
-            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:titleTextColor="@color/white" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_lista_amigos"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/amigosToolbar"
-            />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/fabAniadir_Amigo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="24dp"
-            android:layout_marginRight="24dp"
-            android:layout_marginBottom="32dp"
-            android:backgroundTint="@color/naranja_tipo2"
-            android:clickable="true"
-            android:contentDescription="@string/fab_text"
-            android:src="@drawable/ic_add_white"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!-- -->
-</androidx.drawerlayout.widget.DrawerLayout>
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/amigos_toolbar"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="0dp"
+        />
+</RelativeLayout>
