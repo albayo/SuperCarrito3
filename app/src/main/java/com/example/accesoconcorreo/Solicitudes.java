@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.util.Log;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -62,13 +63,16 @@ public class Solicitudes extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    //mSolicitudes.clear();
+                    mSolicitudes.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String remitente = ds.getKey();
                         Solicitud s=new Solicitud(remitente);
                         s.setSolicitudAmistad();
+                        mSolicitudes.add(s);
+                        Log.d("Solicitudes",mSolicitudes.size()+"");
 
                     }
+                    Log.d("Solicitudes123",mSolicitudes.size()+"");
                     solicitudesAdapter = new SolicitudesAdapter(Solicitudes.this, R.layout.item_solicitud, mSolicitudes, nick);
                     recyclerViewSolicitudes.setAdapter(solicitudesAdapter);
                 }
@@ -79,6 +83,7 @@ public class Solicitudes extends AppCompatActivity {
             }
         }
         );
+        /*
         mDatabase.child("users").child(nick).child("solicitudes").child("listas").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -103,6 +108,7 @@ public class Solicitudes extends AppCompatActivity {
 
             }
         });
+        */
 
 
     }

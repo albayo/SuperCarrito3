@@ -64,7 +64,10 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
     }
 
-
+    public void setmSolicitudes(List<Solicitud> mSolicitudes) {
+        this.mSolicitudes=new ArrayList<>();
+        this.mSolicitudes = mSolicitudes;
+    }
 
     public class SolicitudViewHolder extends  RecyclerView.ViewHolder{
 
