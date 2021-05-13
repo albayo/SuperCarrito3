@@ -100,6 +100,14 @@ public class ReadAndWriteSnippets {
         mDatabase.child("users").child(nick).child("solicitudes").child("amistad").child(usuarioActual).setValue("pendiente");
     }
 
+    public static void eliminarSolicitudLista(String usuarioActual,String remitente,String idLista){
+        mDatabase.child("users").child(usuarioActual).child("solicitudes").child("listas").child(remitente).child(idLista).removeValue();
+    }
+
+    public static void eliminarSolicitudAmistad(String usuarioActual,String remitente){
+        mDatabase.child("users").child(usuarioActual).child("solicitudes").child("amistad").child(remitente).removeValue();
+    }
+
     public static void setNavigationView(DrawerLayout drawerLayout, NavigationView navigationView, androidx.appcompat.widget.Toolbar toolbar, String nick, String email, Activity activity, Context context){
 
         //NAVIGATION

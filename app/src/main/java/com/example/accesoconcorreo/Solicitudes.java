@@ -19,17 +19,19 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import Adapters.ProductListAdapter;
 import Adapters.SolicitudesAdapter;
-import ModeloDominio.Producto;
 import ModeloDominio.Solicitud;
 
 public class Solicitudes extends AppCompatActivity {
     private List<Solicitud> mSolicitudes;
+   // private List<Solicitud> mSolicitudesListas;
     private DatabaseReference mDatabase;
-    private SolicitudesAdapter solicitudesAdapter;
+    private SolicitudesAdapter solicitudesAdapterAmigos;
+    private SolicitudesAdapter solicitudesAdapterListas;
+
     private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán las solicitudes del usuario
-    private RecyclerView recyclerViewSolicitudes;
+    private RecyclerView recyclerViewSolicitudesAmigos;
+    private RecyclerView recyclerViewSolicitudesListas;
 
     private String nick;
 
@@ -41,10 +43,15 @@ public class Solicitudes extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.solicitudesToolbar);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mSolicitudes=new ArrayList<>();
+        mSolicitudes =new ArrayList<>();
+        //mSolicitudesListas=new ArrayList<>();
 
-        recyclerViewSolicitudes=findViewById(R.id.solicitudes_recycler);
-        recyclerViewSolicitudes.setLayoutManager(new LinearLayoutManager(this));
+        recyclerViewSolicitudesAmigos=findViewById(R.id.solicitudes_recycler);
+        recyclerViewSolicitudesAmigos.setLayoutManager(new LinearLayoutManager(this));
+
+        recyclerViewSolicitudesListas=findViewById(R.id.solicitudes_listas_recycler);
+        recyclerViewSolicitudesListas.setLayoutManager(new LinearLayoutManager(this));
+
         nick=getIntent().getStringExtra("nick");
 
         String title="Supercarrito - "+nick;
@@ -72,12 +79,12 @@ public class Solicitudes extends AppCompatActivity {
                         Solicitud s=new Solicitud(remitente);
                         s.setSolicitudAmistad();
                         mSolicitudes.add(s);
-                        Log.d("Solicitudes",mSolicitudes.size()+"");
+                        Log.d("Solicitudes", mSolicitudes.size()+"");
 
                     }
-                    Log.d("Solicitudes123",mSolicitudes.size()+"");
-                    solicitudesAdapter = new SolicitudesAdapter(Solicitudes.this, R.layout.item_solicitud, mSolicitudes, nick);
-                    recyclerViewSolicitudes.setAdapter(solicitudesAdapter);
+                    Log.d("Solicitudes123", mSolicitudes.size()+"");
+                    solicitudesAdapterAmigos = new SolicitudesAdapter(Solicitudes.this, R.layout.item_solicitud, mSolicitudes, nick);
+                    recyclerViewSolicitudesAmigos.setAdapter(solicitudesAdapterAmigos);
                 }
             }
 
@@ -86,7 +93,7 @@ public class Solicitudes extends AppCompatActivity {
             }
         }
         );
-        /*
+
         mDatabase.child("users").child(nick).child("solicitudes").child("listas").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -99,10 +106,11 @@ public class Solicitudes extends AppCompatActivity {
                             String nombreLista=ds2.getValue().toString();
                             Solicitud s=new Solicitud(remitente);
                             s.setSolicitudLista(idLista,nombreLista);
+                            mSolicitudes.add(s);
                         }
                     }
-                    solicitudesAdapter = new SolicitudesAdapter(Solicitudes.this, R.layout.item_solicitud, mSolicitudes, nick);
-                    recyclerViewSolicitudes.setAdapter(solicitudesAdapter);
+                    solicitudesAdapterListas = new SolicitudesAdapter(Solicitudes.this, R.layout.item_solicitud, mSolicitudes, nick);
+                    recyclerViewSolicitudesListas.setAdapter(solicitudesAdapterListas);
                 }
             }
 
@@ -111,7 +119,7 @@ public class Solicitudes extends AppCompatActivity {
 
             }
         });
-        */
+
 
 
     }

@@ -18,6 +18,7 @@ import com.example.accesoconcorreo.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Solicitud;
 
 public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.SolicitudViewHolder> {
@@ -85,14 +86,28 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
             aceptar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    int position=getLayoutPosition();
+                    Solicitud current=mSolicitudes.get(position);
+                    if(current.getTipoSolicitud().equals("lista")){
 
+                    }
+                    else{
+
+                    }
                 }
             });
 
             declinar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    int position=getLayoutPosition();
+                    Solicitud current=mSolicitudes.get(position);
+                    if(current.getTipoSolicitud().equals("lista")){
+                        ReadAndWriteSnippets.eliminarSolicitudLista(nick,current.getRemitente(),current.getIdLista());
+                    }
+                    else{
+                        ReadAndWriteSnippets.eliminarSolicitudAmistad(nick,current.getRemitente());
+                    }
                 }
             });
         }
