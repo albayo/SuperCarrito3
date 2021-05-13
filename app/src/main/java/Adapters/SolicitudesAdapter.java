@@ -1,12 +1,14 @@
 package Adapters;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +22,6 @@ import ModeloDominio.Solicitud;
 
 public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.SolicitudViewHolder> {
 
-    //No puede ser de lista de Strings
     private List<Solicitud> mSolicitudes;
     private Activity activity;
     private int resource;
@@ -31,28 +32,28 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
         this.resource=resource;
         this.mSolicitudes=l;
         this.nick=nick;
+        Log.d("SOLICITUDES","CONSTRUCTOR");
     }
 
-
-    @NonNull
     @Override
-    public SolicitudViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
+    public SolicitudesAdapter.SolicitudViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d("SOLICITUDES","CONSTRUCTOR");
+            View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
         return new SolicitudesAdapter.SolicitudViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SolicitudViewHolder holder, int position) {
+        Log.d("SOLICITUDES","ADAPTER ffffffffffff");
         if(mSolicitudes!=null){
+            Log.d("SOLICITUDES","ADAPTER");
             Solicitud current = mSolicitudes.get(position);
-
             holder.remitente.setText(current.getRemitente());
             if(current.getTipoSolicitud().equals("amistad"))
                 holder.tipoSolicitud.setText("Solicitud de amistad de:");
             else
                 holder.tipoSolicitud.setText("Solicitud de participar en la lista "+current.getNombreLista()+" de:");
         }
-
     }
 
     @Override
@@ -71,7 +72,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
     public class SolicitudViewHolder extends  RecyclerView.ViewHolder{
 
-        private final EditText tipoSolicitud, remitente;
+        private final TextView tipoSolicitud, remitente;
         private final ImageButton aceptar, declinar;
 
         public SolicitudViewHolder(@NonNull View itemView) {

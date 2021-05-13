@@ -3,6 +3,7 @@ package com.example.accesoconcorreo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.pm.ActivityInfo;
@@ -38,15 +39,17 @@ public class Solicitudes extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_solicitudes);
 
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.solicitudesToolbar);
+        toolbar = (Toolbar) findViewById(R.id.solicitudesToolbar);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mSolicitudes=new ArrayList<>();
+
         recyclerViewSolicitudes=findViewById(R.id.solicitudes_recycler);
+        recyclerViewSolicitudes.setLayoutManager(new LinearLayoutManager(this));
         nick=getIntent().getStringExtra("nick");
 
         String title="Supercarrito - "+nick;
 
-        myToolbar.setTitle(title);
+        toolbar.setTitle(title);
         obtenerSolicitudes(nick);
 
 
@@ -63,7 +66,7 @@ public class Solicitudes extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    mSolicitudes.clear();
+                    //mSolicitudes.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String remitente = ds.getKey();
                         Solicitud s=new Solicitud(remitente);
