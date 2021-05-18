@@ -42,7 +42,8 @@ import ModeloDominio.Usuario;
 public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.ListaViewHolder>{
 
 
-    //
+    private String nick;
+    private String email;
     //Representa las listas que se representarán
     private List<Lista> mListas;  // Cached copy of Listas
     //Represente los ids de las listas , se cambiará por un Map.
@@ -59,11 +60,13 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
      *
      * @param a Representa el Activity siguiente al que queremos ir
      */
-    public ListaListAdapter(Activity a, int resource, List<Lista> l) {
+    public ListaListAdapter(Activity a, int resource, List<Lista> l,String nick,String email) {
         this.resource=resource;
         this.a = a;
         this.mListas = l;
         //this.mListasId=lid;
+        this.nick=nick;
+        this.email=email;
     }
 
 
@@ -93,6 +96,9 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
 
             holder.ListaNombreView.setText(current);
             holder.idLista.setText(String.valueOf(l.getIdLista()));
+
+            holder.imgGrupal.setVisibility(View.INVISIBLE);
+
             DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
             mDatabase.child("listas").child(String.valueOf(l.getIdLista())).child("compartida").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                 @Override
@@ -102,9 +108,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
                             l.setGrupal(true);
                             holder.imgGrupal.setVisibility(View.VISIBLE);
                         }
-                        else{
-                            holder.imgGrupal.setVisibility(View.INVISIBLE);
-                        }
+
                     }
                 }
             });
@@ -211,7 +215,8 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
             Intent intent = new Intent(a, ListaProductos.class);
             intent.putExtra("nombreLista", nombrelista);
             intent.putExtra("idLista", id);
-
+            intent.putExtra("email",email);
+            intent.putExtra("nick",nick);
             a.startActivity(intent);
         }
     }

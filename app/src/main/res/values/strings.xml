@@ -37,6 +37,7 @@
     <string name="remitente">usuario</string>
     <string name="productos">Productos</string>
     <string name="supermercados">Supermercados</string>
+    <string name="opciones_añadir_miembros">Añadir miembros</string>
 
     <string-array name="supers_array">
         <item>Mercadona</item>

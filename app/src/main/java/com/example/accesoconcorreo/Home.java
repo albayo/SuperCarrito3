@@ -238,7 +238,7 @@ public class Home extends AppCompatActivity {
                 if(task.isSuccessful()){
                     if(task.getResult().getValue()==null){
                         listas.clear();
-                        mListaAdapter = new ListaListAdapter(Home.this,R.layout.pantalla_listas_list,listas);
+                        mListaAdapter = new ListaListAdapter(Home.this,R.layout.pantalla_listas_list,listas,nick,email);
                         recyclerView.setAdapter(mListaAdapter);
                     }
                 }
@@ -269,7 +269,7 @@ public class Home extends AppCompatActivity {
                     }
                     Log.d("Adapter","LISta");
 
-                    mListaAdapter = new ListaListAdapter(Home.this,R.layout.pantalla_listas_list,listas);
+                    mListaAdapter = new ListaListAdapter(Home.this,R.layout.pantalla_listas_list,listas,nick,email);
                     recyclerView.setAdapter(mListaAdapter);
                 }
             }

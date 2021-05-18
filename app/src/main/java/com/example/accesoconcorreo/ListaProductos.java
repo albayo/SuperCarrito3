@@ -76,7 +76,8 @@ public class ListaProductos extends AppCompatActivity {
         nombreLista = getIntent().getStringExtra("nombreLista");
         //idLista
         //nombreLista
-
+        email=getIntent().getStringExtra("email");
+        nick=getIntent().getStringExtra("nick");
         mDatabase = FirebaseDatabase.getInstance().getReference();
         productos = new ArrayList<>();
         recyclerViewproductos = (RecyclerView) findViewById(R.id.lista_prod_recycler);
@@ -98,9 +99,11 @@ public class ListaProductos extends AppCompatActivity {
 
                     return true;
                 } else {
-                    if (id == R.id.opciones_productos) {
-
-                        return true;
+                    if (id == R.id.opciones_añadir_amigos) {
+                        Intent homeIntent = new Intent(ListaProductos.this, ListaAmigos.class); //debería ir la clase del Perfil
+                        homeIntent.putExtra("email", email);
+                        homeIntent.putExtra("nick", nick);
+                        startActivity(homeIntent);
                     }
                 }
 
@@ -167,9 +170,12 @@ public class ListaProductos extends AppCompatActivity {
 
             return true;
         }
-        if (id == R.id.opciones_productos) {
+        if (id == R.id.opciones_añadir_amigos) {
+            Intent homeIntent = new Intent(ListaProductos.this, ListaAmigos.class); //debería ir la clase del Perfil
+            homeIntent.putExtra("email", email);
+            homeIntent.putExtra("nick", nick);
 
-            return true;
+
         }
 
 
