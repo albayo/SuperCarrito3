@@ -19,7 +19,9 @@ import com.example.accesoconcorreo.Perfil;
 import com.example.accesoconcorreo.R;
 import com.example.accesoconcorreo.SolicitudesAmigos;
 import com.example.accesoconcorreo.SolicitudesLista;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
@@ -113,6 +115,22 @@ public class ReadAndWriteSnippets {
 
     public static void eliminarSolicitudAmistad(String usuarioActual, String remitente) {
         mDatabase.child("users").child(usuarioActual).child("solicitudes").child("amistad").child(remitente).removeValue();
+    }
+
+    public static void aniadirAmigo(String usuarioActual, String amigo){
+
+        mDatabase.child("users").child(usuarioActual).child("email").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().getValue()!=null){
+                        String correo=task.getResult().getValue().toString();
+                        mDatabase.child("users").child(usuarioActual).child("amigos").child(amigo).setValue(correo);
+                    }
+                }
+            }
+        });
+
     }
 
     public static void setNavigationView(DrawerLayout drawerLayout, NavigationView navigationView, androidx.appcompat.widget.Toolbar toolbar, String nick, String email, Activity activity, Context context) {
