@@ -16,7 +16,7 @@ import com.example.accesoconcorreo.Home;
 import com.example.accesoconcorreo.ListaAmigos;
 import com.example.accesoconcorreo.Login;
 import com.example.accesoconcorreo.R;
-import com.example.accesoconcorreo.Solicitudes;
+import com.example.accesoconcorreo.SolicitudesAmigos;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -155,7 +155,7 @@ public class ReadAndWriteSnippets {
                         context.startActivity(intentlogout);
                         break;
                     case R.id.nav_solicitudes:
-                        Intent solIntent = new Intent(context, Solicitudes.class);
+                        Intent solIntent = new Intent(context, SolicitudesAmigos.class);
                         solIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         solIntent.putExtra("nick",nick);
                         context.startActivity(solIntent);

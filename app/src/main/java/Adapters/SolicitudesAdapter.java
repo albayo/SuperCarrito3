@@ -33,21 +33,21 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
         this.resource=resource;
         this.mSolicitudes=l;
         this.nick=nick;
-        Log.d("SOLICITUDES","CONSTRUCTOR");
+
     }
 
     @Override
     public SolicitudesAdapter.SolicitudViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("SOLICITUDES","CONSTRUCTOR");
+
             View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
         return new SolicitudesAdapter.SolicitudViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull SolicitudViewHolder holder, int position) {
-        Log.d("SOLICITUDES","ADAPTER ffffffffffff");
+
         if(mSolicitudes!=null){
-            Log.d("SOLICITUDES","ADAPTER");
+
             Solicitud current = mSolicitudes.get(position);
             holder.remitente.setText(current.getRemitente());
             if(current.getTipoSolicitud().equals("amistad"))

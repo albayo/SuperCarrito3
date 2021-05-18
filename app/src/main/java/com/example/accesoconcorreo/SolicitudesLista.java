@@ -22,15 +22,12 @@ import java.util.List;
 import Adapters.SolicitudesAdapter;
 import ModeloDominio.Solicitud;
 
-public class Solicitudes extends AppCompatActivity {
-    private List<Solicitud> mSolicitudes;
-   // private List<Solicitud> mSolicitudesListas;
+public class SolicitudesLista extends AppCompatActivity {
+    private List<Solicitud> mSolicitudesListas;
     private DatabaseReference mDatabase;
-    private SolicitudesAdapter solicitudesAdapterAmigos;
     private SolicitudesAdapter solicitudesAdapterListas;
 
     private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán las solicitudes del usuario
-    private RecyclerView recyclerViewSolicitudesAmigos;
     private RecyclerView recyclerViewSolicitudesListas;
 
     private String nick;
@@ -39,17 +36,13 @@ public class Solicitudes extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //esta línea sirve para impedir que se pueda girar la pantalla
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_solicitudes);
+        setContentView(R.layout.activity_solicitudes_lista);
 
-        toolbar = (Toolbar) findViewById(R.id.solicitudesToolbar);
+        toolbar = (Toolbar) findViewById(R.id.solicitudesListasToolbar);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mSolicitudes =new ArrayList<>();
-        //mSolicitudesListas=new ArrayList<>();
+        mSolicitudesListas =new ArrayList<>();
 
-        recyclerViewSolicitudesAmigos=findViewById(R.id.solicitudes_recycler);
-        recyclerViewSolicitudesAmigos.setLayoutManager(new LinearLayoutManager(this));
-
-        recyclerViewSolicitudesListas=findViewById(R.id.solicitudes_listas_recycler);
+        recyclerViewSolicitudesListas=findViewById(R.id.solicitudes_recyclerListas);
         recyclerViewSolicitudesListas.setLayoutManager(new LinearLayoutManager(this));
 
         nick=getIntent().getStringExtra("nick");
@@ -58,47 +51,15 @@ public class Solicitudes extends AppCompatActivity {
 
         toolbar.setTitle(title);
         obtenerSolicitudes(nick);
-
-
     }
 
     public void obtenerSolicitudes(String nick){
-        mSolicitudes.clear();
-        mDatabase.child("users").child(nick).child("solicitudes").child("amistad").addValueEventListener(new ValueEventListener() {
-            /**
-             * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.
-             *
-             * @param snapshot Representa el nodo de la base de datos a actualizar.
-             */
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    //mSolicitudes.clear();
-                    for (DataSnapshot ds : snapshot.getChildren()) {
-                        String remitente = ds.getKey();
-                        Solicitud s=new Solicitud(remitente);
-                        s.setSolicitudAmistad();
-                        mSolicitudes.add(s);
-                        Log.d("Solicitudes", mSolicitudes.size()+"");
-
-                    }
-                    Log.d("Solicitudes123", mSolicitudes.size()+"");
-                    solicitudesAdapterAmigos = new SolicitudesAdapter(Solicitudes.this, R.layout.item_solicitud, mSolicitudes, nick);
-                    recyclerViewSolicitudesAmigos.setAdapter(solicitudesAdapterAmigos);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-            }
-        }
-        );
-
+        mSolicitudesListas.clear();
         mDatabase.child("users").child(nick).child("solicitudes").child("listas").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-                    //mSolicitudes.clear();
+                    mSolicitudesListas.clear();
                     for(DataSnapshot ds:snapshot.getChildren()){
                         String remitente=ds.getValue().toString();
                         for (DataSnapshot ds2:ds.getChildren()){
@@ -106,10 +67,11 @@ public class Solicitudes extends AppCompatActivity {
                             String nombreLista=ds2.getValue().toString();
                             Solicitud s=new Solicitud(remitente);
                             s.setSolicitudLista(idLista,nombreLista);
-                            mSolicitudes.add(s);
+                            mSolicitudesListas.add(s);
+                            Log.d("SolicitudesListas", mSolicitudesListas.size()+"");
                         }
                     }
-                    solicitudesAdapterListas = new SolicitudesAdapter(Solicitudes.this, R.layout.item_solicitud, mSolicitudes, nick);
+                    solicitudesAdapterListas = new SolicitudesAdapter(SolicitudesLista.this, R.layout.item_solicitud, mSolicitudesListas, nick);
                     recyclerViewSolicitudesListas.setAdapter(solicitudesAdapterListas);
                 }
             }
@@ -119,8 +81,6 @@ public class Solicitudes extends AppCompatActivity {
 
             }
         });
-
-
 
     }
 }

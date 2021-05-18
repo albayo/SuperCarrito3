@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SolicitudesAmigos">
+    tools:context=".SolicitudesLista">
 
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/solicitudesAmigosToolbar"
+        android:id="@+id/solicitudesListasToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -25,10 +25,10 @@
         app:titleTextColor="@color/white" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/solicitudes_recyclerAmigos"
+        android:id="@+id/solicitudes_recyclerListas"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/solicitudesAmigosToolbar"
+        android:layout_below="@+id/solicitudesListasToolbar"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
