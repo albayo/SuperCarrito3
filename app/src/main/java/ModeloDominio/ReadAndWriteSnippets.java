@@ -93,6 +93,7 @@ public class ReadAndWriteSnippets {
        insertContadorListas(Lista.getContLista()+1);
     }
 
+
     public static void solicitudLista(String usuarioActual, String nick, String idLista, String nombreLista){
         mDatabase.child("users").child(nick).child("solicitudes").child("listas").child(usuarioActual).child(idLista).setValue(nombreLista);
     }
