@@ -1,14 +1,11 @@
 package com.example.accesoconcorreo;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.FragmentTransaction;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import ModeloDominio.Lista;
 import ModeloDominio.ReadAndWriteSnippets;
-import ModeloDominio.Usuario;
 
 /**
  * Esta clase define el fragmento llamado "fragment_introducir_amigo" que sirve para introducir un nombre para mandar una solicitud de amigo a un usuario.
@@ -84,7 +77,8 @@ public class introducir_amigo extends DialogFragment {
              */
             @Override
             public void onClick(View v) {
-                cerrarFragment();            }
+                cerrarFragment();
+            }
         });
     }
 
@@ -98,13 +92,13 @@ public class introducir_amigo extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_introducir_nom_lista2, container, false);
+        return inflater.inflate(R.layout.fragment_introducir_amigo, container, false);
     }
 
     /**
      * Método que sirve para cerrar el Fragment
      */
     private void cerrarFragment() {
-        getActivity().onBackPressed();
+        getFragmentManager().beginTransaction().remove(this).commit();
     }
 }

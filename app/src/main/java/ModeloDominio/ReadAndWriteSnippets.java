@@ -154,7 +154,7 @@ public class ReadAndWriteSnippets {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        if (!(context instanceof Home)) {
+                        if (!(context instanceof Home)) {//mirar
                             Intent intentH = new Intent(context, Home.class);
                             intentH.putExtra("email", email);
                             intentH.putExtra("nick", nick);

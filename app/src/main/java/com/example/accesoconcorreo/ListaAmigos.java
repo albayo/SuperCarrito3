@@ -3,9 +3,11 @@ package com.example.accesoconcorreo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -13,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -27,6 +30,7 @@ import Adapters.ProductListAdapter;
 import Adapters.SolicitudesAdapter;
 import ModeloDominio.Lista;
 import ModeloDominio.Producto;
+import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Solicitud;
 
 public class ListaAmigos extends AppCompatActivity {
@@ -36,6 +40,9 @@ public class ListaAmigos extends AppCompatActivity {
     private ListaAmigosAdapter listaAmigosAdapter;
     private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán las solicitudes del usuario
     private RecyclerView recyclerViewAmigos;
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
     private String nick;
 
@@ -60,10 +67,16 @@ public class ListaAmigos extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                introducir_amigo amigoDialogFragment = new introducir_amigo(nick);
-                amigoDialogFragment.show(getSupportFragmentManager(),"tag");
+                introducir_amigo amigoDF = new introducir_amigo(nick);
+                amigoDF.show(getSupportFragmentManager(),"tag");
             }
         });
+
+        drawerLayout= findViewById(R.id.drawer_layout_amigos);
+        navigationView= findViewById(R.id.nav_View);
+        Activity activity=this;
+
+        ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,toolbar,nick,getIntent().getStringExtra("email"),activity,getApplicationContext());
 
     }
 
