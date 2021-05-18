@@ -172,14 +172,11 @@ public class introducir_nom_lista extends DialogFragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-
     }
 
     /**
      * Método que sirve para cerrar el Fragment
      */
-
-
     private void cerrarFragment() {
 
         getActivity().onBackPressed();

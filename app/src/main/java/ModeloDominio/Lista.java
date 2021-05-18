@@ -1,8 +1,6 @@
 package ModeloDominio;
 //Falta arreglar la base de datos ESTA MAL
-
-
-
+    //Representa si el checkbox que tiene cada lista está seleccionado (esa lista se quiere eliminar) o no
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;

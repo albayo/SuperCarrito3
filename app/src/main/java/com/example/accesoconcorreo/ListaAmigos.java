@@ -6,6 +6,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +25,7 @@ import java.util.List;
 import Adapters.ListaAmigosAdapter;
 import Adapters.ProductListAdapter;
 import Adapters.SolicitudesAdapter;
+import ModeloDominio.Lista;
 import ModeloDominio.Producto;
 import ModeloDominio.Solicitud;
 
@@ -54,12 +56,12 @@ public class ListaAmigos extends AppCompatActivity {
         String title="Supercarrito - "+nick;
 
         toolbar.setTitle(title);
-        obtenerAmigosUsuario(nick);
         FloatingActionButton fab=findViewById(R.id.fab_Aniadir_Amigos);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //CREAR FUNCIONALIDAD
+                introducir_amigo amigoDialogFragment = new introducir_amigo(nick);
+                amigoDialogFragment.show(getSupportFragmentManager(),"tag");
             }
         });
 
