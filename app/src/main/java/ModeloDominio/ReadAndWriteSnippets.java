@@ -15,7 +15,10 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import com.example.accesoconcorreo.Home;
 import com.example.accesoconcorreo.ListaAmigos;
 import com.example.accesoconcorreo.Login;
+import com.example.accesoconcorreo.Perfil;
 import com.example.accesoconcorreo.R;
+import com.example.accesoconcorreo.SolicitudesAmigos;
+import com.example.accesoconcorreo.SolicitudesLista;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -166,11 +169,25 @@ public class ReadAndWriteSnippets {
                         intentlogout.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intentlogout);
                         break;
-                    case R.id.nav_solicitudes:
-                       /* Intent solIntent = new Intent(context, Solicitudes.class);
-                        solIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                        solIntent.putExtra("nick", nick);
-                        context.startActivity(solIntent);*/
+                    case R.id.nav_solicitudesamigos:
+                        Intent solamIntent = new Intent(context, SolicitudesAmigos.class);
+                        solamIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                        solamIntent.putExtra("nick", nick);
+                        context.startActivity(solamIntent);
+                        break;
+                    case R.id.nav_solicitudeslista:
+                        Intent solliIntent = new Intent(context, SolicitudesLista.class);
+                        solliIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                        solliIntent.putExtra("nick", nick);
+                        context.startActivity(solliIntent);
+                        break;
+                    case R.id.nav_profile:
+                        Intent profintent = new Intent(context, Perfil.class);
+                        profintent.putExtra("email", email);
+                        profintent.putExtra("nick", nick);
+                        context.startActivity(profintent);
+                        break;
+
                 }
                 drawerLayout.closeDrawer(GravityCompat.START);
                 return true;

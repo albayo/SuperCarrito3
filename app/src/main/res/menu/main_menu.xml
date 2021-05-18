@@ -31,9 +31,14 @@
                     android:title="Perfil" />
 
                 <item
-                    android:id="@+id/nav_solicitudes"
+                    android:id="@+id/nav_solicitudesamigos"
                     android:icon="@drawable/ic_solicitudes"
-                    android:title="Solicitudes" />
+                    android:title="Solicitudes amistad" />
+
+                <item
+                    android:id="@+id/nav_solicitudeslista"
+                    android:icon="@drawable/ic_solicitudes"
+                    android:title="Solicitudes lista" />
 
                 <item
                     android:id="@+id/nav_logout"
