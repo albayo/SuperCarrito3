@@ -75,7 +75,7 @@ public class ReadAndWriteSnippets {
     public static void insertContadorListas(int n){
         mDatabase.child("contadorLista").setValue(n);
     }
-    public static void insertarLista(String nombrelista,String nick) {
+    public static void insertarLista(String nombrelista,String nick,boolean compartida) {
 
         actualizaContadorListas();
 
@@ -87,6 +87,7 @@ public class ReadAndWriteSnippets {
         Map<String,Object> postValues = list.toMap();
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("nombre").setValue(nombrelista);
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("productos").setValue("pr1");
+        if(compartida)  mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("compartida").setValue("true");
         mDatabase.child("users").child(nick).child("listas").child(String.valueOf(list.getIdLista())).setValue(nombrelista);
 
        insertContadorListas(Lista.getContLista()+1);

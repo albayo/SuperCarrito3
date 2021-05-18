@@ -3,6 +3,7 @@ package Adapters;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,12 +12,18 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accesoconcorreo.CrearLista;
 import com.example.accesoconcorreo.Home;
 import com.example.accesoconcorreo.ListaProductos;
 import com.example.accesoconcorreo.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.io.Serializable;
 import java.util.List;
@@ -83,13 +90,31 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
         if  ( mListas  !=  null || mListas.get(position)!=null) {
             Lista l = mListas.get(position);
             String current =  l.getNombre();
-            if(l.isGrupal()){
+
+            holder.ListaNombreView.setText(current);
+            holder.idLista.setText(String.valueOf(l.getIdLista()));
+            DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
+            mDatabase.child("listas").child(String.valueOf(l.getIdLista())).child("compartida").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull  Task<DataSnapshot> task) {
+                    if(task.isSuccessful()){
+                        if(task.getResult().getValue()!=null){
+                            l.setGrupal(true);
+                            holder.imgGrupal.setVisibility(View.VISIBLE);
+                        }
+                        else{
+                            holder.imgGrupal.setVisibility(View.INVISIBLE);
+                        }
+                    }
+                }
+            });
+           /* if(l.isGrupal() || l.getUsuarios().size()>1){
                 holder.imgGrupal.setVisibility(View.VISIBLE);
             }else{
                 holder.imgGrupal.setVisibility(View.INVISIBLE);
-            }
-            holder.ListaNombreView.setText(current);
-            holder.idLista.setText(String.valueOf(l.getIdLista()));
+            }*/
+
+
         }  else  {
             // Covers the case of data not being ready yet.
             holder. ListaNombreView .setText( "No hay listas" );
@@ -136,6 +161,8 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
         private final ImageView imgGrupal;
         //Representa el Checkbox que indicará si esta lista se quiere elminiar o no
         private final CheckBox checkbox;
+
+
         /**
          * Constructor de la clase
          * @param itemView View en el cual se busca el TextView en el cual se representará la información
@@ -149,6 +176,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
             this.idLista = (TextView)itemView.findViewById(R.id.text_id_lista);
             checkbox = (CheckBox) itemView.findViewById(R.id.checkBox_eliminar);
             imgGrupal = (ImageView) itemView.findViewById(R.id.imgGrupal);
+
             /*if(true){
                 imgGrupal.setVisibility(View.INVISIBLE);
             }*/

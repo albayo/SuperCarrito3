@@ -252,6 +252,7 @@ public class Home extends AppCompatActivity {
              * Método que cuando cambia un objeto en la base de datos se ejecuta para mostrar las listas de manera actualizada
              * @param snapshot
              */
+            boolean grupal=false;
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -262,6 +263,7 @@ public class Home extends AppCompatActivity {
                         String id=ds.getKey();
                         Log.d("Obtener",id);
                         String nombre = ds.getValue().toString();
+
                         Lista l =new Lista(nombre,id);
                         listas.add(l);
                     }

@@ -19,8 +19,6 @@ public class Lista implements Serializable {
     //Representa el número de listas creadas
     private static int contLista=0;
 
-
-
     private boolean checkboxEliminar;
     //Representa el tipo de la lista
     private String tipolista;
@@ -68,6 +66,15 @@ public class Lista implements Serializable {
         this.grupal = false;
         this.checkboxEliminar=false;
         this.productos=new java.util.ArrayList<Producto>();
+    }
+    public Lista(String nombre,String id,boolean compartida){
+        this.idLista=Integer.parseInt(id);
+        this.usuarios=new ArrayList<>();
+        this.nombre=nombre;
+        this.grupal = false;
+        this.checkboxEliminar=false;
+        this.productos=new java.util.ArrayList<Producto>();
+        this.grupal=compartida;
     }
     public boolean isCheckboxEliminar() {
         return checkboxEliminar;
@@ -169,7 +176,7 @@ public class Lista implements Serializable {
     public boolean isGrupal(){
         return this.grupal;
     }
-
+    public void setGrupal(boolean b){this.grupal=b;}
     /**
      * Método que convierte la información contenida en la clase a un mapa
      * @return result (mapa con el contenido de la clase)

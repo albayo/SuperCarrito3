@@ -78,7 +78,7 @@ public class fragment_crear_compartida extends DialogFragment {
                                 Toast toast = Toast.makeText(getContext(), "Usuario añadido", Toast.LENGTH_LONG);
                                 toast.show();
 
-                                ReadAndWriteSnippets.insertarLista(nombreLista,nick);
+                                ReadAndWriteSnippets.insertarLista(nombreLista,nick,true);
                                 String idLista=String.valueOf(Lista.getContLista());
                                 for(String s: usuarios){
                                     //ReadAndWriteSnippets.aniadirUsuarioaList(nombreLista,s,String.valueOf(Lista.getContLista()));

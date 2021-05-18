@@ -124,7 +124,7 @@ public class introducir_nom_lista extends DialogFragment {
 
                         Log.d("Cont", "CrearLista:" +Lista.getContLista());
                         List<Usuario> lista=new ArrayList<>();
-                        ReadAndWriteSnippets.insertarLista(nombreLista,nick);
+                        ReadAndWriteSnippets.insertarLista(nombreLista,nick,false);
                         cerrarFragment();
 
                         Intent intent = new Intent(getContext(), ListaProductos.class);
