@@ -154,7 +154,7 @@ public class ReadAndWriteSnippets {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_home:
-                        if (!(context instanceof Home)) {//mirar
+                        if (!(toolbar.getId() == R.id.homeToolbar)) {
                             Intent intentH = new Intent(context, Home.class);
                             intentH.putExtra("email", email);
                             intentH.putExtra("nick", nick);
@@ -166,13 +166,15 @@ public class ReadAndWriteSnippets {
                         break;
                     case R.id.nav_amigos:
                         Log.d("NAVIGATOR", "A AMIGOS");
-                        Intent intent = new Intent(context, ListaAmigos.class);
-                        intent.putExtra("email", email);
-                        intent.putExtra("nick", nick);
-                        intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                        Toast t = Toast.makeText(context, "A amigos", Toast.LENGTH_LONG);
-                        t.show();
-                        context.startActivity(intent);
+                        if (!(toolbar.getId() == R.id.amigos_toolbar)) {
+                            Intent intent = new Intent(context, ListaAmigos.class);
+                            intent.putExtra("email", email);
+                            intent.putExtra("nick", nick);
+                            intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                            Toast t = Toast.makeText(context, "A amigos", Toast.LENGTH_LONG);
+                            t.show();
+                            context.startActivity(intent);
+                        }
                         break;
                     case R.id.nav_listas:
                         Intent homeIntent = new Intent(context, Home.class);
@@ -203,6 +205,7 @@ public class ReadAndWriteSnippets {
                         Intent profintent = new Intent(context, Perfil.class);
                         profintent.putExtra("email", email);
                         profintent.putExtra("nick", nick);
+                        profintent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(profintent);
                         break;
 
