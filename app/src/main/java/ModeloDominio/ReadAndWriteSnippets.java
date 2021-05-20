@@ -1,6 +1,7 @@
 package ModeloDominio;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
@@ -55,13 +56,26 @@ public class ReadAndWriteSnippets {
     }
 
     // [START rtdb_write_new_user]
-    public void insertarUsuario(String name, String email) {
+    public void insertarUsuario(String name, String email,Context context) {
         Usuario user = new Usuario(name, email);
-        if (mDatabase.child("users").child(name).getKey() == null) {
-            mDatabase.child("users").child(name).setValue(user.toMap());
-        }
+        mDatabase.child("users").child(name).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().getValue()==null){
+                        mDatabase.child("users").child(name).setValue(user.toMap());
+                        mDatabase.child("users").child(name).child("foto").setValue(Constantes.URLFOTODEFECTO);
+                    }
+                    else{
+                        Toast toast=new Toast(context);
+                        toast.setText("El usuario ya existe, pruebe con otro nick");
+                    }
+                }
+            }
+        });
 
     }
+
 
     public static void actualizaContadorListas() {
 
