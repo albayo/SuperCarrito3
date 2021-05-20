@@ -63,12 +63,29 @@ public class ReadAndWriteSnippets {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
                     if(task.getResult().getValue()==null){
-                        mDatabase.child("users").child(name).setValue(user.toMap());
-                        mDatabase.child("users").child(name).child("foto").setValue(Constantes.URLFOTODEFECTO);
+                        mDatabase.child("correousuario").child(email).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task2) {
+                                if(task2.isSuccessful()) {
+                                    if (task2.getResult().getValue() == null) {
+                                        mDatabase.child("users").child(name).setValue(user.toMap());
+                                        mDatabase.child("correousuario").child(email).setValue(name);
+                                    }
+                                }
+                                else {
+                                    Toast toast=new Toast(context);
+                                    toast.setText("Este correo ya tiene un usuario, pruebe con otro correo");
+                                    toast.show();
+                                }
+
+                            }
+                        });
+
                     }
                     else{
                         Toast toast=new Toast(context);
                         toast.setText("El usuario ya existe, pruebe con otro nick");
+                        toast.show();
                     }
                 }
             }
