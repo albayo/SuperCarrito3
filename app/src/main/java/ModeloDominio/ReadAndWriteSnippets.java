@@ -119,7 +119,7 @@ public class ReadAndWriteSnippets {
 
     public static void aniadirAmigo(String usuarioActual, String amigo){
 
-        mDatabase.child("users").child(usuarioActual).child("email").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        mDatabase.child("users").child(amigo).child("email").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
@@ -133,8 +133,8 @@ public class ReadAndWriteSnippets {
 
     }
 
-    public static void aniadirLista(String usuarioActual, String amigo){
-
+    public static void aniadirLista(String nick, String idLista, String nombreLista){
+        mDatabase.child("users").child(nick).child("listas").child(idLista).setValue(nombreLista);
 
     }
 

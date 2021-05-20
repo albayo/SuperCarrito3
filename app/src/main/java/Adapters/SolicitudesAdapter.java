@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresPermission;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accesoconcorreo.R;
@@ -89,7 +90,8 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
                     int position=getLayoutPosition();
                     Solicitud current=mSolicitudes.get(position);
                     if(current.getTipoSolicitud().equals("lista")){
-
+                        ReadAndWriteSnippets.aniadirLista(nick,current.getIdLista(),current.getNombreLista());
+                        ReadAndWriteSnippets.eliminarSolicitudLista(nick,current.getRemitente(),current.getIdLista());
                     }
                     else{
                         ReadAndWriteSnippets.aniadirAmigo(nick,current.getRemitente());
