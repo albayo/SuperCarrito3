@@ -100,6 +100,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
                 public void onClick(View v) {
                     int position=getLayoutPosition();
                     Solicitud current=mSolicitudes.get(position);
+
                     if(current.getTipoSolicitud().equals("lista")){
                         ReadAndWriteSnippets.aniadirLista(nick,current.getIdLista(),current.getNombreLista());
                         ReadAndWriteSnippets.eliminarSolicitudLista(nick,current.getRemitente(),current.getIdLista());
