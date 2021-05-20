@@ -169,6 +169,17 @@ public class ReadAndWriteSnippets {
 
     }
 
+    public static List<Producto> buscarProductos(List<Producto> productos, String nombreProds){
+        List<Producto> productoList = new ArrayList<>();
+        for(Producto p : productos){
+            if(p.getNombre().contains(nombreProds)){
+                productoList.add(p);
+            }
+        }
+
+        return productoList;
+    }
+
     public static void setNavigationView(DrawerLayout drawerLayout, NavigationView navigationView, androidx.appcompat.widget.Toolbar toolbar, String nick, String email, Activity activity, Context context) {
 
         //NAVIGATION
