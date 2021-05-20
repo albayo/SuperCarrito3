@@ -48,13 +48,16 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
     public void onBindViewHolder(@NonNull SolicitudViewHolder holder, int position) {
 
         if(mSolicitudes!=null){
-
             Solicitud current = mSolicitudes.get(position);
-            holder.remitente.setText(current.getRemitente());
-            if(current.getTipoSolicitud().equals("amistad"))
+
+            if(current.getTipoSolicitud().equals("amistad")){
+                holder.remitente.setText(current.getRemitente());
                 holder.tipoSolicitud.setText("Solicitud de amistad de:");
-            else
+            }
+            else{
                 holder.tipoSolicitud.setText("Solicitud de participar en la lista "+current.getNombreLista()+" de:");
+                holder.remitente.setText(current.getRemitente());
+            }
         }
     }
 

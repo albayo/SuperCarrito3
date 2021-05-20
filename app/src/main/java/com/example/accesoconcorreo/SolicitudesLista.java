@@ -61,7 +61,7 @@ public class SolicitudesLista extends AppCompatActivity {
                 if(snapshot.exists()){
                     mSolicitudesListas.clear();
                     for(DataSnapshot ds:snapshot.getChildren()){
-                        String remitente=ds.getValue().toString();
+                        String remitente=ds.getKey().toString();
                         for (DataSnapshot ds2:ds.getChildren()){
                             String idLista=ds2.getKey();
                             String nombreLista=ds2.getValue().toString();
