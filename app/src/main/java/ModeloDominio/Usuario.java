@@ -29,6 +29,9 @@ public class Usuario {
     private String email;
     //Representa el nombre de las listas en la que participa el usuario
     private List<String> listas;
+    //Representa la foto del usuario
+    private String fotoPerfil;
+
 
     /**
      * Constructor base de la clase
@@ -40,6 +43,7 @@ public class Usuario {
         this.nick="";
         this.email=email;
         this.listas=new ArrayList<>();
+        this.fotoPerfil=Constantes.URLFOTODEFECTO;
     }
 
     /**
@@ -53,6 +57,7 @@ public class Usuario {
         this.nick = nick;
         this.email = email;
         this.listas = new ArrayList<String>();
+        this.fotoPerfil=Constantes.URLFOTODEFECTO;
     }
     public int getId(){ return id; }
     /**
@@ -97,6 +102,13 @@ public class Usuario {
         listas.add(l);
     }
 
+
+    /**
+     * Método que añade la foto cuya URL es s a la foto del usuario
+     * @param s Representa la URL de la foto
+     */
+    public void aniadirfoto(String s){ this.fotoPerfil=s;}
+
     /**
      * Método que convierte la información contenida en la clase a un mapa
      * @return result (mapa con el contenido de la clase)
@@ -107,6 +119,7 @@ public class Usuario {
         result.put("nick",nick);
         result.put("email",email);
         result.put("listas",listas);
+        result.put("fotoperfil",fotoPerfil);
 
         return result;
     }

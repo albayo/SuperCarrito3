@@ -55,6 +55,8 @@ public class introducir_nick extends DialogFragment {
     //Representa la clase de Lógica de Negocio la cuál será necesaria para comprobar información con la BD
     private ReadAndWriteSnippets persistencia;
 
+    private Context contexto;
+
 
     //Representa el nombre del último botón en el cual se ha hecho click
     private String ultBoton = "";
@@ -64,9 +66,10 @@ public class introducir_nick extends DialogFragment {
      * @param email Representa el correo del nuevo usuario
      * @param pwd Representa la contraseña del nuevo usuario
      */
-    public introducir_nick(String email, String pwd) {
+    public introducir_nick(String email, String pwd,Context context) {
         this.email = email;
         this.pwd = pwd;
+        this.contexto=context;
     }
 
     /**
@@ -111,7 +114,7 @@ public class introducir_nick extends DialogFragment {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
                                     if (task.isSuccessful()) {
-                                        persistencia.insertarUsuario(nick, email);
+                                        persistencia.insertarUsuario(nick, email,contexto);
                                         cerrarFragment();
                                         showHome(nick, email, ProviderType.Basic); //MEJOR CON ?: ""
                                     } else {

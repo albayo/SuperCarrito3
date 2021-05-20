@@ -102,7 +102,7 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (usuarioET.getText().toString().trim().length() > 0 && contraseniaET.getText().toString().trim().length() > 0) {
-                    introducir_nick nickDF = new introducir_nick(usuarioET.getText().toString(),contraseniaET.getText().toString());
+                    introducir_nick nickDF = new introducir_nick(usuarioET.getText().toString(),contraseniaET.getText().toString(),getApplicationContext());
                     nickDF.show(getSupportFragmentManager(),"tag");
                    /* Task<AuthResult> authResultTask = FirebaseAuth.getInstance().createUserWithEmailAndPassword(usuarioET.getText().toString(), contraseniaET.getText().toString())
                             .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -272,7 +272,7 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                persistencia.insertarUsuario(account.getDisplayName(), account.getEmail());
+                                persistencia.insertarUsuario(account.getDisplayName(), account.getEmail(),getApplicationContext());
                                 showHome(account.getDisplayName(),account.getEmail(), ProviderType.google);
                             } else {
                                 showAlert();
