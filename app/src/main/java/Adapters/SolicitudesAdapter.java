@@ -92,7 +92,10 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
                     }
                     else{
+                        ReadAndWriteSnippets.aniadirAmigo(nick,current.getRemitente());
+                        ReadAndWriteSnippets.aniadirAmigo(current.getRemitente(),nick);
 
+                        ReadAndWriteSnippets.eliminarSolicitudAmistad(nick,current.getRemitente());
                     }
                 }
             });

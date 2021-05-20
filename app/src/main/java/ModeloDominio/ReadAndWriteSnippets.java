@@ -133,6 +133,11 @@ public class ReadAndWriteSnippets {
 
     }
 
+    public static void aniadirLista(String usuarioActual, String amigo){
+
+
+    }
+
     public static void setNavigationView(DrawerLayout drawerLayout, NavigationView navigationView, androidx.appcompat.widget.Toolbar toolbar, String nick, String email, Activity activity, Context context) {
 
         //NAVIGATION
