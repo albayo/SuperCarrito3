@@ -63,13 +63,19 @@ public class ReadAndWriteSnippets {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
                     if(task.getResult().getValue()==null){
-                        mDatabase.child("correousuario").child(email).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        String [] emailnodo=email.split("@");
+                        String emailinsert1=""+emailnodo[0]+emailnodo[1];
+                        Log.d("email",emailinsert1);
+                        String [] emailnodo2=emailinsert1.split("\\.");
+                        String emailinsert2=""+emailnodo2[0]+emailnodo2[1];
+                        Log.d("email",emailinsert2);
+                        mDatabase.child("correousuario").child(emailinsert2).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task2) {
                                 if(task2.isSuccessful()) {
                                     if (task2.getResult().getValue() == null) {
                                         mDatabase.child("users").child(name).setValue(user.toMap());
-                                        mDatabase.child("correousuario").child(email).setValue(name);
+                                        mDatabase.child("correousuario").child(emailinsert2).setValue(name);
                                     }
                                 }
                                 else {
