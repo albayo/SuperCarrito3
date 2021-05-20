@@ -112,6 +112,7 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
                     }
                     else{
                         ReadAndWriteSnippets.eliminarSolicitudAmistad(nick,current.getRemitente());
+                        ReadAndWriteSnippets.eliminarSolicitudAmistad(nick,current.getRemitente());
                     }
                 }
             });

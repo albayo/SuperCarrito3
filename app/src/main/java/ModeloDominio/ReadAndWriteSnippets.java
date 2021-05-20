@@ -119,13 +119,13 @@ public class ReadAndWriteSnippets {
 
     public static void aniadirAmigo(String usuarioActual, String amigo){
 
-        mDatabase.child("users").child(amigo).child("email").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+        mDatabase.child("users").child(usuarioActual).child("email").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
                     if(task.getResult().getValue()!=null){
                         String correo=task.getResult().getValue().toString();
-                        mDatabase.child("users").child(usuarioActual).child("amigos").child(amigo).setValue(correo);
+                        mDatabase.child("users").child(amigo).child("amigos").child(usuarioActual).setValue(correo);
                     }
                 }
             }
