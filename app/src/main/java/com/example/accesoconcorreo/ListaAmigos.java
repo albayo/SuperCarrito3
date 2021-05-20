@@ -77,7 +77,7 @@ public class ListaAmigos extends AppCompatActivity {
         Activity activity=this;
 
         ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,toolbar,nick,getIntent().getStringExtra("email"),activity,getApplicationContext());
-
+        obtenerAmigosUsuario(nick);
     }
 
     public void obtenerAmigosUsuario(String nick) {
