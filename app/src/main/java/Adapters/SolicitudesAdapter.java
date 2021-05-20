@@ -15,6 +15,11 @@ import androidx.annotation.RequiresPermission;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accesoconcorreo.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,6 +92,9 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
             aceptar=itemView.findViewById(R.id.aceptar_sol);
             declinar=itemView.findViewById(R.id.declinar_sol);
 
+            DatabaseReference mDatabase=FirebaseDatabase.getInstance().getReference();
+
+
             aceptar.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -95,13 +103,35 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
                     if(current.getTipoSolicitud().equals("lista")){
                         ReadAndWriteSnippets.aniadirLista(nick,current.getIdLista(),current.getNombreLista());
                         ReadAndWriteSnippets.eliminarSolicitudLista(nick,current.getRemitente(),current.getIdLista());
+                        mDatabase.child("users").child(nick).child("listas").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if(task.isSuccessful()){
+                                    if(task.getResult().getValue()==null){
+                                        activity.recreate();
+                                    }
+                                }
+                            }
+                        });
                     }
                     else{
                         ReadAndWriteSnippets.aniadirAmigo(nick,current.getRemitente());
                         ReadAndWriteSnippets.aniadirAmigo(current.getRemitente(),nick);
 
                         ReadAndWriteSnippets.eliminarSolicitudAmistad(nick,current.getRemitente());
+                        mDatabase.child("users").child(nick).child("amistad").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if(task.isSuccessful()){
+                                    if(task.getResult().getValue()==null){
+                                        activity.recreate();
+                                    }
+                                }
+                            }
+                        });
                     }
+
+
                 }
             });
 
@@ -112,10 +142,30 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
                     Solicitud current=mSolicitudes.get(position);
                     if(current.getTipoSolicitud().equals("lista")){
                         ReadAndWriteSnippets.eliminarSolicitudLista(nick,current.getRemitente(),current.getIdLista());
+                        mDatabase.child("users").child(nick).child("listas").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if(task.isSuccessful()){
+                                    if(task.getResult().getValue()==null){
+                                        activity.recreate();
+                                    }
+                                }
+                            }
+                        });
                     }
                     else{
                         ReadAndWriteSnippets.eliminarSolicitudAmistad(nick,current.getRemitente());
                         ReadAndWriteSnippets.eliminarSolicitudAmistad(nick,current.getRemitente());
+                        mDatabase.child("users").child(nick).child("amistad").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if(task.isSuccessful()){
+                                    if(task.getResult().getValue()==null){
+                                        activity.recreate();
+                                    }
+                                }
+                            }
+                        });
                     }
                 }
             });

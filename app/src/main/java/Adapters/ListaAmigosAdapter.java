@@ -10,31 +10,44 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.accesoconcorreo.Home;
+import com.example.accesoconcorreo.ListaAmigos;
 import com.example.accesoconcorreo.ListaProductos;
 import com.example.accesoconcorreo.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
 public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.AmigosViewHolder>{
     //Representa las listas que se representarán
-    private List<String> mListas;  // Cached copy of Listas
+    private List<String> mAmigos;  // Cached copy of Listas
     //Represente los ids de las listas , se cambiará por un Map.
-    private List<String> mListasId; //
+    private List<String> mCorreos; //
     //Representa el objeto necesario para la instanciacion en forma de View del layout necesario en este caso(item:prod_list)
     private int resource;
     //Representa el siguiente activity al que iremos, para redirigir.
-    private Activity a;
+    private Activity activity;
+    private String modo;
+    private String nick;
 
-    public ListaAmigosAdapter(Activity a, int resource, List<String> l,List<String> lid) {
+
+
+    public ListaAmigosAdapter(Activity a, int resource, List<String> l,List<String> lid,String nick,String modo) {
         Log.d("Construcor","ConstructorLanzado");
         this.resource=resource;
-        this.a = a;
-        this.mListas = l;
-        this.mListasId=lid;
+        this.activity = a;
+        this.mAmigos = l;
+        this.mCorreos=lid;
+        this.modo=modo;
+        this.nick=nick;
     }
     public AmigosViewHolder onCreateViewHolder(ViewGroup parent, int  viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
@@ -43,13 +56,13 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
     @Override
     public void  onBindViewHolder(ListaAmigosAdapter.AmigosViewHolder holder, int  position) {
         Log.d("Holder","HolderLanzado");
-        if  ( mListas  !=  null || mListas.get(position)!=null) {
-            String current =  mListas.get(position);
-            holder.ListaNombreView.setText(current);
-            holder.idLista.setText(mListasId.get(position));
+        if  ( mAmigos  !=  null || mAmigos.get(position)!=null) {
+            String current =  mAmigos.get(position);
+            holder.AmigoNombreView.setText(current);
+            holder.idLista.setText(mCorreos.get(position));
         }  else  {
             // Covers the case of data not being ready yet.
-            holder. ListaNombreView .setText( "No hay listas" );
+            holder. AmigoNombreView .setText( "No hay listas" );
         }
     }
 
@@ -58,11 +71,11 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
      * @param Listas Representa la lista de Listas que se quiere asignar
      */
     public void  setListas(List<String> Listas){
-        mListas  = Listas;
+        mAmigos  = Listas;
     
     }
     // getItemCount﴾﴿ is called many times, and when it is first called,
-    // mListas has not been updated ﴾means initially, it's null, and we can't return null.
+    // mAmigos has not been updated ﴾means initially, it's null, and we can't return null.
 
     /**
      * Método que devuelve el número de elementos a representar
@@ -71,8 +84,8 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
 
     @Override
     public int  getItemCount() {
-        if  ( mListas  !=  null )
-            return  mListas .size();
+        if  ( mAmigos  !=  null )
+            return  mAmigos .size();
         else return  0;
     }
 
@@ -85,7 +98,7 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
         //Representa el View donde se dispondrán los nombres de las listas
         public View view;
         //Representa el TextView donde sale el nombre de la lista
-        private final TextView ListaNombreView;
+        private final TextView AmigoNombreView;
         //Representa el TextView donde saldrá el id de la lista
         private final TextView idLista;
         //Representa una copia del adapter
@@ -100,26 +113,41 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
         private  AmigosViewHolder(View itemView, ListaAmigosAdapter adapter) {
             super (itemView);
             this.view=itemView;
-            this.ListaNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
+            this.AmigoNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
             this.idLista=(TextView)itemView.findViewById(R.id.text_id_lista);
             this.btELiminarAmigo=(ImageButton)itemView.findViewById(R.id.btEliminarAmigo);
             this.adapter = adapter;
             //itemView.setOnClickListener(this);
+            DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
 
-            /*btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
+            btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
-                    androidx.appcompat.app.AlertDialog.Builder b= new androidx.appcompat.app.AlertDialog.Builder(this);
+                    androidx.appcompat.app.AlertDialog.Builder b= new androidx.appcompat.app.AlertDialog.Builder(activity);
                     b.setTitle("Confirmación");
                     b.setMessage("¿Está seguro/a de que desea cerrar sesión?");
-                    b.setPositiveButton("Aceptar",new DialogInterface.OnClickListener() {
 
+                    b.setPositiveButton("Aceptar",new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            String amigo=AmigoNombreView.getText().toString();
+                            Log.d("AMIGOS",amigo);
+                            mDatabase.child("users").child(nick).child("amigos").child(amigo).removeValue();
+                            mDatabase.child("users").child(amigo).child("amigos").child(nick).removeValue();
 
-                            Home.super.onBackPressed();
+                            mDatabase.child("users").child(nick).child("amigos").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if(task.isSuccessful()){
+                                        if(task.getResult().getValue()==null){
+
+                                            activity.recreate();
+                                        }
+                                    }
+                                }
+                            });
                         }
                     });
 
@@ -128,13 +156,13 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            onResume();
+
                         }
                     });
                     AlertDialog alert=b.create();
                     alert.show();
                 }
-            });*/
+            });
         }
 
         /**
@@ -145,8 +173,8 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
         public void onClick(View v) {
             //Se obtiene la posicion del item que ha sido clickado
             int mPosicion = getLayoutPosition();
-            String lista = mListas.get(mPosicion);
-            String id = mListasId.get(mPosicion);
+            String lista = mAmigos.get(mPosicion);
+            String id = mAmigosId.get(mPosicion);
 
             Intent intent = new Intent(a, ListaProductos.class);
             intent.putExtra("nombreLista", lista);

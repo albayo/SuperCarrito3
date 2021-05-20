@@ -174,7 +174,7 @@ public class ListaProductos extends AppCompatActivity {
             Intent homeIntent = new Intent(ListaProductos.this, ListaAmigos.class); //debería ir la clase del Perfil
             homeIntent.putExtra("email", email);
             homeIntent.putExtra("nick", nick);
-
+            homeIntent.putExtra("modo","añadir");
 
         }
 

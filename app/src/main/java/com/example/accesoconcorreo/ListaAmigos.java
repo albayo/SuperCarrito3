@@ -14,6 +14,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -75,14 +77,29 @@ public class ListaAmigos extends AppCompatActivity {
         drawerLayout= findViewById(R.id.drawer_layout_amigos);
         navigationView= findViewById(R.id.nav_View);
         Activity activity=this;
-
+        String modo=getIntent().getStringExtra("modo");
         ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,toolbar,nick,getIntent().getStringExtra("email"),activity,getApplicationContext());
-        obtenerAmigosUsuario(nick);
+        obtenerAmigosUsuario(nick,modo);
+
+
     }
 
-    public void obtenerAmigosUsuario(String nick) {
-        List<String> lAmigos = new ArrayList<>();
-        List<String> lCorreos=new ArrayList<>();
+    public void obtenerAmigosUsuario(String nick, String modo) {
+
+        //NECESARIO PARA BORRAR EL ÚLTIMO
+        mDatabase.child("users").child(nick).child("amigos").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().getValue()==null){
+                        Log.d("AMIGOOOS", "NO HAYY");
+                        mAmigos.clear();
+                        listaAmigosAdapter= new ListaAmigosAdapter(ListaAmigos.this,R.layout.amigos_recycler, mAmigos,mCorreos,nick,modo);
+                        recyclerViewAmigos.setAdapter(listaAmigosAdapter);
+                    }
+                }
+            }
+        });
         mDatabase.child("users").child(nick).child("amigos").addValueEventListener(new ValueEventListener() {
             /**
              * Método que cuando cambia un objeto en la base de datos se ejecuta para mostrar las listas de manera actualizada
@@ -91,15 +108,15 @@ public class ListaAmigos extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    lCorreos.clear();
-                    lAmigos.clear();
+                    mCorreos.clear();
+                    mAmigos.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String nombre=ds.getKey();
                         String correo = ds.getValue().toString();
-                        lAmigos.add(nombre);
-                        lCorreos.add(correo);
+                        mAmigos.add(nombre);
+                        mCorreos.add(correo);
                     }
-                    listaAmigosAdapter= new ListaAmigosAdapter(ListaAmigos.this,R.layout.amigos_recycler, lAmigos,lCorreos);
+                    listaAmigosAdapter= new ListaAmigosAdapter(ListaAmigos.this,R.layout.amigos_recycler, mAmigos,mCorreos,nick,modo);
                     recyclerViewAmigos.setAdapter(listaAmigosAdapter);
                 }
             }
