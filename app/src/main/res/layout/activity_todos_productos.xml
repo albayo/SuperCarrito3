@@ -29,7 +29,7 @@
 
         <!-- ajustar la anchura posiblemente de forma dinámica-->
         <!-- para escribir las opciones de los spinner hay que hacerlo en Java -->
-        <Spinner
+        <!--<Spinner
             android:id="@+id/spinner_super"
             android:layout_width="141dp"
             android:layout_height="0dp"
@@ -55,8 +55,28 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/spinner_productos"
+            app:layout_constraintTop_toTopOf="parent" />-->
+
+        <EditText
+            android:id="@+id/etBusqueda"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:ems="10"
+            android:hint="Nombre de producto"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/ivBusqueda"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/ivBusqueda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_search_black" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.recyclerview.widget.RecyclerView

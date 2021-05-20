@@ -2,6 +2,7 @@ package com.example.accesoconcorreo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,7 +10,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
@@ -24,24 +29,27 @@ import java.util.List;
 
 import Adapters.TodosProductosAdapter;
 import ModeloDominio.Producto;
+import ModeloDominio.ReadAndWriteSnippets;
 
 /**
- * Esta clase define la actividad llamada "activity_productos_compra" que sirve para mostrar todos los productos de la base de datos.
+ * Esta clase define la actividad llamada "activity_todos_productos" que sirve para mostrar todos los productos de la base de datos.
  *
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 30/04/2021
+ * @version: 20/05/2021
  */
-public class TodosProductos extends AppCompatActivity {
+public class TodosProductos extends AppCompatActivity implements SearchView.OnQueryTextListener {
     private String idLista;
     private List<Producto> productos;
-    private List<String> nombresSuper;
-    private List<String> categoriasProd;
+    private List<Producto> todosProds;
+    private EditText etbusqueda;
+    private ImageView ivBusqueda;
     private DatabaseReference mDatabase;
     private RecyclerView recyclerViewproductos;
     private TodosProductosAdapter todosProductosAdapter;
     private Toolbar toolbar;
-    private Spinner spinnerSuper;
-    private Spinner spinnerProd;
+    /*private Spinner spinnerSuper;
+    private Spinner spinnerProd;//inutilizado de momento ya que la API no tiene categorías
+    */
 
     /**
      * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
@@ -57,11 +65,16 @@ public class TodosProductos extends AppCompatActivity {
         idLista = getIntent().getStringExtra("idLista");
         recyclerViewproductos = (RecyclerView) findViewById(R.id.super_prod_list_recycler);
         recyclerViewproductos.setLayoutManager(new LinearLayoutManager(this));
+        etbusqueda = findViewById(R.id.etBusqueda);
+        ivBusqueda = findViewById(R.id.ivBusqueda);
         toolbar = findViewById(R.id.toolbar_lista_super_prod);
         toolbar.setTitle(nombreLista);
         toolbar.inflateMenu(R.menu.menu_todos_prod);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-
+            /**
+             * Método que sirve para comprobar si se ha hecho click en alguno de los elementos del menu
+             * @param item Representa al elemento del menu sobre el cual se ha hecho click
+             */
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
@@ -74,13 +87,30 @@ public class TodosProductos extends AppCompatActivity {
             }
         });
 
-        spinnerProd=findViewById(R.id.spinner_productos);
-        spinnerSuper=findViewById(R.id.spinner_super);
-        //categoriasProd = ;
-        nombresSuper = new ArrayList<>();
+        /*spinnerProd=findViewById(R.id.spinner_productos);
+        spinnerSuper=findViewById(R.id.spinner_super);*/
+
+        ivBusqueda.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método que sirve para buscar el articulo cuyo nombre ha sido introducido en el campo de búsqueda
+             * @param v Representa al objeto View sobre el cual se ha hecho click
+             */
+            @Override
+            public void onClick(View v) {
+                if(etbusqueda.getText().toString().trim().length() != 0){
+                    productos = ReadAndWriteSnippets.buscarProductos(todosProds, etbusqueda.getText().toString());
+                    mostrarProductos(productos);
+                }else{
+                    //Toast.makeText(TodosProductos.this, "Para buscar un articulo debe introducir su nombre", Toast.LENGTH_LONG).show();
+                    mostrarProductos(todosProds);
+                }
+            }
+        });
+
         mDatabase = FirebaseDatabase.getInstance().getReference();
         productos = new ArrayList<>();
         obtenerTodosProductos();
+        todosProds = productos;
     }
 
     /**
@@ -109,9 +139,7 @@ public class TodosProductos extends AppCompatActivity {
                         productos.add(p);
 
                     }
-                    todosProductosAdapter = new TodosProductosAdapter(TodosProductos.this, R.layout.item_productos_comprar, productos, idLista);
-                    recyclerViewproductos.setAdapter(todosProductosAdapter);
-                    recyclerViewproductos.setLayoutManager(new GridLayoutManager(TodosProductos.this,3));
+                    mostrarProductos(productos);
                 }
             }
             @Override
@@ -122,28 +150,19 @@ public class TodosProductos extends AppCompatActivity {
 
     }
 
-    /***
-     *
-     * @return
-     */
-    //habrá que hacerlo para que si tuviesemos bien la BD funcionase y fuese escalable
-    //habrá que modificar la BD para que algunos de los productos tengan esta funcionalidad (habrá que añadirles foto, supermercado y categoría)
-    /*public List<String> getNombresSuper(){
-        List<String> nombres = new ArrayList<>();
+    private void mostrarProductos(List<Producto> productosMostrar) {
+        todosProductosAdapter = new TodosProductosAdapter(TodosProductos.this, R.layout.item_productos_comprar, productosMostrar, idLista);
+        recyclerViewproductos.setAdapter(todosProductosAdapter);
+        recyclerViewproductos.setLayoutManager(new GridLayoutManager(TodosProductos.this,3));
+    }
 
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
 
-
-        return nombres;
-    }*/
-
-    /***
-     *
-     * @return
-     */
-    /*public List<String> getCategoriasProd{
-        List<String> categorias = new ArrayList<>();
-
-
-        return categorias;
-    }*/
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
+    }
 }
