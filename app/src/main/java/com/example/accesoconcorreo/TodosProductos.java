@@ -72,13 +72,14 @@ public class TodosProductos extends AppCompatActivity{
         svProductos.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                if(query.trim().length() == 0){
+                /*if(query.trim().length() == 0){
                     mostrarProductos(todosProds);
                 }else{
                     productos = ReadAndWriteSnippets.buscarProductos(todosProds, query);
                     mostrarProductos(productos);
                 }
-                return true;
+                return true;*/
+                return false;
             }
 
             @Override
