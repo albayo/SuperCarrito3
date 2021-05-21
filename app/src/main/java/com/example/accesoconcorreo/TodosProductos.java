@@ -2,7 +2,7 @@ package com.example.accesoconcorreo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.SearchView;
+import android.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -37,12 +37,13 @@ import ModeloDominio.ReadAndWriteSnippets;
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
  * @version: 20/05/2021
  */
-public class TodosProductos extends AppCompatActivity implements SearchView.OnQueryTextListener {
+public class TodosProductos extends AppCompatActivity{
     private String idLista;
     private List<Producto> productos;
     private List<Producto> todosProds;
     private EditText etbusqueda;
     private ImageView ivBusqueda;
+    private SearchView svProductos;
     private DatabaseReference mDatabase;
     private RecyclerView recyclerViewproductos;
     private TodosProductosAdapter todosProductosAdapter;
@@ -65,8 +66,32 @@ public class TodosProductos extends AppCompatActivity implements SearchView.OnQu
         idLista = getIntent().getStringExtra("idLista");
         recyclerViewproductos = (RecyclerView) findViewById(R.id.super_prod_list_recycler);
         recyclerViewproductos.setLayoutManager(new LinearLayoutManager(this));
-        etbusqueda = findViewById(R.id.etBusqueda);
-        ivBusqueda = findViewById(R.id.ivBusqueda);
+        /*etbusqueda = findViewById(R.id.etBusqueda);
+        ivBusqueda = findViewById(R.id.ivBusqueda);*/
+        svProductos = (android.widget.SearchView) findViewById(R.id.svProductos);
+        svProductos.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                if(query.trim().length() == 0){
+                    mostrarProductos(todosProds);
+                }else{
+                    productos = ReadAndWriteSnippets.buscarProductos(todosProds, query);
+                    mostrarProductos(productos);
+                }
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                if(newText.trim().length() == 0){
+                    mostrarProductos(todosProds);
+                }else{
+                    productos = ReadAndWriteSnippets.buscarProductos(todosProds, newText);
+                    mostrarProductos(productos);
+                }
+                return true;
+            }
+        });
         toolbar = findViewById(R.id.toolbar_lista_super_prod);
         toolbar.setTitle(nombreLista);
         toolbar.inflateMenu(R.menu.menu_todos_prod);
@@ -90,12 +115,12 @@ public class TodosProductos extends AppCompatActivity implements SearchView.OnQu
         /*spinnerProd=findViewById(R.id.spinner_productos);
         spinnerSuper=findViewById(R.id.spinner_super);*/
 
-        ivBusqueda.setOnClickListener(new View.OnClickListener() {
+        //ivBusqueda.setOnClickListener(new View.OnClickListener() {
             /**
              * Método que sirve para buscar el articulo cuyo nombre ha sido introducido en el campo de búsqueda
              * @param v Representa al objeto View sobre el cual se ha hecho click
              */
-            @Override
+           /* @Override
             public void onClick(View v) {
                 if(etbusqueda.getText().toString().trim().length() != 0){
                     productos = ReadAndWriteSnippets.buscarProductos(todosProds, etbusqueda.getText().toString());
@@ -105,7 +130,7 @@ public class TodosProductos extends AppCompatActivity implements SearchView.OnQu
                     mostrarProductos(todosProds);
                 }
             }
-        });
+        });*/
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
         productos = new ArrayList<>();
@@ -145,8 +170,7 @@ public class TodosProductos extends AppCompatActivity implements SearchView.OnQu
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
             }
-                                                                       }
-        );
+        });
 
     }
 
@@ -156,13 +180,5 @@ public class TodosProductos extends AppCompatActivity implements SearchView.OnQu
         recyclerViewproductos.setLayoutManager(new GridLayoutManager(TodosProductos.this,3));
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
-    }
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        return false;
-    }
 }
