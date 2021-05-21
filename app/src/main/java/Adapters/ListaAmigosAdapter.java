@@ -26,6 +26,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
+import ModeloDominio.ReadAndWriteSnippets;
+
 public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.AmigosViewHolder>{
     //Representa las listas que se representarán
     private List<String> mAmigos;  // Cached copy of Listas
@@ -37,10 +39,12 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
     private Activity activity;
     private String modo;
     private String nick;
+    private final String idLista;
+    private final String nombreLista;
 
 
 
-    public ListaAmigosAdapter(Activity a, int resource, List<String> l,List<String> lid,String nick,String modo) {
+    public ListaAmigosAdapter(Activity a, int resource, List<String> l,List<String> lid,String nick,String modo,String idLista,String nombreLista) {
         Log.d("Construcor","ConstructorLanzado");
         this.resource=resource;
         this.activity = a;
@@ -48,6 +52,8 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
         this.mCorreos=lid;
         this.modo=modo;
         this.nick=nick;
+        this.idLista=idLista;
+        this.nombreLista=nombreLista;
     }
     public AmigosViewHolder onCreateViewHolder(ViewGroup parent, int  viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
@@ -59,7 +65,7 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
         if  ( mAmigos  !=  null || mAmigos.get(position)!=null) {
             String current =  mAmigos.get(position);
             holder.AmigoNombreView.setText(current);
-            holder.idLista.setText(mCorreos.get(position));
+
         }  else  {
             // Covers the case of data not being ready yet.
             holder. AmigoNombreView .setText( "No hay listas" );
@@ -99,11 +105,12 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
         public View view;
         //Representa el TextView donde sale el nombre de la lista
         private final TextView AmigoNombreView;
-        //Representa el TextView donde saldrá el id de la lista
-        private final TextView idLista;
+
+
         //Representa una copia del adapter
         final ListaAmigosAdapter adapter;
         private final ImageButton btELiminarAmigo;
+        private final ImageButton btSimboloAmigo;
         /**
          * Constructor de la clase
          * @param itemView View en el cual se busca el TextView en el cual se representará la información
@@ -114,11 +121,19 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
             super (itemView);
             this.view=itemView;
             this.AmigoNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
-            this.idLista=(TextView)itemView.findViewById(R.id.text_id_lista);
             this.btELiminarAmigo=(ImageButton)itemView.findViewById(R.id.btEliminarAmigo);
             this.adapter = adapter;
+            this.btSimboloAmigo=(ImageButton) itemView.findViewById(R.id.RecyclerImagenAmigo);
             //itemView.setOnClickListener(this);
             DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
+            if(modo.equals("añadir")){
+                btSimboloAmigo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        ReadAndWriteSnippets.solicitudLista(nick,AmigoNombreView.getText().toString(),idLista,nombreLista);
+                    }
+                });
+            }
 
             btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
                 @Override

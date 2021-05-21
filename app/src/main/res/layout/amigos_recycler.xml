@@ -36,8 +36,8 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_lista_usuario" />
 
-        <ImageView
-            android:id="@+id/imagenAmigo"
+        <ImageButton
+            android:id="@+id/RecyclerImagenAmigo"
             android:layout_width="38dp"
             android:layout_height="44dp"
             android:layout_marginTop="8dp"

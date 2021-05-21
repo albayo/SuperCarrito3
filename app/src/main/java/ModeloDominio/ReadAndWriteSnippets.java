@@ -172,6 +172,16 @@ public class ReadAndWriteSnippets {
 
     public static void aniadirLista(String nick, String idLista, String nombreLista){
         mDatabase.child("users").child(nick).child("listas").child(idLista).setValue(nombreLista);
+        mDatabase.child("listas").child(idLista).child("compartida").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull  Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().getValue()==null){
+                        mDatabase.child("listas").child(idLista).child("compartida").setValue("true");
+                    }
+                }
+            }
+        });
 
     }
 

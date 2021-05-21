@@ -77,14 +77,22 @@ public class ListaAmigos extends AppCompatActivity {
         drawerLayout= findViewById(R.id.drawer_layout_amigos);
         navigationView= findViewById(R.id.nav_View);
         Activity activity=this;
-        String modo=getIntent().getStringExtra("modo");
+        String idLista=" ",nombreLista=" ",modo=" ";
+        modo=getIntent().getExtras().getString("modo");
+        idLista=getIntent().getExtras().getString("idLista");
+        nombreLista=getIntent().getStringExtra("nombreLista");
+        if(modo==null){
+            modo=" ";
+            idLista=" ";nombreLista=" ";
+
+        }
         ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,toolbar,nick,getIntent().getStringExtra("email"),activity,getApplicationContext());
-        obtenerAmigosUsuario(nick,modo);
+        obtenerAmigosUsuario(nick,modo,idLista,nombreLista);
 
 
     }
 
-    public void obtenerAmigosUsuario(String nick, String modo) {
+    public void obtenerAmigosUsuario(String nick, String modo,String idLista,String nombreLista) {
 
         //NECESARIO PARA BORRAR EL ÚLTIMO
         mDatabase.child("users").child(nick).child("amigos").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -94,7 +102,7 @@ public class ListaAmigos extends AppCompatActivity {
                     if(task.getResult().getValue()==null){
                         Log.d("AMIGOOOS", "NO HAYY");
                         mAmigos.clear();
-                        listaAmigosAdapter= new ListaAmigosAdapter(ListaAmigos.this,R.layout.amigos_recycler, mAmigos,mCorreos,nick,modo);
+                        listaAmigosAdapter= new ListaAmigosAdapter(ListaAmigos.this,R.layout.amigos_recycler, mAmigos,mCorreos,nick,modo,idLista,nombreLista);
                         recyclerViewAmigos.setAdapter(listaAmigosAdapter);
                     }
                 }
@@ -116,7 +124,8 @@ public class ListaAmigos extends AppCompatActivity {
                         mAmigos.add(nombre);
                         mCorreos.add(correo);
                     }
-                    listaAmigosAdapter= new ListaAmigosAdapter(ListaAmigos.this,R.layout.amigos_recycler, mAmigos,mCorreos,nick,modo);
+
+                    listaAmigosAdapter= new ListaAmigosAdapter(ListaAmigos.this,R.layout.amigos_recycler, mAmigos,mCorreos,nick,modo,idLista,nombreLista);
                     recyclerViewAmigos.setAdapter(listaAmigosAdapter);
                 }
             }
