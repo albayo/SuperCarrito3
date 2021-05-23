@@ -102,6 +102,7 @@ public class Perfil extends AppCompatActivity {
                 Intent intent=new Intent(Intent.ACTION_PICK);
                 intent.setType("image/*");
                 startActivityForResult(intent,GALLERY_INTENT);
+
             }
         });
 
@@ -188,6 +189,7 @@ public class Perfil extends AppCompatActivity {
                         Uri downloadUri = task.getResult();
                         String downloadURL = downloadUri.toString();
                         mDatabaseReference.child("users").child(nick).child("fotoperfil").setValue(downloadURL);
+                        recreate();
                     } else {
                         Toast.makeText(Perfil.this,"Fallo al subir la foto",Toast.LENGTH_LONG).show();
                     }
