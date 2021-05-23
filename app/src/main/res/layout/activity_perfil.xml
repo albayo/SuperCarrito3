@@ -22,6 +22,7 @@
     </com.google.android.material.navigation.NavigationView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_perfil"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -93,6 +94,16 @@
             app:layout_constraintTop_toTopOf="parent"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
             app:titleTextColor="@color/white" />
+
+        <ImageButton
+            android:id="@+id/ibutt_subirfoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageview_fotoperfil"
+            app:layout_constraintEnd_toEndOf="@+id/imageview_fotoperfil"
+            app:layout_constraintTop_toTopOf="@+id/imageview_fotoperfil"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.drawerlayout.widget.DrawerLayout>

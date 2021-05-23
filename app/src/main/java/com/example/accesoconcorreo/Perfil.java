@@ -6,8 +6,10 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 
 import android.app.Activity;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -17,6 +19,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import Adapters.ListaListAdapter;
 import ModeloDominio.ReadAndWriteSnippets;
@@ -34,10 +38,14 @@ public class Perfil extends AppCompatActivity {
     //Representa un navigation
     private NavigationView navigationView;
     private Toolbar toolbar;
+    private StorageReference mStorage;
 
     private String email;
     private String nick;
     private ImageView fotoperfil;
+    private static final int GALLERY_INTENT=1;
+
+    private ImageButton btnSubir;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +56,7 @@ public class Perfil extends AppCompatActivity {
         email = getIntent().getExtras().get("email").toString();
         //cambiar esto al user normal
         nick = getIntent().getStringExtra("nick");
+        mStorage= FirebaseStorage.getInstance().getReference();
 
         Usuario u = new Usuario(nick, email);
 
@@ -60,7 +69,8 @@ public class Perfil extends AppCompatActivity {
 
         TextView nickt=findViewById(R.id.text_username);
         TextView emailt=findViewById(R.id.text_username2);
-         fotoperfil=findViewById(R.id.imageview_fotoperfil);
+        fotoperfil=findViewById(R.id.imageview_fotoperfil);
+        btnSubir=findViewById(R.id.ibutt_subirfoto);
 
         toolbar.setTitle("Perfil");
 
@@ -70,6 +80,15 @@ public class Perfil extends AppCompatActivity {
         obtenerFoto(nick);
 
 
+        btnSubir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent,GALLERY_INTENT);
+            }
+        });
+
 
         }
     public void obtenerFoto(String name){
@@ -77,7 +96,10 @@ public class Perfil extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(snapshot.exists()){
-
+                    /*fotoperfil.setImageURI(snapshot.getValue());
+                    Uri uri=new Uri();
+                    fotoperfil.se
+*/
                 }
             }
 
