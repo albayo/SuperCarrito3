@@ -115,8 +115,6 @@ public class Perfil extends AppCompatActivity {
             public void onSuccess(DataSnapshot dataSnapshot) {
                 Log.d("entra","success");
                 String url = dataSnapshot.getValue().toString();
-                Toast.makeText(Perfil.this,url,Toast.LENGTH_LONG).show();;
-                //StorageReference ref=FirebaseStorage.getInstance().getReferenceFromUrl(url);
                 Glide.with(Perfil.this).load(url).fitCenter().centerCrop().override(500,500).into(fotoperfil);
 
             }
