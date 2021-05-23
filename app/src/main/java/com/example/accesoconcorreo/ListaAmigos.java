@@ -62,7 +62,7 @@ public class ListaAmigos extends AppCompatActivity {
         recyclerViewAmigos.setLayoutManager(new LinearLayoutManager(this));
         nick=getIntent().getStringExtra("nick");
 
-        String title="Supercarrito - "+nick;
+        String title="Amigos";
 
         toolbar.setTitle(title);
         FloatingActionButton fab=findViewById(R.id.fab_Aniadir_Amigos);
