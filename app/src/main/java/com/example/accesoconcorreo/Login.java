@@ -160,9 +160,10 @@ public class Login extends AppCompatActivity {
                 if (contraseniaET.getTransformationMethod() == null) {
                     Log.d("Mostrar contraseña", "Habilitar mostrar contraseña");
                     contraseniaET.setTransformationMethod(new PasswordTransformationMethod());
-                    ;
+                    mostrarContrasena.setImageResource(R.drawable.ic_ojo_negro);
                 } else {
                     contraseniaET.setTransformationMethod(null);
+                    mostrarContrasena.setImageResource(R.drawable.ic_eyeslash_black);
                 }
             }
         });
