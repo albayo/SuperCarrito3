@@ -1,5 +1,6 @@
 package com.example.accesoconcorreo;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -10,6 +11,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -18,9 +20,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.android.gms.tasks.Continuation;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -88,7 +93,7 @@ public class Perfil extends AppCompatActivity {
 
         emailt.setText(email);
         nickt.setText(nick);
-        //obtenerFoto(nick);
+        obtenerFoto(nick);
 
 
         btnSubir.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +109,18 @@ public class Perfil extends AppCompatActivity {
         }
     public void obtenerFoto(String name){
 
-        String url= mDatabaseReference.child("users").child(name).child("fotoperfil").get().getResult().getValue().toString();
+        mDatabaseReference.child("users").child(name).child("fotoperfil").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                Log.d("entra","success");
+                String url = dataSnapshot.getValue().toString();
+                Toast.makeText(Perfil.this,url,Toast.LENGTH_LONG).show();;
+                //StorageReference ref=FirebaseStorage.getInstance().getReferenceFromUrl(url);
+                Glide.with(Perfil.this).load(url).fitCenter().centerCrop().override(500,500).into(fotoperfil);
+
+            }
+
+        });
         //Picasso.get().load(url).into(fotoperfil);
         /*
 
@@ -150,8 +166,35 @@ public class Perfil extends AppCompatActivity {
             progressDialog.show();
             Uri uri= data.getData();
 
-            StorageReference filePath= mStorage.child("fotos").child(nick);
+            final StorageReference filePath= mStorage.child("fotos").child(nick);
+            UploadTask uploadTask = filePath.putFile(uri);
 
+            Task<Uri> urlTask = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+                @Override
+                public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                    if (!task.isSuccessful()) {
+                        throw task.getException();
+                    }
+
+                    // Continue with the task to get the download URL
+                    return filePath.getDownloadUrl();
+                }
+            }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                @Override
+                public void onComplete(@NonNull Task<Uri> task) {
+                    if (task.isSuccessful()) {
+                        progressDialog.dismiss();
+                        Toast.makeText(Perfil.this,"Foto subida exitosamente",Toast.LENGTH_LONG).show();
+                        Uri downloadUri = task.getResult();
+                        String downloadURL = downloadUri.toString();
+                        mDatabaseReference.child("users").child(nick).child("fotoperfil").setValue(downloadURL);
+                    } else {
+                        Toast.makeText(Perfil.this,"Fallo al subir la foto",Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+
+            /*
             filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -161,6 +204,7 @@ public class Perfil extends AppCompatActivity {
                     mDatabaseReference.child("users").child(nick).child("fotoperfil").setValue(url);
                 }
             });
+            */
         }
     }
 }
