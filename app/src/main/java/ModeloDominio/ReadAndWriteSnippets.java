@@ -80,7 +80,7 @@ public class ReadAndWriteSnippets {
                                 }
                                 else {
                                     Toast toast=new Toast(context);
-                                    toast.setText("Este correo ya tiene un usuario, pruebe con otro correo");
+                                    toast.makeText(context,"Este correo ya tiene un usuario, pruebe con otro correo",Toast.LENGTH_LONG);
                                     toast.show();
                                 }
 
@@ -89,9 +89,7 @@ public class ReadAndWriteSnippets {
 
                     }
                     else{
-                        Toast toast=new Toast(context);
-                        toast.setText("El usuario ya existe, pruebe con otro nick");
-                        toast.show();
+
                     }
                 }
             }
@@ -178,6 +176,7 @@ public class ReadAndWriteSnippets {
                 if(task.isSuccessful()){
                     if(task.getResult().getValue()==null){
                         mDatabase.child("listas").child(idLista).child("compartida").setValue("true");
+
                     }
                 }
             }

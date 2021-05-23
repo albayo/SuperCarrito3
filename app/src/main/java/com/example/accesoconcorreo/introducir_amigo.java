@@ -14,6 +14,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import ModeloDominio.ReadAndWriteSnippets;
 
 /**
@@ -25,7 +31,7 @@ public class introducir_amigo extends DialogFragment {
 
     //Representa el EditText en el cual habrá que introducir el nombre que se le querra dar a la lista
     private EditText etNombre;
-
+    private DatabaseReference mDatabase;
     //Representa el botón de Aceptar del Fragment
     private Button btnAceptar;
 
@@ -57,10 +63,25 @@ public class introducir_amigo extends DialogFragment {
              */
             @Override
             public void onClick(View v) {
+                mDatabase= FirebaseDatabase.getInstance().getReference();
                 String nickAmigo = etNombre.getText().toString();
                 if(nickAmigo != null && nickAmigo.trim().length() > 0) {
-                    ReadAndWriteSnippets.solicitudAmistad(nickUser,nickAmigo);
-                    Toast.makeText(getActivity(), "La solicitud ha sido añadida con éxito", Toast.LENGTH_LONG).show();
+                    mDatabase.child("users").child(nickAmigo).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<DataSnapshot> task) {
+                            if (task.isSuccessful()) {
+                                if(task.getResult().getValue()!=null){
+                                    ReadAndWriteSnippets.solicitudAmistad(nickUser,nickAmigo);
+                                    Toast.makeText(getActivity(), "La solicitud ha sido añadida con éxito", Toast.LENGTH_LONG).show();
+
+                                } else{
+                                    Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                            }
+                        }
+                    });
+
                 }else{
                     Toast.makeText(getActivity(),"Error, se debe introducir un nick para poder mandarle una solicitud",Toast.LENGTH_SHORT).show();
                 }

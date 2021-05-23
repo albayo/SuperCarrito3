@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -45,7 +46,7 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
 
 
     public ListaAmigosAdapter(Activity a, int resource, List<String> l,List<String> lid,String nick,String modo,String idLista,String nombreLista) {
-        Log.d("Construcor","ConstructorLanzado");
+
         this.resource=resource;
         this.activity = a;
         this.mAmigos = l;
@@ -61,7 +62,7 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
     }
     @Override
     public void  onBindViewHolder(ListaAmigosAdapter.AmigosViewHolder holder, int  position) {
-        Log.d("Holder","HolderLanzado");
+
         if  ( mAmigos  !=  null || mAmigos.get(position)!=null) {
             String current =  mAmigos.get(position);
             holder.AmigoNombreView.setText(current);
@@ -131,6 +132,7 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
                     @Override
                     public void onClick(View v) {
                         ReadAndWriteSnippets.solicitudLista(nick,AmigoNombreView.getText().toString(),idLista,nombreLista);
+                        Toast.makeText(view.getContext(),"Amigo Añadido a la lista "+nombreLista,Toast.LENGTH_LONG).show();
                     }
                 });
             }
@@ -141,14 +143,14 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
 
                     androidx.appcompat.app.AlertDialog.Builder b= new androidx.appcompat.app.AlertDialog.Builder(activity);
                     b.setTitle("Confirmación");
-                    b.setMessage("¿Está seguro/a de que desea cerrar sesión?");
+                    b.setMessage("¿Está seguro/a de que desea eliminar el amigo?");
 
                     b.setPositiveButton("Aceptar",new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String amigo=AmigoNombreView.getText().toString();
-                            Log.d("AMIGOS",amigo);
+
                             mDatabase.child("users").child(nick).child("amigos").child(amigo).removeValue();
                             mDatabase.child("users").child(amigo).child("amigos").child(nick).removeValue();
 

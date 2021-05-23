@@ -100,7 +100,6 @@ public class ListaAmigos extends AppCompatActivity {
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
                     if(task.getResult().getValue()==null){
-                        Log.d("AMIGOOOS", "NO HAYY");
                         mAmigos.clear();
                         listaAmigosAdapter= new ListaAmigosAdapter(ListaAmigos.this,R.layout.amigos_recycler, mAmigos,mCorreos,nick,modo,idLista,nombreLista);
                         recyclerViewAmigos.setAdapter(listaAmigosAdapter);
