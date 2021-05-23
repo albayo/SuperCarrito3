@@ -109,6 +109,9 @@ public class ListaProductos extends AppCompatActivity {
                         homeIntent.putExtra("nombreLista",nombreLista);
                         startActivity(homeIntent);
                     }
+                    else if(id==R.id.opciones_mostrar_miembros){ //FALTA MODIFICAR EL ADAPTER PARA QUE TE MUESTRE
+
+                    }
                 }
 
                 return false;
