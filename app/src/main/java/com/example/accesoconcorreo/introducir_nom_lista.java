@@ -111,10 +111,9 @@ public class introducir_nom_lista extends DialogFragment {
                         fragment_crear_compartida fragment=new fragment_crear_compartida(email,nick,etNombre.getText().toString());
 
                         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frame, fragment);
+                        transaction.replace(R.id.nom_lista, fragment);
                         transaction.addToBackStack(null);
                         transaction.commit();
-
                         /*
                         fragment.show(getActivity().getSupportFragmentManager(),"tag");
                         fragment.getLifecycle().getCurrentState();
@@ -150,8 +149,7 @@ public class introducir_nom_lista extends DialogFragment {
              */
             @Override
             public void onClick(View v) {
-                ultBoton = "Cerrar";
-                cerrarFragment();
+                getFragmentManager().beginTransaction().remove(introducir_nom_lista.this).commit();
             }
         });
     }
@@ -179,7 +177,7 @@ public class introducir_nom_lista extends DialogFragment {
      */
     private void cerrarFragment() {
 
-        getActivity().onBackPressed();
+        //getActivity().onBackPressed();
         //getFragmentManager().beginTransaction().remove(this).commit();
             /*Intent intent = new Intent(CrearLista.class, ListaProductos.class);
             startActivity(intent);*/

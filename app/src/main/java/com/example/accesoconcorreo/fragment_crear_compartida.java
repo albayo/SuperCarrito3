@@ -129,6 +129,7 @@ public class fragment_crear_compartida extends DialogFragment {
         cancelar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 cerrarFragment();
             }
         });
@@ -142,8 +143,10 @@ public class fragment_crear_compartida extends DialogFragment {
     }
 
     private void cerrarFragment() {
-
-        getActivity().onBackPressed();
+        getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.nom_lista)).commit();
+        getFragmentManager().beginTransaction().remove(fragment_crear_compartida.this).commit();
+       // getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.nom_lista)).commit();
+        //getActivity().onBackPressed();
         //getFragmentManager().beginTransaction().remove(this).commit();
             /*Intent intent = new Intent(CrearLista.class, ListaProductos.class);
             startActivity(intent);*/
