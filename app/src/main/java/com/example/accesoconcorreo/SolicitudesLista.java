@@ -47,7 +47,7 @@ public class SolicitudesLista extends AppCompatActivity {
 
         nick=getIntent().getStringExtra("nick");
 
-        String title="Supercarrito - "+nick;
+        String title="Solicitudes listas";
 
         toolbar.setTitle(title);
         obtenerSolicitudes(nick);

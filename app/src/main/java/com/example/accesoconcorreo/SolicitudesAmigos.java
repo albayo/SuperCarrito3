@@ -52,7 +52,7 @@ public class SolicitudesAmigos extends AppCompatActivity {
 
         nick=getIntent().getStringExtra("nick");
 
-        String title="Supercarrito - "+nick;
+        String title="Solicitudes Amigos";
 
         toolbar.setTitle(title);
         obtenerSolicitudes(nick);
