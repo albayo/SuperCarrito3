@@ -152,7 +152,7 @@ public class TodosProductos extends AppCompatActivity{
                     Iterable<DataSnapshot> dataSnapshots = snapshot.getChildren();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         Log.d("SIZEE",""+productos.size());
-                        if(productos.size()>50){
+                        if(productos.size()>100){
                             break;
                         }
                         String id = ds.getKey();
