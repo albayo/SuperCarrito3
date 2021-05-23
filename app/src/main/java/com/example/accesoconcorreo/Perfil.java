@@ -105,8 +105,6 @@ public class Perfil extends AppCompatActivity {
 
             }
         });
-
-
         }
     public void obtenerFoto(String name){
 
