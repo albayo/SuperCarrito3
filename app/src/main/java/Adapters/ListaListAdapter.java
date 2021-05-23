@@ -112,11 +112,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
                     }
                 }
             });
-           /* if(l.isGrupal() || l.getUsuarios().size()>1){
-                holder.imgGrupal.setVisibility(View.VISIBLE);
-            }else{
-                holder.imgGrupal.setVisibility(View.INVISIBLE);
-            }*/
+
 
 
         }  else  {
@@ -181,9 +177,7 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
             checkbox = (CheckBox) itemView.findViewById(R.id.checkBox_eliminar);
             imgGrupal = (ImageView) itemView.findViewById(R.id.imgGrupal);
 
-            /*if(true){
-                imgGrupal.setVisibility(View.INVISIBLE);
-            }*/
+
 
             this.adapter = adapter;
             itemView.setOnClickListener(this);
@@ -195,10 +189,10 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
                     Lista current =  mListas.get(position);
                     if(current.isCheckboxEliminar()) current.setCheckboxEliminar(false);
                     else current.setCheckboxEliminar(true);
-                    Log.d("ONCLICK",""+current.isCheckboxEliminar());
+
                 }
             });
-            Log.d("Adapterr","constructor");
+
         }
 
         /**
