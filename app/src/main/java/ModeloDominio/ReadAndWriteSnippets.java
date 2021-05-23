@@ -128,8 +128,11 @@ public class ReadAndWriteSnippets {
         Map<String, Object> postValues = list.toMap();
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("nombre").setValue(nombrelista);
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("productos").setValue("pr1");
-        if (compartida)
+        if (compartida){
             mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("compartida").setValue("true");
+            mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("miembros").child(nick).setValue(nick);
+        }
+
         mDatabase.child("users").child(nick).child("listas").child(String.valueOf(list.getIdLista())).setValue(nombrelista);
 
         insertContadorListas(Lista.getContLista() + 1);
@@ -170,6 +173,7 @@ public class ReadAndWriteSnippets {
 
     public static void aniadirLista(String nick, String idLista, String nombreLista){
         mDatabase.child("users").child(nick).child("listas").child(idLista).setValue(nombreLista);
+        mDatabase.child("listas").child(idLista).child("miembros").child(nick).setValue(nick);
         mDatabase.child("listas").child(idLista).child("compartida").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull  Task<DataSnapshot> task) {
