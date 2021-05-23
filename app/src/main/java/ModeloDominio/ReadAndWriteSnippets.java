@@ -234,8 +234,6 @@ public class ReadAndWriteSnippets {
                             intent.putExtra("email", email);
                             intent.putExtra("nick", nick);
                             intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                            Toast t = Toast.makeText(context, "A amigos", Toast.LENGTH_LONG);
-                            t.show();
                             context.startActivity(intent);
                         }
                         break;
