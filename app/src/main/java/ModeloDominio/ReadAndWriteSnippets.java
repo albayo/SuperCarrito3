@@ -130,9 +130,8 @@ public class ReadAndWriteSnippets {
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("productos").setValue("pr1");
         if (compartida){
             mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("compartida").setValue("true");
-            mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("miembros").child(nick).setValue(nick);
         }
-
+        mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("miembros").child(nick).setValue(nick);
         mDatabase.child("users").child(nick).child("listas").child(String.valueOf(list.getIdLista())).setValue(nombrelista);
 
         insertContadorListas(Lista.getContLista() + 1);
