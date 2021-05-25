@@ -261,7 +261,7 @@ public class ReadAndWriteSnippets {
                         /*Intent intentlogout = new Intent(context, Login.class);
                         intentlogout.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(intentlogout);*/
-                        context.startActivity(new Intent(context, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+                        context.startActivity(new Intent(context, Login.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | FLAG_ACTIVITY_NEW_TASK));
                         break;
                     case R.id.nav_solicitudesamigos:
                         Intent solamIntent = new Intent(context, SolicitudesAmigos.class);
