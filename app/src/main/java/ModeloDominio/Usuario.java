@@ -115,7 +115,6 @@ public class Usuario {
      */
     public Map<String,Object> toMap(){
         HashMap<String, Object> result = new HashMap<>();
-        result.put("id",id);
         result.put("nick",nick);
         result.put("email",email);
         result.put("listas",listas);
