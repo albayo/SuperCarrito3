@@ -1,4 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout style="@style/Theme.AccesoConCorreo"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout_solicitudes"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<com.google.android.material.navigation.NavigationView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/nav_view_solicitudes"
+    app:headerLayout="@layout/header"
+    app:menu="@menu/main_menu"
+    android:layout_gravity="start"/>
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -43,3 +62,4 @@
 
 
 </RelativeLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

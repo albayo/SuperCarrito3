@@ -282,6 +282,7 @@ public class ReadAndWriteSnippets {
                         Intent solamIntent = new Intent(context, SolicitudesAmigos.class);
                         solamIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         solamIntent.putExtra("nick", nick);
+                        solamIntent.putExtra("email", email);
                         solamIntent.putExtra("menuitem", item.getItemId());
                         context.startActivity(solamIntent);
                         break;
@@ -289,6 +290,7 @@ public class ReadAndWriteSnippets {
                         Intent solliIntent = new Intent(context, SolicitudesLista.class);
                         solliIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         solliIntent.putExtra("nick", nick);
+                        solliIntent.putExtra("email", email);
                         solliIntent.putExtra("menuitem", item.getItemId());
                         context.startActivity(solliIntent);
                         break;

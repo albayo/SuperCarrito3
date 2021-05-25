@@ -3,6 +3,7 @@ package com.example.accesoconcorreo;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -10,6 +11,7 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -20,6 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.SolicitudesAdapter;
+import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Solicitud;
 
 public class SolicitudesAmigos extends AppCompatActivity {
@@ -32,8 +35,12 @@ public class SolicitudesAmigos extends AppCompatActivity {
     private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán las solicitudes del usuario
     private RecyclerView recyclerViewSolicitudesAmigos;
 
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
+
 
     private String nick;
+    private String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,16 +52,24 @@ public class SolicitudesAmigos extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mSolicitudesAmigos =new ArrayList<>();
 
+        drawerLayout=findViewById(R.id.drawer_layout_solicitudes);
+        navigationView=findViewById(R.id.nav_view_solicitudes);
+
+
 
         recyclerViewSolicitudesAmigos=findViewById(R.id.solicitudes_recyclerAmigos);
         recyclerViewSolicitudesAmigos.setLayoutManager(new LinearLayoutManager(this));
 
 
         nick=getIntent().getStringExtra("nick");
+        email=getIntent().getStringExtra("email");
 
         String title="Solicitudes Amigos";
 
         toolbar.setTitle(title);
+
+        ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,toolbar,nick,email,SolicitudesAmigos.this,getApplicationContext());
+
         obtenerSolicitudes(nick);
 
 
