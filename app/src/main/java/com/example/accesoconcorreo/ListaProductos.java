@@ -164,33 +164,7 @@ public class ListaProductos extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) { ////esto no se lanza
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.carrito_productos) {
-            removeProds();
-
-            return true;
-        }
-        if (id == R.id.opciones_añadir_amigos) { //ESTE NO ESSSSSSSS
-            Intent homeIntent = new Intent(ListaProductos.this, ListaAmigos.class); //debería ir la clase del Perfil
-            homeIntent.putExtra("email", email);
-            homeIntent.putExtra("nick", nick);
-            homeIntent.putExtra("modo","añadir");
-
-            homeIntent.putExtra("idLista",idLista);
-            homeIntent.putExtra("nombreLista",nombreLista);
-            startActivity(homeIntent);
-        }
-
-
-        return super.onOptionsItemSelected(item);
-    }
 
     /**
      * Método que saca de la base de datos los productos de una lista con id "listaid

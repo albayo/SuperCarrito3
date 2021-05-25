@@ -128,6 +128,16 @@ public class ReadAndWriteSnippets {
         Map<String, Object> postValues = list.toMap();
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("nombre").setValue(nombrelista);
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("productos").setValue("pr1");
+        mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("propietario").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull  Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().getValue()==null){
+                        mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("propietario").setValue(nick);
+                    }
+                }
+            }
+        });
         if (compartida){
             mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("compartida").setValue("true");
         }
