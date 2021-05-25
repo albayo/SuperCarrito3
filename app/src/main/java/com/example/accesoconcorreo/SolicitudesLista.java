@@ -47,7 +47,7 @@ public class SolicitudesLista extends AppCompatActivity {
 
         nick=getIntent().getStringExtra("nick");
 
-        String title="Supercarrito - "+nick;
+        String title="Solicitudes listas";
 
         toolbar.setTitle(title);
         obtenerSolicitudes(nick);
@@ -68,7 +68,7 @@ public class SolicitudesLista extends AppCompatActivity {
                             Solicitud s=new Solicitud(remitente);
                             s.setSolicitudLista(idLista,nombreLista);
                             mSolicitudesListas.add(s);
-                            Log.d("SolicitudesListas", mSolicitudesListas.size()+"");
+
                         }
                     }
                     solicitudesAdapterListas = new SolicitudesAdapter(SolicitudesLista.this, R.layout.item_solicitud, mSolicitudesListas, nick);
