@@ -11,13 +11,17 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.Continuation;
@@ -31,12 +35,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
-import com.squareup.picasso.Picasso;
-
-import java.util.Objects;
 
 import Adapters.ListaListAdapter;
-import ModeloDominio.Constantes;
 import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Usuario;
 
@@ -61,6 +61,9 @@ public class Perfil extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
+    private int numeroAmigos;
+
+    private Button btnAmigos;
     private ImageButton btnSubir;
 
     @Override
@@ -69,31 +72,47 @@ public class Perfil extends AppCompatActivity {
         setContentView(R.layout.activity_perfil);
         database = FirebaseDatabase.getInstance();
         mDatabaseReference = database.getReference();
+
         email = getIntent().getExtras().get("email").toString();
         //cambiar esto al user normal
         nick = getIntent().getStringExtra("nick");
         mStorage= FirebaseStorage.getInstance().getReference();
-
+        numeroAmigos=0;
         Usuario u = new Usuario(nick, email);
 
         drawerLayout= findViewById(R.id.drawer_layout_perfil);
         navigationView= findViewById(R.id.nav_view);
         toolbar=findViewById(R.id.perftoolbar);
+        navigationView.setCheckedItem(getIntent().getIntExtra("menuitem", 0));
         Activity activity=this;
 
         ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,toolbar,nick,email,activity,getApplicationContext());
 
         TextView nickt=findViewById(R.id.text_username);
-        TextView emailt=findViewById(R.id.text_username2);
+        TextView numAmigos=findViewById(R.id.text_numeroam);
+        TextView emailt=findViewById(R.id.text_email);
         fotoperfil=findViewById(R.id.imageview_fotoperfil);
         btnSubir=findViewById(R.id.ibutt_subirfoto);
+        btnAmigos=findViewById(R.id.button_amigos);
 
         toolbar.setTitle("Perfil");
         progressDialog=new ProgressDialog(this);
-
+        numeroAmigos(nick);
         emailt.setText(email);
         nickt.setText(nick);
+        numAmigos.setText(String.valueOf(numeroAmigos));
         obtenerFoto(nick);
+
+        btnAmigos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(), ListaAmigos.class);
+                intent.putExtra("email", email);
+                intent.putExtra("nick", nick);
+                intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                getApplicationContext().startActivity(intent);
+            }
+        });
 
 
         btnSubir.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +125,19 @@ public class Perfil extends AppCompatActivity {
             }
         });
         }
+
+    private void numeroAmigos(String name) {
+        mDatabaseReference.child("users").child(name).child("amigos").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds:dataSnapshot.getChildren()){
+                    numeroAmigos++;
+                }
+
+            }
+        });
+    }
+
     public void obtenerFoto(String name){
 
         mDatabaseReference.child("users").child(name).child("fotoperfil").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -113,7 +145,7 @@ public class Perfil extends AppCompatActivity {
             public void onSuccess(DataSnapshot dataSnapshot) {
                 Log.d("entra","success");
                 String url = dataSnapshot.getValue().toString();
-                Glide.with(Perfil.this).load(url).fitCenter().centerCrop().override(500,500).into(fotoperfil);
+                Glide.with(Perfil.this).load(url).fitCenter().centerCrop().override(600,600).transition(withCrossFade()).into(fotoperfil);
 
             }
 
