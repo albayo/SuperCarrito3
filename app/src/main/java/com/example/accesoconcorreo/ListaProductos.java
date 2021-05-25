@@ -3,6 +3,7 @@ package com.example.accesoconcorreo;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -25,6 +26,7 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,6 +39,7 @@ import java.util.List;
 import Adapters.ProductListAdapter;
 import ModeloDominio.Lista;
 import ModeloDominio.Producto;
+import ModeloDominio.ReadAndWriteSnippets;
 
 /**
  * Esta clase define la actividad (llamada "activity_lista_producto") que dispondrá en pantalla los
@@ -56,6 +59,9 @@ public class ListaProductos extends AppCompatActivity {
     private String nick;
     private String nombreLista;
     private String idLista;
+
+    private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
 
 
     /**
@@ -86,8 +92,14 @@ public class ListaProductos extends AppCompatActivity {
         //ir cambiandolo cada pantalla
         String nombreLista = getIntent().getStringExtra("nombreLista");
 
+        drawerLayout=findViewById(R.id.drawer_layout_listaProd);
+        navigationView=findViewById(R.id.nav_view_listaProd);
+        ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,toolbar,nick,email,ListaProductos.this,getApplicationContext());
+
         myToolbar.setTitle(nombreLista); // establece el titulo del appBar al nombre de la lista
         myToolbar.inflateMenu(R.menu.menu_lista_prod);
+        ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,myToolbar,nick,email,ListaProductos.this,getApplicationContext());
+
         myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
 
             @Override
