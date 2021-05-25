@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -244,6 +245,7 @@ public class ReadAndWriteSnippets {
                             Intent intentH = new Intent(context, Home.class);
                             intentH.putExtra("email", email);
                             intentH.putExtra("nick", nick);
+                            intentH.putExtra("menuitem", item.getItemId());
                             intentH.addFlags(FLAG_ACTIVITY_NEW_TASK);
                             Toast t = Toast.makeText(context, "A amigos", Toast.LENGTH_LONG);
                             t.show();
@@ -256,6 +258,7 @@ public class ReadAndWriteSnippets {
                             Intent intent = new Intent(context, ListaAmigos.class);
                             intent.putExtra("email", email);
                             intent.putExtra("nick", nick);
+                            intent.putExtra("menuitem", item.getItemId());
                             intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
                         }
@@ -265,6 +268,7 @@ public class ReadAndWriteSnippets {
                         homeIntent.putExtra("email", email);
                         homeIntent.putExtra("nick", nick);
                         // homeIntent.putExtra("provider", provider.name());
+                        homeIntent.putExtra("menuitem", item.getItemId());
                         homeIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(homeIntent);
                         break;
@@ -278,18 +282,21 @@ public class ReadAndWriteSnippets {
                         Intent solamIntent = new Intent(context, SolicitudesAmigos.class);
                         solamIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         solamIntent.putExtra("nick", nick);
+                        solamIntent.putExtra("menuitem", item.getItemId());
                         context.startActivity(solamIntent);
                         break;
                     case R.id.nav_solicitudeslista:
                         Intent solliIntent = new Intent(context, SolicitudesLista.class);
                         solliIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         solliIntent.putExtra("nick", nick);
+                        solliIntent.putExtra("menuitem", item.getItemId());
                         context.startActivity(solliIntent);
                         break;
                     case R.id.nav_profile:
                         Intent profintent = new Intent(context, Perfil.class);
                         profintent.putExtra("email", email);
                         profintent.putExtra("nick", nick);
+                        profintent.putExtra("menuitem", item.getItemId());
                         profintent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                         context.startActivity(profintent);
                         break;

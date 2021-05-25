@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -45,7 +46,6 @@ public class ListaAmigos extends AppCompatActivity {
 
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-
     private String nick;
 
     @Override
@@ -76,6 +76,7 @@ public class ListaAmigos extends AppCompatActivity {
 
         drawerLayout= findViewById(R.id.drawer_layout_amigos);
         navigationView= findViewById(R.id.nav_View);
+        navigationView.setCheckedItem(getIntent().getIntExtra("menuitem", 0));
         Activity activity=this;
         String idLista=" ",nombreLista=" ",modo=" ";
         modo=getIntent().getExtras().getString("modo");

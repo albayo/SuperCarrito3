@@ -43,7 +43,7 @@ import ModeloDominio.Producto;
  * productos que componen una lista determinada
  *
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 13/04/2021
+ * @version: 25/05/2021
  */
 public class ListaProductos extends AppCompatActivity {
     private List<Producto> productos;

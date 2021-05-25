@@ -146,6 +146,7 @@ public class Home extends AppCompatActivity {
 
         drawerLayout= findViewById(R.id.drawer_layout_home);
         navigationView= findViewById(R.id.nav_view);
+        navigationView.setCheckedItem(getIntent().getIntExtra("menuitem", 0));
         toolbar=findViewById(R.id.homeToolbar);
         Activity activity=this;
 
