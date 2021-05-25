@@ -208,6 +208,17 @@ public class ReadAndWriteSnippets {
         return productoList;
     }
 
+    public static String getNick(String email){
+
+        String [] emailnodo=email.split("@");
+        String emailinsert1=""+emailnodo[0]+emailnodo[1];
+
+        String [] emailnodo2=emailinsert1.split("\\.");
+        String emailinsert2=""+emailnodo2[0]+emailnodo2[1];
+
+        return emailinsert2;
+    }
+
     public static void setNavigationView(DrawerLayout drawerLayout, NavigationView navigationView, androidx.appcompat.widget.Toolbar toolbar, String nick, String email, Activity activity, Context context) {
 
         //NAVIGATION
