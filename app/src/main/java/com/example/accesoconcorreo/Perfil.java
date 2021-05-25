@@ -30,10 +30,8 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -63,7 +61,7 @@ public class Perfil extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    private long numeroAmigos;
+    private int numeroAmigos;
 
     private Button btnAmigos;
     private ImageButton btnSubir;
@@ -130,15 +128,14 @@ public class Perfil extends AppCompatActivity {
         }
 
     private void numeroAmigos(String name) {
-        mDatabaseReference.child("users").child(name).child("amigos").addValueEventListener(new ValueEventListener() {
+        mDatabaseReference.child("users").child(name).child("amigos").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                numeroAmigos = dataSnapshot.getChildrenCount();
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(Perfil.this,"Fallo la lectura:",Toast.LENGTH_LONG).show();
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    for (DataSnapshot child : task.getResult().getChildren()) {
+                        numeroAmigos++;
+                    }
+                }
             }
         });
     }

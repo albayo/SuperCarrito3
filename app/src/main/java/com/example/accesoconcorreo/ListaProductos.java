@@ -36,6 +36,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import Adapters.MiembrosListaAdapter;
 import Adapters.ProductListAdapter;
 import ModeloDominio.Lista;
 import ModeloDominio.Producto;
@@ -122,7 +123,14 @@ public class ListaProductos extends AppCompatActivity {
                         startActivity(homeIntent);
                     }
                     else if(id==R.id.opciones_mostrar_miembros){ //FALTA MODIFICAR EL ADAPTER PARA QUE TE MUESTRE
+                        Intent miembros = new Intent(ListaProductos.this, MostrarMiebrosLista.class); //debería ir la clase del Perfil
+                        miembros.putExtra("email", email);
+                        miembros.putExtra("nick", nick);
+                        //miembros.putExtra("modo","añadir");
 
+                        miembros.putExtra("idLista",idLista);
+                        miembros.putExtra("nombreLista",nombreLista);
+                        startActivity(miembros);
                     }
                 }
 

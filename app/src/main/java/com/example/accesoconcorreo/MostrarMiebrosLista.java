@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -25,16 +26,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Adapters.ListaAmigosAdapter;
+import Adapters.MiembrosListaAdapter;
 import ModeloDominio.ReadAndWriteSnippets;
 
 public class MostrarMiebrosLista extends AppCompatActivity {
-    private List<String> mAmigos;
-    private List<String> mCorreos;
+    private List<String> mMiembros;
     private DatabaseReference mDatabase;
-    private ListaAmigosAdapter listaAmigosAdapter;
+    private MiembrosListaAdapter miembrosAdapter;
     private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán las solicitudes del usuario
-    private RecyclerView recyclerViewAmigos;
-
+    private RecyclerView recyclerViewMiembros;
+    private boolean propietario;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
     private String nick;
@@ -42,19 +43,21 @@ public class MostrarMiebrosLista extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mostrar_miebros_lista);
-
-
+        mMiembros=new ArrayList<>();
         toolbar = (Toolbar) findViewById(R.id.miembroslista_toolbar);
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mAmigos=new ArrayList<>();
-        mCorreos=new ArrayList<>();
-        recyclerViewAmigos=findViewById(R.id.amigos_recycler);
-        recyclerViewAmigos.setLayoutManager(new LinearLayoutManager(this));
-        nick=getIntent().getStringExtra("nick");
-
-        String title="Amigos";
-
+        mMiembros=new ArrayList<>();
+        String title="Miembros";
         toolbar.setTitle(title);
+        propietario=false;
+
+        recyclerViewMiembros=findViewById(R.id.miembros_recycler);
+        recyclerViewMiembros.setLayoutManager(new LinearLayoutManager(this));
+
+        nick=getIntent().getStringExtra("nick");
+        String idLista=" ",nombreLista=" ";
+        idLista=getIntent().getExtras().getString("idLista");
+        nombreLista=getIntent().getStringExtra("nombreLista");
         FloatingActionButton fab=findViewById(R.id.fab_Aniadir_Miembro);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,14 +66,32 @@ public class MostrarMiebrosLista extends AppCompatActivity {
                 amigoDF.show(getSupportFragmentManager(),"tag");
             }
         });
+        fab.setVisibility(View.INVISIBLE);
+        mDatabase.child("listas").child(idLista).child("propietario").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull  Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().getValue()!=null){
+                        String propie=task.getResult().getValue().toString();
+                        Log.d("Prop",propie);
+                        Log.d("Nick",nick);
+                        if(propie.equals(nick)){
+                           propietario=true;
+                           //miembrosAdapter.setPropietario(propietario);
+                           fab.setVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            }
+        });
+
 
         drawerLayout= findViewById(R.id.drawer_layout_amigos);
         navigationView= findViewById(R.id.nav_View);
         Activity activity=this;
-        String idLista=" ",nombreLista=" ";
 
-        idLista=getIntent().getExtras().getString("idLista");
-        nombreLista=getIntent().getStringExtra("nombreLista");
+
+
 
         ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,toolbar,nick,getIntent().getStringExtra("email"),activity,getApplicationContext());
 
@@ -80,20 +101,6 @@ public class MostrarMiebrosLista extends AppCompatActivity {
 
 
     public void obtenerMiembrosLista(String nick,String idLista,String nombreLista) {
-
-        /*//NECESARIO PARA BORRAR EL ÚLTIMO
-        mDatabase.child("listas").child(idLista).child("miembros").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    if(task.getResult().getValue()==null){
-                        mAmigos.clear();
-                        listaAmigosAdapter= new ListaAmigosAdapter(MostrarMiebrosLista.this,R.layout.amigos_recycler, mAmigos,mCorreos,nick,modo,idLista,nombreLista);
-                        recyclerViewAmigos.setAdapter(listaAmigosAdapter);
-                    }
-                }
-            }
-        });*/
         mDatabase.child("listas").child(idLista).child("miembros").addValueEventListener(new ValueEventListener() {
             /**
              * Método que cuando cambia un objeto en la base de datos se ejecuta para mostrar las listas de manera actualizada
@@ -102,18 +109,19 @@ public class MostrarMiebrosLista extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    mCorreos.clear();
-                    mAmigos.clear();
+
+                    mMiembros.clear();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String nombre=ds.getKey();
-                        String correo = ds.getValue().toString();
-                        mAmigos.add(nombre);
-                        mCorreos.add(correo);
-                    }
+                        mMiembros.add(nombre);
+                        Log.d("ADDD",nombre);
 
-                    //listaAmigosAdapter= new ListaAmigosAdapter(ListaAmigos.this,R.layout.amigos_recycler, mAmigos,mCorreos,nick,modo,idLista,nombreLista);
-                    recyclerViewAmigos.setAdapter(listaAmigosAdapter);
+                    }
+                    Log.d("PROP",""+propietario);
+                    miembrosAdapter= new MiembrosListaAdapter(MostrarMiebrosLista.this,R.layout.item_miembros, mMiembros,nick,idLista,nombreLista,propietario);
+                    recyclerViewMiembros.setAdapter(miembrosAdapter);
                 }
+
             }
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

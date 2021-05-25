@@ -24,7 +24,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ListaAmigos">
+        tools:context=".MostrarMiebrosLista">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/miembroslista_toolbar"
@@ -44,7 +44,7 @@
             app:titleTextColor="@color/white" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/amigos_recycler"
+            android:id="@+id/miembros_recycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/miembroslista_toolbar"

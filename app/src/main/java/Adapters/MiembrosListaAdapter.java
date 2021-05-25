@@ -2,6 +2,7 @@ package Adapters;
 
 import android.app.Activity;
 import android.content.DialogInterface;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,11 +26,9 @@ import java.util.List;
 
 import ModeloDominio.ReadAndWriteSnippets;
 
-public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdapter.MiembrosListaViewHolder>{
+public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdapter.MiembrosListaViewHolder> {
     //Representa las listas que se representarán
     private List<String> mMiembros;  // Cached copy of Listas
-    //Represente los ids de las listas , se cambiará por un Map.
-    private List<String> mCorreos; //
     //Representa el objeto necesario para la instanciacion en forma de View del layout necesario en este caso(item:prod_list)
     private int resource;
     //Representa el siguiente activity al que iremos, para redirigir.
@@ -37,43 +36,56 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
     private String nick;
     private final String idLista;
     private final String nombreLista;
+    private boolean propietario;
 
-    public MiembrosListaAdapter(Activity a, int resource, List<String> l, List<String> lid, String nick, String idLista, String nombreLista) {
-        this.resource=resource;
+    public MiembrosListaAdapter(Activity a, int resource, List<String> l, String nick, String idLista, String nombreLista,boolean prop) {
+        Log.d("Adapter", "constr");
+        this.resource = resource;
         this.activity = a;
         this.mMiembros = l;
-        this.mCorreos=lid;
-        this.nick=nick;
-        this.idLista=idLista;
-        this.nombreLista=nombreLista;
-    }
-    
-    @Override
-    public MiembrosListaAdapter.MiembrosListaViewHolder onCreateViewHolder(@NonNull  ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
-        return new MiembrosListaAdapter.MiembrosListaViewHolder(itemView,this);
+        this.nick = nick;
+        this.idLista = idLista;
+        this.nombreLista = nombreLista;
+        this.propietario=prop;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull  MiembrosListaAdapter.MiembrosListaViewHolder holder, int position) {
-        if  ( mMiembros  !=  null || mMiembros.get(position)!=null) {
-            String current =  mMiembros.get(position);
+    public MiembrosListaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        Log.d("Adapter", "onCreate");
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(resource, parent, false);
+        return new MiembrosListaAdapter.MiembrosListaViewHolder(itemView, this);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull MiembrosListaAdapter.MiembrosListaViewHolder holder, int position) {
+        if (mMiembros != null || mMiembros.get(position) != null) {
+            Log.d("Adapter", "onBind");
+            String current = mMiembros.get(position);
+
             holder.AmigoNombreView.setText(current);
+            if(current.equals(nick)){
+                holder.AmigoNombreView.setText(current +" (Tu)");
+            }
 
-        }  else  {
+        } else {
             // Covers the case of data not being ready yet.
-            holder. AmigoNombreView .setText( "No hay listas" );
+            holder.AmigoNombreView.setText("No hay listas");
         }
     }
-    public void  setListas(List<String> Listas){
-        mMiembros  = Listas;
+    public void setPropietario(boolean b){
+        propietario=b;
+    }
+    public void setMiembros(List<String> miembros) {
+        mMiembros = miembros;
 
     }
+
     @Override
     public int getItemCount() {
-        return 0;
+        return mMiembros.size();
     }
-    public class  MiembrosListaViewHolder  extends  RecyclerView.ViewHolder {
+
+    public class MiembrosListaViewHolder extends RecyclerView.ViewHolder {
         //Representa el View donde se dispondrán los nombres de las listas
         public View view;
         //Representa el TextView donde sale el nombre de la lista
@@ -83,7 +95,7 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
         //Representa una copia del adapter
         final MiembrosListaAdapter adapter;
         private final ImageButton btELiminarAmigo;
-        private final ImageButton btSimboloAmigo;
+
 
         /**
          * Constructor de la clase
@@ -95,32 +107,35 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
         private MiembrosListaViewHolder(View itemView, MiembrosListaAdapter adapter) {
             super(itemView);
             this.view = itemView;
-            this.AmigoNombreView = (TextView) itemView.findViewById(R.id.text_lista_usuario);
-            this.btELiminarAmigo = (ImageButton) itemView.findViewById(R.id.btEliminarAmigo);
+            this.AmigoNombreView = (TextView) itemView.findViewById(R.id.text_nombre_miembro);
             this.adapter = adapter;
-            this.btSimboloAmigo = (ImageButton) itemView.findViewById(R.id.RecyclerImagenAmigo);
-            //itemView.setOnClickListener(this);
+            this.btELiminarAmigo = (ImageButton) itemView.findViewById(R.id.btEliminarMiembro);
+            if(!propietario ){
+                btELiminarAmigo.setVisibility(View.INVISIBLE);
+            }
+            else{
+
+
             DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
-
-
             btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
+                    Log.d("CLick","cliiick");
                     androidx.appcompat.app.AlertDialog.Builder b = new androidx.appcompat.app.AlertDialog.Builder(activity);
                     b.setTitle("Confirmación");
-                    b.setMessage("¿Está seguro/a de que desea eliminar el amigo?");
+                    b.setMessage("¿Está seguro/a de que desea eliminar el miembro de la lista?");
 
                     b.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
 
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String amigo = AmigoNombreView.getText().toString();
+                            if(!amigo.equals(nick)){
 
-                            mDatabase.child("users").child(nick).child("amigos").child(amigo).removeValue();
-                            mDatabase.child("users").child(amigo).child("amigos").child(nick).removeValue();
+                            mDatabase.child("listas").child(idLista).child("miembros").child(amigo).removeValue();
+                            mDatabase.child("users").child(amigo).child("listas").child(idLista).removeValue();
 
-                            mDatabase.child("users").child(nick).child("amigos").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            mDatabase.child("listas").child(idLista).child("miembros").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if (task.isSuccessful()) {
@@ -132,21 +147,16 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
                                 }
                             });
                         }
-                    });
-
-                    b.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
+                            else{
+                                Toast.makeText(activity,"No puedes eliminarte a ti mismo",Toast.LENGTH_LONG).show();
+                            }
                         }
                     });
-                    AlertDialog alert = b.create();
+                    AlertDialog alert=b.create();
                     alert.show();
                 }
             });
+            }
         }
-
     }
 }
