@@ -30,6 +30,9 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import ModeloDominio.Lista;
 import ModeloDominio.ReadAndWriteSnippets;
@@ -63,6 +66,9 @@ public class Login extends AppCompatActivity {
     private EditText contraseniaET;
 
 
+    private DatabaseReference mDatabase;
+
+
     /**
      * Método que sirve para borrar los campos de usuario y contraseña cuando se vuelva a recuperar
      * el foco después de haber ido a otra activity
@@ -86,6 +92,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mAuth = FirebaseAuth.getInstance();
+        mDatabase = FirebaseDatabase.getInstance().getReference();
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.fichaProdToolbar);
         myToolbar.setTitle("SuperCarrito");
@@ -184,8 +191,20 @@ public class Login extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                String nick = usuarioET.getText().toString().split("@")[0];//persistencia.getNick(usuarioET.getText().toString());
-                                showHome(nick, usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
+                                String emailProc= ReadAndWriteSnippets.getNick(usuarioET.getText().toString());
+
+                                mDatabase.child("correousuario").child(emailProc).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                        if(task.isSuccessful()){
+                                            String nick= task.getResult().getValue().toString();
+                                            showHome(nick, usuarioET.getText().toString(), ProviderType.Basic);
+                                        }
+                                    }
+                                });
+                                //String nick = usuarioET.getText().toString().split("@")[0];//persistencia.getNick(usuarioET.getText().toString());
+
+                               // showHome(nick, usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
                             } else {
                                 showAlert();
                             }
