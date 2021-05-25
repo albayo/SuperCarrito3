@@ -95,6 +95,7 @@ public class Perfil extends AppCompatActivity {
         btnSubir=findViewById(R.id.ibutt_subirfoto);
         btnAmigos=findViewById(R.id.button_amigos);
 
+
         toolbar.setTitle("Perfil");
         progressDialog=new ProgressDialog(this);
         numeroAmigos(nick);
