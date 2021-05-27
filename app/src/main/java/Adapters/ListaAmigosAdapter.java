@@ -18,6 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.accesoconcorreo.Home;
 import com.example.accesoconcorreo.ListaAmigos;
 import com.example.accesoconcorreo.ListaProductos;
+import com.example.accesoconcorreo.Perfil;
+import com.example.accesoconcorreo.Perfil_otros;
 import com.example.accesoconcorreo.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -28,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.List;
 
 import ModeloDominio.ReadAndWriteSnippets;
+
+import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.AmigosViewHolder>{
     //Representa las listas que se representarán
@@ -136,6 +140,15 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
                     }
                 });
             }
+            btSimboloAmigo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent profintent = new Intent(view.getContext(), Perfil_otros.class);
+                    profintent.putExtra("nick", AmigoNombreView.getText().toString());
+                    profintent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                    view.getContext().startActivity(profintent);
+                }
+            });
 
             btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
                 @Override

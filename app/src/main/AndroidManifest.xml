@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AccesoConCorreo">
-        <activity android:name=".MostrarMiebrosLista"></activity>
+        <activity android:name=".Perfil_otros"></activity>
+        <activity android:name=".MostrarMiebrosLista" />
         <activity android:name=".SolicitudesLista" />
         <activity android:name=".Perfil" />
         <activity android:name=".ListaAmigos" />
