@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/item_solicitud"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    app:cardCornerRadius="15dp"
+    app:cardCornerRadius="25dp"
     app:cardElevation="4dp"
     app:cardUseCompatPadding="true">
 
@@ -49,6 +48,7 @@
                     android:id="@+id/tipo_solicitud"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo"
                     android:text="@string/tipo_sol"
                     android:textSize="14sp" />
 
@@ -56,8 +56,9 @@
                     android:id="@+id/remitente"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo"
                     android:text="@string/remitente"
-                    android:textSize="12sp" />
+                    android:textSize="14sp" />
 
 
             </LinearLayout>

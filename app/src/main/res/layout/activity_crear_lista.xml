@@ -62,9 +62,10 @@
                     android:id="@+id/lista_sola_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo"
                     android:text="@string/lista_personal"
                     android:textColor="@color/naranja_tipo3"
-                    android:textSize="18sp" />
+                    android:textSize="20sp" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
@@ -97,9 +98,10 @@
                     android:id="@+id/lista_grupo_text"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo"
                     android:text="@string/grupo_de_compra"
-                    android:textSize="18sp"
-                    android:textColor="@color/white"/>
+                    android:textColor="@color/white"
+                    android:textSize="20sp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 

@@ -93,7 +93,7 @@ public class Home extends AppCompatActivity {
 
         Toolbar myToolbar = (Toolbar) findViewById(R.id.homeToolbar);
 
-        myToolbar.setTitle("SuperCarrito-" + nick);
+        myToolbar.setTitle("Mis Listas");
         myToolbar.inflateMenu(R.menu.menu_home_toolbar);
         myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
 

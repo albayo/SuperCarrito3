@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -10,9 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints=""
+        android:fontFamily="@font/baloo"
         android:hint="@string/nick"
         android:inputType="textLongMessage"
-        android:padding="6dp" />
+        android:padding="6dp"
+        android:textSize="20sp"
+        android:textStyle="bold|italic" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -27,7 +31,9 @@
             android:layout_marginTop="0dp"
             android:layout_marginEnd="1dp"
             android:layout_weight="2"
-            android:text="@string/aceptar" />
+            android:fontFamily="@font/baloo"
+            android:text="@string/aceptar"
+            app:cornerRadius="20sp" />
 
         <Button
             android:id="@+id/btnCancelar"
@@ -38,7 +44,9 @@
             android:layout_marginTop="0dp"
             android:layout_marginRight="0dp"
             android:layout_weight="2"
-            android:text="@string/cancelar" />
+            android:fontFamily="@font/baloo"
+            android:text="@string/cancelar"
+            app:cornerRadius="20sp" />
 
     </LinearLayout>
 

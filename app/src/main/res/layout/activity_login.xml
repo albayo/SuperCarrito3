@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/const_login"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_margin="0dp">
@@ -21,8 +22,8 @@
 
     <ImageView
         android:id="@+id/imageView_logosuper"
-        android:layout_width="161dp"
-        android:layout_height="121dp"
+        android:layout_width="184dp"
+        android:layout_height="146dp"
         android:layout_marginTop="60dp"
         android:contentDescription="@string/supercarrito_logueo"
         android:src="@mipmap/carro"
@@ -34,13 +35,14 @@
         android:id="@+id/editText_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:autofillHints=""
         android:backgroundTint="@color/naranja_tipo3"
         android:ems="10"
+        android:fontFamily="@font/baloo"
         android:hint="@string/email_logueo"
         android:inputType="textEmailAddress"
-        android:textColor="@color/black"
+        android:textColor="#CD000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,9 +56,10 @@
         android:autofillHints=""
         android:backgroundTint="@color/naranja_tipo3"
         android:ems="10"
+        android:fontFamily="@font/baloo"
         android:hint="@string/contrasenia_logueo"
         android:inputType="textPassword"
-        android:textColor="@color/black"
+        android:textColor="#D2000000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editText_email" />
@@ -118,7 +121,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:text="@string/registrar" />
+            android:text="@string/registrar"
+            app:cornerRadius="20dp" />
 
         <Button
             android:id="@+id/btnAcceder"
@@ -126,7 +130,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_weight="1"
-            android:text="@string/acceder" />
+            android:text="@string/acceder"
+            app:cornerRadius="20dp" />
 
     </LinearLayout>
 
@@ -140,6 +145,7 @@
         android:drawableStart="@mipmap/google"
         android:drawableLeft="@mipmap/google"
         android:text="GOOGLE"
+        app:cornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

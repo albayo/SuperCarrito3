@@ -12,14 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints=""
+        android:fontFamily="@font/baloo"
         android:hint="@string/nickCompartir"
         android:inputType="textLongMessage"
-        android:padding="6dp" />
+        android:padding="6dp"
+        android:textSize="20sp"
+        android:textStyle="bold|italic" />
 
     <TextView
         android:id="@+id/et_aniadidos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/baloo" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,14 +34,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="@string/aceptar" />
+            android:fontFamily="@font/baloo"
+            android:text="@string/aceptar"
+            android:textSize="14sp"
+            app:cornerRadius="20dp" />
 
         <Button
             android:id="@+id/btCancelar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="@string/cancelar" />
+            android:fontFamily="@font/baloo"
+            android:text="@string/cancelar"
+            android:textSize="14sp"
+            app:cornerRadius="20dp" />
 
     </LinearLayout>
 
@@ -51,8 +61,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:fontFamily="@font/baloo"
             android:text="@string/seguir"
-            android:textSize="12sp" />
+            android:textSize="14sp"
+            app:cornerRadius="20dp" />
     </LinearLayout>
 
 </LinearLayout>

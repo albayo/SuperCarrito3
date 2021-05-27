@@ -11,9 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints=""
+        android:fontFamily="@font/baloo"
         android:hint="@string/nombreLista"
         android:inputType="textLongMessage"
-        android:padding="6dp" />
+        android:padding="6dp"
+        android:textSize="20sp"
+        android:textStyle="bold|italic" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -32,6 +35,7 @@
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="0dp"
                 android:layout_weight="2"
+                android:fontFamily="@font/baloo"
                 android:text="@string/aceptar"
                 android:textSize="18sp" />
 
@@ -44,6 +48,7 @@
                 android:layout_marginEnd="0dp"
                 android:layout_marginRight="0dp"
                 android:layout_weight="2"
+                android:fontFamily="@font/baloo"
                 android:text="@string/cancelar"
                 android:textSize="18sp" />
         </LinearLayout>

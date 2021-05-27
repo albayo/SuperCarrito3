@@ -48,14 +48,17 @@
                     android:id="@+id/nombre_producto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo"
                     android:text="@string/nombreproducto"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:textStyle="bold|italic" />
 
                 <TextView
 
                     android:id="@+id/super_producto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:fontFamily="@font/baloo"
                     android:text="@string/nombresuper"
                     android:textSize="12sp" />
 
