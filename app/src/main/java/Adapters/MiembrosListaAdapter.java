@@ -65,6 +65,7 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
             holder.AmigoNombreView.setText(current);
             if(current.equals(nick)){
                 holder.AmigoNombreView.setText(current +" (Tu)");
+                holder.btELiminarAmigo.setVisibility(View.INVISIBLE);
             }
 
         } else {
