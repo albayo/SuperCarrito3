@@ -143,6 +143,8 @@ public class ListaProductos extends AppCompatActivity {
         String idLista = getIntent().getStringExtra("idLista");
 
         obtenerProductosLista(idLista);
+
+
         FloatingActionButton fabAñadirProductos = findViewById(R.id.fabAniadir_Productos);
 
 
@@ -243,14 +245,18 @@ public class ListaProductos extends AppCompatActivity {
      *
      * @param idProducto Representa el id del producto que quieres aadir a la lista
      */
+
     public void addProducto(String idProducto, String cantidad) {
+
         mDatabase.child("json").child("results").child(idProducto.split("_")[0]).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String categoria=snapshot.child("Categoría").getValue().toString();
+                    Log.d("ADDDD",""+productos.size());
                     DataSnapshot ds=snapshot.child("Ítems").child(idProducto.split("_")[1]);
                     if(ds.exists()){
+
                         String nombre = ds.child("Producto").getValue().toString();
                         String image = ds.child("RutaImagen").getValue().toString();
                         String brand = ds.child("Marca").getValue().toString();
@@ -258,10 +264,14 @@ public class ListaProductos extends AppCompatActivity {
                         String tienda=ds.child("ÍtemsTiendas").child("0").child("Tienda").getValue().toString();
                         String precio=ds.child("ÍtemsTiendas").child("0").child("Precio").getValue().toString();
                         double pre=Double.parseDouble(precio)*0.00022;
+
                         precio=pre+"";
-                        Producto p = new Producto(idProducto, nombre, brand, image, categoria, tienda, gradoNutricion,"1",precio);                    productos.add(p);
+                        Log.d("ADDDD",""+productos.size());
+                        Producto p = new Producto(idProducto, nombre, brand, image, categoria, tienda, gradoNutricion,cantidad,precio);                    productos.add(p);
                         //ESTO ES UNA MIERDA
-                        productos.add(p);
+
+                        //productos.add(p);
+                        Log.d("ADDDD",""+productos.size());
                         productosAdapter.setProductos(productos);
 
                     }
