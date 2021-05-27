@@ -18,6 +18,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.accesoconcorreo.ListaProductos;
 import com.example.accesoconcorreo.R;
 import com.example.accesoconcorreo.ficha_producto;
@@ -31,7 +32,10 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.List;
 
 import ModeloDominio.Producto;
-    /**
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+
+/**
      * Esta clase define el Adapter necesario para que nuestra capa de presentacion se comunique
      * con la Persistencia y de esta manera mostrar los productos en ella.
      *
@@ -96,9 +100,11 @@ import ModeloDominio.Producto;
 
                 holder.ProductoNombreView.setText(nomProd);
 
-                if(!current.getImage().equals(""))
-                    holder.ProductoImageView.setImageURI(Uri.parse(current.getImage()));
+                if(!current.getImage().contains("imagen-no-disponible")) {
+                    //holder.ProductoImageView.setImageURI(Uri.parse(current.getImage()));
+                    Glide.with(a).load(Uri.parse(current.getImage())).fitCenter().centerCrop().override(200,200).transition(withCrossFade()).into(holder.ProductoImageView);
 
+                }
                 else
                     holder.ProductoImageView.setImageResource(R.mipmap.pordefecto);
 

@@ -15,7 +15,9 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.accesoconcorreo.ListaProductos;
+import com.example.accesoconcorreo.Perfil;
 import com.example.accesoconcorreo.R;
 import com.example.accesoconcorreo.TodosProductos;
 import com.example.accesoconcorreo.ficha_producto;
@@ -30,6 +32,9 @@ import java.util.List;
 import java.util.Map;
 
 import ModeloDominio.Producto;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
+
 /**
  * Esta clase define el adapter necesario para que la capa de Presentación y Persistencia se comuniquen
  *  y se representen de forma visual los datos(todos los Productos de los supermercados)
@@ -103,7 +108,9 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
             holder.nombreProductoView.setText(nomProd);
 
             if(!current.getImage().contains("imagen-no-disponible"))
-                holder.imagenProducto.setImageURI(Uri.parse(current.getImage()));
+                //holder.imagenProducto.setImageURI(Uri.parse(current.getImage()));
+                Glide.with(a).load(Uri.parse(current.getImage())).fitCenter().centerCrop().override(200,200).transition(withCrossFade()).into(holder.imagenProducto);
+
 
             else {holder.imagenProducto.setImageResource(R.mipmap.pordefecto);}
 

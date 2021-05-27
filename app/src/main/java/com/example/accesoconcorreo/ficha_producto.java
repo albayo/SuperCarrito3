@@ -16,8 +16,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+
 import Adapters.ProductListAdapter;
 import ModeloDominio.Producto;
+
+import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 /**
  * Esta clase define la actividad (llamada "activity_ficha_producto") que servirá para el disponer la información de un producto
@@ -68,8 +72,10 @@ public class ficha_producto extends AppCompatActivity {
             nombre.setText(n);
 
         Uri uri=Uri.parse(producto.getImage());
-        if(!producto.getImage().equals(""))
-            fotoprod.setImageURI(uri);
+        if(!producto.getImage().contains("imagen-no-disponible"))
+            //fotoprod.setImageURI(uri);
+            Glide.with(ficha_producto.this).load(Uri.parse(producto.getImage())).fitCenter().centerCrop().override(400,400).transition(withCrossFade()).into(fotoprod);
+
         else
             fotoprod.setImageResource(R.mipmap.pordefecto);
         
