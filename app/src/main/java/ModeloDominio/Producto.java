@@ -22,9 +22,29 @@ public class Producto implements Serializable {
     //Representa el grado de nutricion del producto
     private String gradoNutrition;
     //Representa la marca del producto
-    private String ingred; // Una string para ingredienteS ????
+    private String categoria; // Una string para ingredienteS ????
     //Representa la marca del supermercado
     private String supermercado;
+
+
+    /**
+     * Método que devuelve el precio del Producto
+     * @return El precio del Producto
+     */
+    public String getPrecio() {
+        return precio;
+    }
+
+    /**
+     * Método que establece como precio del Producto la cadena pasada por parámetro
+     * @param precio Representa el nuevo identificador del Producto
+     */
+    public void setPrecio(String precio) {
+        this.precio = precio;
+    }
+
+    //Representa el precio del producto
+    private String precio;
 
     private boolean checkbox;
 
@@ -53,7 +73,7 @@ public class Producto implements Serializable {
         this.nombre = "";
         this.brand = "";
         this.image = "";
-        this.ingred = "";
+        this.categoria = "";
         this.supermercado=null;
     }
 
@@ -63,19 +83,21 @@ public class Producto implements Serializable {
      * @param nombre Representa el nombre del Producto
      * @param brand Representa la marca del Producto
      * @param image Representa la imagen(la URL de la imagen) del Producto
-     * @param ingred Representa los ingredientes del Producto
+     * @param cat Representa los ingredientes del Producto
      * @param s Representa el supermercado en el que se puede comprar el Producto
+     * @param precio Representa el precio del Producto
      */
-    public Producto(String idProducto, String nombre, String brand, String image, String ingred,String s,String grade,String cantidad) {
+    public Producto(String idProducto, String nombre, String brand, String image, String cat,String s,String grade,String cantidad,String precio) {
         this.idProducto = idProducto;
         this.nombre = nombre;
         this.brand = brand;
         this.image = image;
-        this.ingred = ingred;
+        this.categoria = cat;
         this.supermercado=s;
         this.gradoNutrition=grade;
         this.cantidad=cantidad;
         this.checkbox=false;
+        this.precio=precio;
     }
     /**
      * Método que devuelve el grado de nutricion del Producto
@@ -162,16 +184,16 @@ public class Producto implements Serializable {
      * Método que devuelve los ingredientes del Producto
      * @return Los ingredientes del Producto en forma de String (????)
      */
-    public String getIngred() {
-        return ingred;
+    public String getCategoria() {
+        return categoria;
     }
 
     /**
      * Método que establece como ingredientes del Producto la cadena pasada por parámetro
-     * @param ingred Representa los ingredientes del Producto
+     * @param cat Representa los ingredientes del Producto
      */
-    public void setIngred(String ingred) {
-        this.ingred = ingred;
+    public void setCategoria(String cat) {
+        this.categoria = cat;
     }
 
 

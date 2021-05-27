@@ -82,7 +82,7 @@ public class ficha_producto extends AppCompatActivity {
             case "e":fotonutri.setImageResource(R.mipmap.nutriscore_e);
         }
 
-        nutricional.setText(producto.getIngred());
+       nutricional.setText("ejemplo");
 
         brand.setText(producto.getBrand());
 

@@ -102,7 +102,7 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
 
             holder.nombreProductoView.setText(nomProd);
 
-            if(!current.getImage().equals(""))
+            if(!current.getImage().contains("imagen-no-disponible"))
                 holder.imagenProducto.setImageURI(Uri.parse(current.getImage()));
 
             else {holder.imagenProducto.setImageResource(R.mipmap.pordefecto);}

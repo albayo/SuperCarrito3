@@ -12,6 +12,7 @@ import android.content.pm.ActivityInfo;
 import android.media.Image;
 import android.os.Build;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -41,6 +42,7 @@ import Adapters.ProductListAdapter;
 import ModeloDominio.Lista;
 import ModeloDominio.Producto;
 import ModeloDominio.ReadAndWriteSnippets;
+import okhttp3.internal.cache.DiskLruCache;
 
 /**
  * Esta clase define la actividad (llamada "activity_lista_producto") que dispondrá en pantalla los
@@ -242,25 +244,58 @@ public class ListaProductos extends AppCompatActivity {
      * @param idProducto Representa el id del producto que quieres aadir a la lista
      */
     public void addProducto(String idProducto, String cantidad) {
+        mDatabase.child("json").child("results").child(idProducto.split("_")[0]).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String categoria=snapshot.child("Categoría").getValue().toString();
+                    DataSnapshot ds=snapshot.child("Ítems").child(idProducto.split("_")[1]);
+                    if(ds.exists()){
+                        String nombre = ds.child("Producto").getValue().toString();
+                        String image = ds.child("RutaImagen").getValue().toString();
+                        String brand = ds.child("Marca").getValue().toString();
+                        String gradoNutricion = "";
+                        String tienda=ds.child("ÍtemsTiendas").child("0").child("Tienda").getValue().toString();
+                        String precio=ds.child("ÍtemsTiendas").child("0").child("Precio").getValue().toString();
+                        double pre=Double.parseDouble(precio)*0.00022;
+                        precio=pre+"";
+                        Producto p = new Producto(idProducto, nombre, brand, image, categoria, tienda, gradoNutricion,"1",precio);                    productos.add(p);
+                        //ESTO ES UNA MIERDA
+                        productos.add(p);
+                        productosAdapter.setProductos(productos);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        /*
         Log.d("GETPRODUCTO", "INI");
 
-        mDatabase.child("json").child("results").child(idProducto).addValueEventListener(new ValueEventListener() {
+        mDatabase.child("json").child("results").child(idProducto.split("_")[0]).child("Ítems").child(idProducto.split("_")[1]).addValueEventListener(new ValueEventListener() {
 
             /**
              * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.
-             * @param ds Representa el nodo de la base de datos a actualizar.
-             */
+             * @param snapshot Representa el nodo de la base de datos a actualizar.
+             *sasasdasdasdadsasd/
             @Override
-            public void onDataChange(@NonNull DataSnapshot ds) {
-                if (ds.exists()) {
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
 
-                    String nombre = ds.child("product_name").getValue().toString();
-                    String ingredients = ds.child("ingredients_text").getValue().toString();
-                    String imgage = ds.child("image_small_url").getValue().toString();
-                    String brand = ds.child("brand_owner").getValue().toString();
-                    String gradoNutricion = ds.child("nutriscore_grade").getValue().toString();
-                    Producto p = new Producto(idProducto, nombre, brand, imgage, ingredients, "", gradoNutricion, cantidad);
-                    productos.add(p);
+
+                    String nombre = snapshot.child("Producto").getValue().toString();
+                    String categoria = snapshot.child("ingredients_text").getValue().toString();
+                    String image = snapshot.child("RutaImagen").getValue().toString();
+                    String brand = snapshot.child("Marca").getValue().toString();
+                    String gradoNutricion = "";
+
+
+                    Producto p = new Producto(idProducto, nombre, brand, image, categoria, "Eroski", gradoNutricion,"1");                    productos.add(p);
                     //ESTO ES UNA MIERDA
                     productosAdapter.setProductos(productos);
                 }
@@ -272,7 +307,7 @@ public class ListaProductos extends AppCompatActivity {
             }
         });
 
-
+*/
     }
 
 }

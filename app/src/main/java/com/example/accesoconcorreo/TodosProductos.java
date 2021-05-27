@@ -156,13 +156,31 @@ public class TodosProductos extends AppCompatActivity{
                             break;
                         }
                         String id = ds.getKey();
-                        String nombre = ds.child("product_name").getValue().toString();
-                        String ingredients = ds.child("ingredients_text").getValue().toString();
-                        String imgage = ds.child("image_url").getValue().toString();
-                        String brand = ds.child("brand_owner").getValue().toString();
-                        String gradoNutricion = ds.child("nutriscore_grade").getValue().toString();
-                        Producto p = new Producto(id, nombre, brand, "", ingredients, "Eroski", gradoNutricion,"1");
-                        productos.add(p);
+                        String nombre = ds.child("Nombre").getValue().toString();
+                        String categoria= ds.child("Categoría").getValue().toString();
+
+                        for(DataSnapshot ds1 : ds.child("Ítems").getChildren()){
+                            id+="_"+ds1.getKey();
+                            String brand=ds1.child("Marca").getValue().toString();
+                            String image = ds1.child("RutaImagen").getValue().toString();
+                            String gradoNutricion="";
+                            String tienda=ds1.child("ÍtemsTiendas").child("0").child("Tienda").getValue().toString();
+                            String precio=ds1.child("ÍtemsTiendas").child("0").child("Precio").getValue().toString();
+                            double pre=Double.parseDouble(precio)*0.00022;
+                            precio=pre+"";
+                            Producto p = new Producto(id, nombre, brand, image, categoria, tienda, gradoNutricion,"1",precio);
+                            productos.add(p);
+                            id=ds.getKey();
+                        }
+
+
+
+                       // String ingredients = ds.child("ingredients_text").getValue().toString();
+
+
+                        //String gradoNutricion = ds.child("nutriscore_grade").getValue().toString();
+                        //Producto p = new Producto(id, nombre, brand, "", ingredients, "Eroski", gradoNutricion,"1");
+                        //productos.add(p);
 
                     }
                     mostrarProductos(productos);
