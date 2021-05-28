@@ -267,7 +267,8 @@ public class ListaProductos extends AppCompatActivity {
 
                         precio=pre+"";
                         Log.d("ADDDD",""+productos.size());
-                        Producto p = new Producto(idProducto, nombre, brand, image, categoria, tienda, gradoNutricion,cantidad,precio);                    productos.add(p);
+                        Producto p = new Producto(idProducto, nombre, brand, image, categoria, tienda, gradoNutricion,cantidad,precio);
+                        productos.add(p);
                         //ESTO ES UNA MIERDA
 
                         //productos.add(p);
