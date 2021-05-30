@@ -36,7 +36,7 @@ import java.util.Map;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 public class ReadAndWriteSnippets {
-
+    //represtenta la cadena que se usará para mandar mensajes al log y que así se puedan identificar
     private static final String TAG = "ReadAndWriteSnippets";
 
     // [START declare_database_ref]
@@ -56,6 +56,13 @@ public class ReadAndWriteSnippets {
         mDatabase.child("users").child(nick).child("listas").child(idLista).setValue(nombreLista);
     }
 
+    /**
+     * Busca en la lista de productos "productos" todos los elementos cuyo nombre tiene similitud con la cadena pasada por parámetro y que pertenecen a la categoría pasada por parámetro
+     * @param productos representa la lista de productos que se quiere filtrar
+     * @param nombreProds representa el nombre de un producto o parte de este por el que se quiere filtrar la lista
+     * @param categoriaSelec representa una de las categorías posibles en las que se subdividen los productos
+     * @return devuelve una lista que es un subconjunto de la lista pasada por parámetro
+     */
     public static List<Producto> buscarConCategoría(List<Producto> productos, String nombreProds, String categoriaSelec) {
         List<Producto> productoList = new ArrayList<>();
         for(Producto p : productos){
@@ -68,6 +75,13 @@ public class ReadAndWriteSnippets {
     }
 
     // [START rtdb_write_new_user]
+
+    /**
+     * Inserta el usuario con el nombre "name" y el email "email" en la BD
+     * @param name representa el nombre que tendrá el usuario en la BD
+     * @param email representa el email con el que se ha logueado el usuario en la aplicación
+     * @param context
+     */
     public void insertarUsuario(String name, String email,Context context) {
         Usuario user = new Usuario(name, email);
         mDatabase.child("users").child(name).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -109,7 +123,9 @@ public class ReadAndWriteSnippets {
 
     }
 
-
+    /**
+     * Actualiza una variable de la BD que sirve para llevar cuenta de cuantas listas existen
+     */
     public static void actualizaContadorListas() {
 
         mDatabase.child("contadorLista").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -128,6 +144,12 @@ public class ReadAndWriteSnippets {
         mDatabase.child("contadorLista").setValue(n);
     }
 
+    /**
+     * Inserta la lista pasada por parámetro
+     * @param nombrelista representa el nombre de la lista
+     * @param nick representa el nick del usuario que ha creado la lista
+     * @param compartida representa que es una lista compartida en caso de que sea true, y que es una lista individual en caso de que sea false
+     */
     public static void insertarLista(String nombrelista, String nick, boolean compartida) {
 
         actualizaContadorListas();
@@ -159,23 +181,50 @@ public class ReadAndWriteSnippets {
         insertContadorListas(Lista.getContLista() + 1);
     }
 
-
+    /**
+     * Manda una solicitud para crear una lista compartida al usuario con nick "nick"
+     * @param usuarioActual representa el nick del usuario actual
+     * @param nick representa el nick del usuario al que se quiere enviar la solicitud
+     * @param idLista representa el id de la lista que quiere convertirse en compartida
+     * @param nombreLista representa el nombre de la lista que quiere convertirse en compartida
+     */
     public static void solicitudLista(String usuarioActual, String nick, String idLista, String nombreLista) {
         mDatabase.child("users").child(nick).child("solicitudes").child("listas").child(usuarioActual).child(idLista).setValue(nombreLista);
     }
 
+    /**
+     * Manda una solicitud para añadir al usuario con nick "nick" como amigo
+     * @param usuarioActual representa el nick del usuario actual
+     * @param nick representa el nick del usuario al que se quiere enviar la solicitud
+     */
     public static void solicitudAmistad(String usuarioActual, String nick) {
         mDatabase.child("users").child(nick).child("solicitudes").child("amistad").child(usuarioActual).setValue("pendiente");
     }
 
+    /**
+     * Elimina una solicitud para crear una lista compartida
+     * @param usuarioActual representa el nick del usuario actual
+     * @param remitente representa el usuario al que se había mandado la solicitud
+     * @param idLista representa la lista sobre la cual se había enviado la solicitud
+     */
     public static void eliminarSolicitudLista(String usuarioActual, String remitente, String idLista) {
         mDatabase.child("users").child(usuarioActual).child("solicitudes").child("listas").child(remitente).child(idLista).removeValue();
     }
 
+    /**
+     * Elimina una solicitud de amigo
+     * @param usuarioActual representa el nick del usuario actual
+     * @param remitente representa el usuario al que se había mandado la solicitud
+     */
     public static void eliminarSolicitudAmistad(String usuarioActual, String remitente) {
         mDatabase.child("users").child(usuarioActual).child("solicitudes").child("amistad").child(remitente).removeValue();
     }
 
+    /**
+     * Añade como amigo al usuario con nick "amigo"
+     * @param usuarioActual representa el nick del usuario actual
+     * @param amigo representa el usuario que se quiere añadir como amigo
+     */
     public static void aniadirAmigo(String usuarioActual, String amigo){
 
         mDatabase.child("users").child(usuarioActual).child("email").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
@@ -192,6 +241,12 @@ public class ReadAndWriteSnippets {
 
     }
 
+    /**
+     * Añade una lista a la BD
+     * @param nick representa el usuario que ha creado la lista
+     * @param idLista representa el id de la lista que se va a añadir
+     * @param nombreLista representa el nombre que se le ha dado a la lista que se quiere añadir
+     */
     public static void aniadirLista(String nick, String idLista, String nombreLista){
         mDatabase.child("users").child(nick).child("listas").child(idLista).setValue(nombreLista);
         mDatabase.child("listas").child(idLista).child("miembros").child(nick).setValue(nick);
@@ -209,6 +264,12 @@ public class ReadAndWriteSnippets {
 
     }
 
+    /**
+     * Busca en la lista de productos "productos" todos los elementos cuyo nombre tiene similitud con la cadena pasada por parámetro
+     * @param productos representa la lista de productos que se quiere filtrar
+     * @param nombreProds representa el nombre de un producto o parte de este por el que se quiere filtrar la lista
+     * @return devuelve una lista que es un subconjunto de la lista pasada por parámetro
+     */
     public static List<Producto> buscarProductos(List<Producto> productos, String nombreProds){
         List<Producto> productoList = new ArrayList<>();
         for(Producto p : productos){
@@ -220,6 +281,11 @@ public class ReadAndWriteSnippets {
         return productoList;
     }
 
+    /**
+     * Obtiene el nick de un usuario a partir de su email
+     * @param email representa el email del usuario
+     * @return nick del usuario
+     */
     public static String getNick(String email){
 
         String [] emailnodo=email.split("@");
