@@ -56,6 +56,17 @@ public class ReadAndWriteSnippets {
         mDatabase.child("users").child(nick).child("listas").child(idLista).setValue(nombreLista);
     }
 
+    public static List<Producto> buscarConCategoría(List<Producto> productos, String nombreProds, String categoriaSelec) {
+        List<Producto> productoList = new ArrayList<>();
+        for(Producto p : productos){
+            if(p.getNombre().toLowerCase().contains(nombreProds.toLowerCase()) && p.getCategoria().equals(categoriaSelec)){
+                productoList.add(p);
+            }
+        }
+
+        return productoList;
+    }
+
     // [START rtdb_write_new_user]
     public void insertarUsuario(String name, String email,Context context) {
         Usuario user = new Usuario(name, email);
@@ -201,7 +212,7 @@ public class ReadAndWriteSnippets {
     public static List<Producto> buscarProductos(List<Producto> productos, String nombreProds){
         List<Producto> productoList = new ArrayList<>();
         for(Producto p : productos){
-            if(p.getNombre().contains(nombreProds)){
+            if(p.getNombre().toLowerCase().contains(nombreProds.toLowerCase())){
                 productoList.add(p);
             }
         }

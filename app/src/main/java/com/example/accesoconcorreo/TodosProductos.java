@@ -2,6 +2,9 @@ package com.example.accesoconcorreo;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -38,19 +41,26 @@ import ModeloDominio.ReadAndWriteSnippets;
  * @version: 20/05/2021
  */
 public class TodosProductos extends AppCompatActivity{
+    //Representa el identificar de la lista a la que se quiere añadir el producto
     private String idLista;
     private List<Producto> productos;
+    //Representa todos los productos que hay en la BD para evitar acceder muchas veces
     private List<Producto> todosProds;
-    private EditText etbusqueda;
-    private ImageView ivBusqueda;
+    //private EditText etbusqueda;
+    //private ImageView ivBusqueda;
+    //Representa el SearchView en el que se escribirá texto para poder realizar una búsqueda
     private SearchView svProductos;
     private DatabaseReference mDatabase;
     private RecyclerView recyclerViewproductos;
     private TodosProductosAdapter todosProductosAdapter;
+    //Representa el toolbar de la actividad
     private Toolbar toolbar;
-    /*private Spinner spinnerSuper;
-    private Spinner spinnerProd;//inutilizado de momento ya que la API no tiene categorías
-    */
+    //Representa todas las categorías que tienen los productos
+    private List<String> categorias;
+    //Representa el spinner el cual permitirá buscar productos por categorías
+    private Spinner spinnerCategorias;
+    //Representa la categoría que está seleccionada por el usuario
+    private String categoriaSelec;
 
     /**
      * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
@@ -61,13 +71,48 @@ public class TodosProductos extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        categorias = new ArrayList<>();
+        categorias.add("-Categorías-");
+        categorias.add("Despensa");
+        categorias.add("Bebidas");
+        categorias.add("Frutas y Verduras");
+        categorias.add("Carnes y Pescados");
+        categorias.add("Panadería");
+        categorias.add("Refrigerados");
+        categorias.add("Dulces y Pasabocas");
+        categorias.add("Cuidado Personal");
+        categorias.add("Aseo del Hogar");
+        categorias.add("Licores");
+        categorias.add("Bebés");
+        categorias.add("Mascotas");
+        categorias.add("Varios");
+
         setContentView(R.layout.activity_todos_productos);
         String nombreLista = getIntent().getStringExtra("nombreLista");
         idLista = getIntent().getStringExtra("idLista");
         recyclerViewproductos = (RecyclerView) findViewById(R.id.super_prod_list_recycler);
         recyclerViewproductos.setLayoutManager(new LinearLayoutManager(this));
-        /*etbusqueda = findViewById(R.id.etBusqueda);
-        ivBusqueda = findViewById(R.id.ivBusqueda);*/
+        this.spinnerCategorias = findViewById(R.id.spinnerCategoria);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorias);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerCategorias.setAdapter(arrayAdapter);
+        spinnerCategorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                categoriaSelec = parent.getItemAtPosition(position).toString();
+                if(categoriaSelec.equals("-Categorías-")){
+                    mostrarProductos(todosProds);
+                }else{
+                    productos = ReadAndWriteSnippets.buscarConCategoría(todosProds, "", categoriaSelec);
+                    mostrarProductos(productos);
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView <?> parent) {
+            }
+        });
+
         svProductos = (android.widget.SearchView) findViewById(R.id.svProductos);
         svProductos.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -84,11 +129,23 @@ public class TodosProductos extends AppCompatActivity{
 
             @Override
             public boolean onQueryTextChange(String newText) {
+                //Toast.makeText(TodosProductos.this, "Tamaño todosProds = " + todosProds.size(), Toast.LENGTH_LONG).show();
                 if(newText.trim().length() == 0){
-                    mostrarProductos(todosProds);
+                    if(categoriaSelec.equals("-Categorías-")){
+                        mostrarProductos(todosProds);
+                    }else{
+                        productos = ReadAndWriteSnippets.buscarConCategoría(todosProds, "", categoriaSelec);
+                        mostrarProductos(productos);
+                    }
+
                 }else{
-                    productos = ReadAndWriteSnippets.buscarProductos(todosProds, newText);
-                    mostrarProductos(productos);
+                    if(categoriaSelec.equals("-Categorías-")){
+                        productos = ReadAndWriteSnippets.buscarProductos(todosProds, newText);
+                        mostrarProductos(productos);
+                    }else{
+                        productos = ReadAndWriteSnippets.buscarConCategoría(todosProds, newText, categoriaSelec);
+                        mostrarProductos(productos);
+                    }
                 }
                 return true;
             }
@@ -152,16 +209,17 @@ public class TodosProductos extends AppCompatActivity{
                     Iterable<DataSnapshot> dataSnapshots = snapshot.getChildren();
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         Log.d("SIZEE",""+productos.size());
-                        if(productos.size()>100){
+                        /*if(productos.size()>100){
                             break;
-                        }
+                        }*/
                         String id = ds.getKey();
                         String nombre = ds.child("Nombre").getValue().toString();
                         String categoria= ds.child("Categoría").getValue().toString();
 
                         for(DataSnapshot ds1 : ds.child("Ítems").getChildren()){
                             id+="_"+ds1.getKey();
-                            String brand=ds1.child("Marca").getValue().toString();
+                            Log.d("IDPROD", id);
+                            String brand = ds1.child("Marca").getValue().toString();
                             String image = ds1.child("RutaImagen").getValue().toString();
                             String gradoNutricion="";
                             String tienda=ds1.child("ÍtemsTiendas").child("0").child("Tienda").getValue().toString();

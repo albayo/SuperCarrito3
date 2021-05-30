@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -90,8 +92,6 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
     @Override
     public void  onBindViewHolder(TodosProductosAdapter.TodosProductosHolder holder, int  position) {
         if  ( mProductos  !=  null || mProductos.get(position)!=null) {
-
-
             Producto current =  mProductos.get(position);
             String nomProd=current.getNombre();
             if(current.getNombre().contains(","))
