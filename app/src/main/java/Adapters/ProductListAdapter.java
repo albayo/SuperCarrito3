@@ -1,7 +1,5 @@
 package Adapters;
 
-
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -40,7 +38,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
      * con la Persistencia y de esta manera mostrar los productos en ella.
      *
      * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
-     * @version: 02/05/2021
+     * @version: 31/05/2021
      */
     public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductoViewHolder> {
         //Representa el objeto necesario para la instanciacion en forma de View del layout necesario en este caso(item:prod_list)
@@ -49,8 +47,9 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
         private List<Producto> mProductos;  // Cached copy of Productos
         //Representa el activity desde la que se construye el adapater, para redirigir.
         private Activity a;
-
+        //Representa el nombre de la lista
         private String idLista;
+        //Representa una instancia de la BD
         private DatabaseReference mDatabase;
 
         /**
@@ -71,7 +70,6 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
          * @param parent Representa el padre en el cual se representara el objeto viewHolder creado
          * @param viewType
          */
-
         @Override
         public  ProductoViewHolder onCreateViewHolder(ViewGroup parent, int  viewType) {
             View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
@@ -141,7 +139,7 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
          * con las id que los representa en esta
          *
          * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
-         * @version: 02/05/2021
+         * @version: 31/05/2021
          */
         class  ProductoViewHolder  extends  RecyclerView.ViewHolder implements View.OnClickListener{
             // Representa un textView en el cual vamos a almacenar el descendente del nombre del producto
@@ -178,6 +176,10 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
                 itemView.setOnClickListener(this);
 
                 botonMas.setOnClickListener(new View.OnClickListener() {
+                    /**
+                     * Método que representa el clickado en un item de la view
+                     * @param v View en el cual se ha clickado
+                     */
                     @Override
                     public void onClick(View v) {
                         int i=Integer.valueOf(mContador.getText().toString());
@@ -190,6 +192,10 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
                 });
 
                 botonMenos.setOnClickListener(new View.OnClickListener() {
+                    /**
+                     * Método que representa el clickado en un item de la view
+                     * @param v View en el cual se ha clickado
+                     */
                     @Override
                     public void onClick(View v) {
                         int i=Integer.valueOf(mContador.getText().toString());
@@ -204,6 +210,10 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
                     }
                 });
                 checkbox.setOnClickListener(new View.OnClickListener() {
+                    /**
+                     * Método que representa el clickado en un item de la view
+                     * @param v View en el cual se ha clickado
+                     */
                     @Override
                     public void onClick(View v) {
                         int position = getLayoutPosition();
@@ -228,6 +238,12 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
 
                 a.startActivity(intent);
             }
+
+            /**
+             * Actualiza la cantidad que hay del producto p en la lista con identificador idLista (param de la clase ProductoListAdapter)
+             * @param p representa el producto del cual se quiere actualizar la cantidad
+             * @param i representa la nueva cantidad que se le quiere dar al producto
+             */
             public void actualizarCantidad(Producto p,int i){
                  mDatabase.child("listas").child(idLista).child("productos").child(p.getIdProducto()).setValue(i);
                  p.setCantidad(String.valueOf(i));

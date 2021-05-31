@@ -92,6 +92,11 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
             holder.AmigoNombreView.setText("No hay listas");
         }
     }
+
+    /**
+     * Establece la propiedad propietario al valor pasado por parametro
+     * @param b
+     */
     public void setPropietario(boolean b){
         propietario=b;
     }
@@ -100,11 +105,20 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
 
     }
 
+    /**
+     * Devuelve el valor de los items que tiene la lista de miembros (indica los miembros que componen la lista)
+     * @return el tamaño del vector de miembros
+     */
     @Override
     public int getItemCount() {
         return mMiembros.size();
     }
 
+    /**
+     * Esta clase define el tipo el cual será usado para representar los datos(las listas de un Usuario)
+     * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+     * @version: 31/05/2021
+     */
     public class MiembrosListaViewHolder extends RecyclerView.ViewHolder {
         //Representa el View donde se dispondrán los nombres de las listas
         public View view;
@@ -123,7 +137,6 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
          * @param itemView View en el cual se busca el TextView en el cual se representará la información
          * @param adapter  representa el adaptador que maneja los datos y views del RecyclerView
          */
-
         private MiembrosListaViewHolder(View itemView, MiembrosListaAdapter adapter) {
             super(itemView);
             this.view = itemView;
