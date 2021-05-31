@@ -34,13 +34,13 @@ import ModeloDominio.Producto;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
 /**
-     * Esta clase define el Adapter necesario para que nuestra capa de presentacion se comunique
-     * con la Persistencia y de esta manera mostrar los productos en ella.
-     *
-     * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
-     * @version: 31/05/2021
-     */
-    public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductoViewHolder> {
+ * Esta clase define el Adapter necesario para que nuestra capa de presentacion se comunique
+ * con la Persistencia y de esta manera mostrar los productos en ella.
+ *
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 31/05/2021
+ */
+public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductoViewHolder> {
         //Representa el objeto necesario para la instanciacion en forma de View del layout necesario en este caso(item:prod_list)
         private int resource;
         //Representa una lista de los productos que obtendremos de la base de datos para mostrarlos.

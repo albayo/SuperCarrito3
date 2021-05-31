@@ -68,6 +68,11 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
         this.propietario=prop;
     }
 
+    /**
+     * Metodo que devuelve un objeto tipo MiembrosListaViewHolder en base a un XML que necesitaremos para representar los datos
+     * @param parent Representa el padre en el cual se representara el objeto viewHolder creado
+     * @param viewType
+     */
     @Override
     public MiembrosListaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         Log.d("Adapter", "onCreate");
@@ -75,6 +80,11 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
         return new MiembrosListaAdapter.MiembrosListaViewHolder(itemView, this);
     }
 
+    /**
+     * Metodo que en un objeto tipo MiembrosListaViewHolder representa los datos en las posiciones especificas
+     * @param holder Representa el objeto tipo ViewHolder
+     * @param position Representa la posicion
+     */
     @Override
     public void onBindViewHolder(@NonNull MiembrosListaAdapter.MiembrosListaViewHolder holder, int position) {
         if (mMiembros != null || mMiembros.get(position) != null) {
@@ -169,6 +179,10 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
                             mDatabase.child("users").child(amigo).child("listas").child(idLista).removeValue();
 
                             mDatabase.child("listas").child(idLista).child("miembros").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                /**
+                                 * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
+                                 * @param task tarea que se ha completado
+                                 */
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if (task.isSuccessful()) {

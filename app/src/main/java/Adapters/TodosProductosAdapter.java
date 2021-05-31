@@ -119,10 +119,18 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
               DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
 
             holder.añadirProducto.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Método que representa el clickado en un item de la view
+                 * @param v View en el cual se ha clickado
+                 */
                 @Override
                 public void onClick(View v) {
                     mDatabase.child("listas").child(idLista).child("productos").child(current.getIdProducto()).get().addOnCompleteListener(
                             new OnCompleteListener<DataSnapshot>() {
+                                /**
+                                 * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
+                                 * @param task tarea que se ha completado
+                                 */
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if (task.isSuccessful()) {
@@ -190,12 +198,12 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
         private final Button añadirProducto;
         //Representa el adapter al que corresponde
         final TodosProductosAdapter adapter;
+
         /**
          * Constructor de la clase
          * @param itemView View en el cual se busca el TextView en el cual se representará la información
          * @param adapter representa el adaptador que maneja los datos y views del RecyclerView
          */
-
         private TodosProductosHolder(View itemView, TodosProductosAdapter adapter) {
             super (itemView);
             this.view=itemView;
@@ -211,7 +219,6 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
          * Método que representa el clickado en un item de la view
          * @param v View en el cual se ha clickado
          */
-
         @Override
         public void onClick(View v) {
             int position = getLayoutPosition();

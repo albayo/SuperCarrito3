@@ -74,12 +74,23 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
         this.nombreLista=nombreLista;
     }
 
+    /**
+     * Metodo que devuelve un objeto tipo AmigosViewHolder en base a un XML que necesitaremos para representar los datos
+     * @param parent Representa el padre en el cual se representara el objeto viewHolder creado
+     * @param viewType
+     */
     public AmigosViewHolder onCreateViewHolder(ViewGroup parent, int  viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
         return new ListaAmigosAdapter.AmigosViewHolder(itemView,this);
     }
+
+    /**
+     * Metodo que en un objeto tipo ProductoViewHolder representa los datos en las posiciones especificas
+     * @param holder Representa el objeto tipo ViewHolder
+     * @param position Representa la posicion
+     */
     @Override
-    public void  onBindViewHolder(ListaAmigosAdapter.AmigosViewHolder holder, int  position) {
+    public void onBindViewHolder(ListaAmigosAdapter.AmigosViewHolder holder, int  position) {
 
         if  ( mAmigos  !=  null || mAmigos.get(position)!=null) {
             String current =  mAmigos.get(position);
@@ -198,6 +209,10 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
                             mDatabase.child("users").child(amigo).child("amigos").child(nick).removeValue();
 
                             mDatabase.child("users").child(nick).child("amigos").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                /**
+                                 * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
+                                 * @param task tarea que se ha completado
+                                 */
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
                                     if(task.isSuccessful()){

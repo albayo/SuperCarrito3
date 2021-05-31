@@ -27,13 +27,31 @@ import java.util.List;
 import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Solicitud;
 
+/**
+ * Esta clase define el Adapter necesario para que nuestra capa de presentacion se comunique
+ * con la Persistencia y de esta manera mostrar las solicitudes en ella.
+ *
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 31/05/2021
+ */
 public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.SolicitudViewHolder> {
 
+    //Representa la lista de solicitudes que tiene un determinado usuario
     private List<Solicitud> mSolicitudes;
+    //Representa el siguiente activity al que iremos, para redirigir.
     private Activity activity;
+    //Representa el entero necesario para la instanciacion en forma de View del layout necesario
     private int resource;
+    //Representa el nick del usuario
     private String nick;
 
+    /**
+     * Constructor principal de la clase
+     * @param a representa el siguiente activity al que iremos, para redirigir
+     * @param resource representa el entero necesario para la instacicacón en forma de View del layout necesario
+     * @param l representa la lista de solicitudes que tiene un determinado usuario
+     * @param nick representa el nick del usuario
+     */
     public SolicitudesAdapter(Activity a,int resource,List<Solicitud> l,String nick){
         this.activity=a;
         this.resource=resource;
@@ -42,6 +60,11 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
     }
 
+    /**
+     * Metodo que devuelve un objeto tipo SolicitudViewHolder en base a un XML que necesitaremos para representar los datos
+     * @param parent Representa el padre en el cual se representara el objeto viewHolder creado
+     * @param viewType
+     */
     @Override
     public SolicitudesAdapter.SolicitudViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
@@ -49,6 +72,11 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
         return new SolicitudesAdapter.SolicitudViewHolder(itemView);
     }
 
+    /**
+     * Metodo que en un objeto tipo SolicitudViewHolder representa los datos en las posiciones especificas
+     * @param holder Representa el objeto tipo ViewHolder
+     * @param position Representa la posicion
+     */
     @Override
     public void onBindViewHolder(@NonNull SolicitudViewHolder holder, int position) {
 
@@ -66,6 +94,10 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
         }
     }
 
+    /**
+     * Método que devuelve el número de elementos a representar
+     * @return El número de elementos a representar
+     */
     @Override
     public int getItemCount() {
         if(mSolicitudes!=null)
@@ -75,16 +107,33 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
     }
 
+    /**
+     * Método que establece la lista de solicitudes a la lista pasada por parámetro
+     * @param mSolicitudes representa una lista de solicitudes
+     */
     public void setmSolicitudes(List<Solicitud> mSolicitudes) {
         this.mSolicitudes=new ArrayList<>();
         this.mSolicitudes = mSolicitudes;
     }
 
+    /**
+     * Esta clase define el ViewHolder necesario para utilizar en nuestro SolicitudAdapter, obteniendo los datos de un View
+     * con las id que los representa en esta
+     *
+     * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+     * @version: 31/05/2021
+     */
     public class SolicitudViewHolder extends  RecyclerView.ViewHolder{
 
+        // Representa los textViews que hay en el correspondiente layout
         private final TextView tipoSolicitud, remitente;
+        //Representa los botones que hay en el correspondiente layout
         private final ImageButton aceptar, declinar;
 
+        /**
+         * Constructor de la clase
+         * @param itemView
+         */
         public SolicitudViewHolder(@NonNull View itemView) {
             super(itemView);
             tipoSolicitud=itemView.findViewById(R.id.tipo_solicitud);
@@ -96,6 +145,10 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
 
             aceptar.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Método que representa el clickado en un item de la view
+                 * @param v View en el cual se ha clickado
+                 */
                 @Override
                 public void onClick(View v) {
                     int position=getLayoutPosition();
@@ -105,6 +158,10 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
                         ReadAndWriteSnippets.aniadirLista(nick,current.getIdLista(),current.getNombreLista());
                         ReadAndWriteSnippets.eliminarSolicitudLista(nick,current.getRemitente(),current.getIdLista());
                         mDatabase.child("users").child(nick).child("listas").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            /**
+                             * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
+                             * @param task tarea que se ha completado
+                             */
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
                                 if(task.isSuccessful()){
@@ -121,6 +178,10 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
 
                         ReadAndWriteSnippets.eliminarSolicitudAmistad(nick,current.getRemitente());
                         mDatabase.child("users").child(nick).child("amistad").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            /**
+                             * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
+                             * @param task tarea que se ha completado
+                             */
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
                                 if(task.isSuccessful()){
@@ -137,6 +198,10 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
             });
 
             declinar.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Método que representa el clickado en un item de la view
+                 * @param v View en el cual se ha clickado
+                 */
                 @Override
                 public void onClick(View v) {
                     int position=getLayoutPosition();
