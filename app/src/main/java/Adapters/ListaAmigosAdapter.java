@@ -32,7 +32,11 @@ import java.util.List;
 import ModeloDominio.ReadAndWriteSnippets;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
-
+/**
+ * Esta clase define el adapter que se usa para inflar el recyclerView que se encuentra en el layout correspondiente a la actividad ListaAmigos
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 31/05/2021
+ */
 public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.AmigosViewHolder>{
     //Representa las listas que se representarán
     private List<String> mAmigos;  // Cached copy of Listas
@@ -42,15 +46,24 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
     private int resource;
     //Representa el siguiente activity al que iremos, para redirigir.
     private Activity activity;
+    //Representa lo que se quiere hacer (añadir, eliminar, ...)
     private String modo;
     private String nick;
     private final String idLista;
     private final String nombreLista;
 
-
-
+    /**
+     * Constructor base de la clare
+     * @param a representa el siguiente activity al que iremos, para redirigir
+     * @param resource representa el objeto necesario para la instanciacion en forma de View del layout necesario en este caso(item:prod_list)
+     * @param l representa la lista de amigos que tiene el usuario
+     * @param lid representa la lista de los correos de los amigos que tiene el usuario
+     * @param nick representa el nick del usuario
+     * @param modo representa lo que se quiere hacer (añadir, eliminar, ...)
+     * @param idLista
+     * @param nombreLista
+     */
     public ListaAmigosAdapter(Activity a, int resource, List<String> l,List<String> lid,String nick,String modo,String idLista,String nombreLista) {
-
         this.resource=resource;
         this.activity = a;
         this.mAmigos = l;
@@ -60,6 +73,7 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
         this.idLista=idLista;
         this.nombreLista=nombreLista;
     }
+
     public AmigosViewHolder onCreateViewHolder(ViewGroup parent, int  viewType) {
         View itemView = LayoutInflater.from(parent.getContext()).inflate(resource,parent,false);
         return new ListaAmigosAdapter.AmigosViewHolder(itemView,this);
@@ -92,7 +106,6 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
      * Método que devuelve el número de elementos a representar
      * @return El número de elementos a representar
      */
-
     @Override
     public int  getItemCount() {
         if  ( mAmigos  !=  null )
@@ -103,7 +116,7 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
     /**
      * Esta clase define el tipo el cual será usado para representar los datos(las listas de un Usuario)
      * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
-     * @version: 02/05/2021
+     * @version: 31/05/2021
      */
     public class  AmigosViewHolder  extends  RecyclerView.ViewHolder{
         //Representa el View donde se dispondrán los nombres de las listas
@@ -116,12 +129,12 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
         final ListaAmigosAdapter adapter;
         private final ImageButton btELiminarAmigo;
         private final ImageButton btSimboloAmigo;
+
         /**
          * Constructor de la clase
          * @param itemView View en el cual se busca el TextView en el cual se representará la información
          * @param adapter representa el adaptador que maneja los datos y views del RecyclerView
          */
-
         private  AmigosViewHolder(View itemView, ListaAmigosAdapter adapter) {
             super (itemView);
             this.view=itemView;
@@ -133,6 +146,10 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
             DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
             if(modo.equals("añadir")){
                 btSimboloAmigo.setOnClickListener(new View.OnClickListener() {
+                    /**
+                     * Método que representa el clickado en un item de la view
+                     * @param v View en el cual se ha clickado
+                     */
                     @Override
                     public void onClick(View v) {
                         ReadAndWriteSnippets.solicitudLista(nick,AmigoNombreView.getText().toString(),idLista,nombreLista);
@@ -141,6 +158,10 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
                 });
             }
             btSimboloAmigo.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Método que representa el clickado en un item de la view
+                 * @param v View en el cual se ha clickado
+                 */
                 @Override
                 public void onClick(View v) {
                     Intent profintent = new Intent(view.getContext(), Perfil_otros.class);
@@ -151,6 +172,10 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
             });
 
             btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Método que representa el clickado en un item de la view
+                 * @param v View en el cual se ha clickado
+                 */
                 @Override
                 public void onClick(View v) {
 
@@ -160,6 +185,11 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
 
                     b.setPositiveButton("Aceptar",new DialogInterface.OnClickListener() {
 
+                        /**
+                         * Método que representa el clickado en un item de la view
+                         * @param dialog
+                         * @param which
+                         */
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             String amigo=AmigoNombreView.getText().toString();
@@ -183,7 +213,11 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
 
                     b.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
 
-
+                        /**
+                         * Método que representa el clickado en un item de la view
+                         * @param dialog
+                         * @param which
+                         */
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 

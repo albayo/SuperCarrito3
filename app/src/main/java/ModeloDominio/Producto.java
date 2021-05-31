@@ -7,7 +7,7 @@ import java.io.Serializable;
 /**
  * Esta clase define objetos que representan a los productos de los supermercados de la aplicación
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 02/05/2021
+ * @version: 31/05/2021
  */
 public class Producto implements Serializable {
     private String cantidad;
@@ -45,21 +45,37 @@ public class Producto implements Serializable {
 
     //Representa el precio del producto
     private String precio;
-
+    //Representa si el producto está marcado para ser borrado o no
     private boolean checkbox;
 
+    /**
+     * Devuelve el valor de la propiedad checkbox
+     * @return checkbox
+     */
     public boolean getCheckbox() {
         return checkbox;
     }
 
+    /**
+     * Establece el valor de la propiedad checkbox con el valor pasado por parámetro
+     * @param checkbox representa el nuevo valor que se le quiere dar a la propiedad checkbox
+     */
     public void setCheckbox(boolean checkbox) {
         this.checkbox = checkbox;
     }
 
+    /**
+     * Devuelve el valor de la propiedad checkbox
+     * @return cantidad
+     */
     public String getCantidad() {
         return cantidad;
     }
 
+    /**
+     * Establece el valor de la propiedad cantidad con el valor pasado por parámetro
+     * @param cantidad representa el nuevo valor que se le quiere dar a la propiedad checkbox
+     */
     public void setCantidad(String cantidad) {
         this.cantidad = cantidad;
     }
@@ -106,7 +122,6 @@ public class Producto implements Serializable {
     public String getGradoNutrition() {
         return gradoNutrition;
     }
-
 
     /**
      * Método que establece como graqdo de nutricion del Producto la cadena pasada por parámetro

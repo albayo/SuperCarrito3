@@ -36,13 +36,12 @@ import ModeloDominio.Usuario;
  * Esta clase define el adapter necesario para que la capa de Presentación y Persistencia se comuniquen
  *  y se representen de forma visual los datos(las listas de un Usuario) de esta última
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 02/05/2021
+ * @version: 31/05/2021
  */
-
 public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.ListaViewHolder>{
-
-
+    //Representa el nick del usuario
     private String nick;
+    //Representa el email del usuario
     private String email;
     //Representa las listas que se representarán
     private List<Lista> mListas;  // Cached copy of Listas
@@ -101,6 +100,10 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
 
             DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
             mDatabase.child("listas").child(String.valueOf(l.getIdLista())).child("compartida").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                /**
+                 * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
+                 * @param task tarea que se ha completado
+                 */
                 @Override
                 public void onComplete(@NonNull  Task<DataSnapshot> task) {
                     if(task.isSuccessful()){
@@ -112,9 +115,6 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
                     }
                 }
             });
-
-
-
         }  else  {
             // Covers the case of data not being ready yet.
             holder. ListaNombreView .setText( "No hay listas" );
@@ -168,7 +168,6 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
          * @param itemView View en el cual se busca el TextView en el cual se representará la información
          * @param adapter representa el adaptador que maneja los datos y views del RecyclerView
          */
-
         private  ListaViewHolder(View itemView, ListaListAdapter adapter) {
             super (itemView);
             this.view=itemView;
@@ -183,6 +182,10 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
             itemView.setOnClickListener(this);
 
             checkbox.setOnClickListener(new View.OnClickListener() {
+                /**
+                 * Método que representa el clickado en un item de la view
+                 * @param v View en el cual se ha clickado
+                 */
                 @Override
                 public void onClick(View v) {
                     int position = getLayoutPosition();

@@ -10,13 +10,13 @@ import java.util.Map;
 /**
  * Esta clase define objetos que representan a las listas de los usuarios de la aplicación
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 02/05/2021
+ * @version: 31/05/2021
  */
 
 public class Lista implements Serializable {
     //Representa el número de listas creadas
     private static int contLista=0;
-
+    //Representa el checkbox que indica si una lista está marcada para ser borrada o no
     private boolean checkboxEliminar;
     //Representa el tipo de la lista
     private String tipolista;
@@ -57,6 +57,12 @@ public class Lista implements Serializable {
         this.grupal = true;
         this.productos=new java.util.ArrayList<Producto>();
     }
+
+    /**
+     * Constructor 2 de una lisa
+     * @param nombre representa el nombre que se le quiere dar a la lista
+     * @param id representa el id que tendrá la lista
+     */
     public Lista(String nombre,String id){
         this.idLista=Integer.parseInt(id);
         this.usuarios=new ArrayList<>();
@@ -65,6 +71,13 @@ public class Lista implements Serializable {
         this.checkboxEliminar=false;
         this.productos=new java.util.ArrayList<Producto>();
     }
+
+    /**
+     * Constructor 3 de una lista
+     * @param nombre representa el nombre que se le quiere dar a la lista
+     * @param id representa el id que tendrá la lista
+     * @param compartida representa que es una lista compartida (en caso de ser true), o que no lo es
+     */
     public Lista(String nombre,String id,boolean compartida){
         this.idLista=Integer.parseInt(id);
         this.usuarios=new ArrayList<>();
@@ -74,10 +87,19 @@ public class Lista implements Serializable {
         this.productos=new java.util.ArrayList<Producto>();
         this.grupal=compartida;
     }
+
+    /**
+     * Devuelve el valor que indica si la lista esta marcada para ser borrada
+     * @return checkbocEliminar
+     */
     public boolean isCheckboxEliminar() {
         return checkboxEliminar;
     }
 
+    /**
+     * Modifica el valor que indica si la lista esta marcada para ser borrada
+     * @param checkboxEliminar representa el nuevo valor que se le quiere dar a esa propiedad
+     */
     public void setCheckboxEliminar(boolean checkboxEliminar) {
         this.checkboxEliminar = checkboxEliminar;
     }

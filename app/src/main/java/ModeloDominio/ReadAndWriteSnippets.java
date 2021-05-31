@@ -35,6 +35,11 @@ import java.util.Map;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
+/**
+ * Esta clase define métodos que serán usados para poder insertar, eliminar, ... elementos de la BD (entre otros)
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 31/05/2021
+ */
 public class ReadAndWriteSnippets {
     //represtenta la cadena que se usará para mandar mensajes al log y que así se puedan identificar
     private static final String TAG = "ReadAndWriteSnippets";
@@ -46,12 +51,21 @@ public class ReadAndWriteSnippets {
 
     // [END declare_database_ref]
 
+    /**
+     * Constructor de la clase
+     */
     public ReadAndWriteSnippets() {
         // [START initialize_database_ref]
         mDatabase = FirebaseDatabase.getInstance().getReference();
         // [END initialize_database_ref]
     }
 
+    /**
+     * Añade un usuario a una lista
+     * @param nombreLista representa el nombre de la lista a la cual se quiere añadir el usuario
+     * @param nick representa el nick del usuario que quiere añadirse a la lista
+     * @param idLista representa el id de la lista a la cual se quiere añadir el usuario
+     */
     public static void aniadirUsuarioaList(String nombreLista, String nick, String idLista) {
         mDatabase.child("users").child(nick).child("listas").child(idLista).setValue(nombreLista);
     }
@@ -140,6 +154,10 @@ public class ReadAndWriteSnippets {
 
     }
 
+    /**
+     * Modifica el valor del contador de listas en la BD
+     * @param n es el valor que se le quiere dar al contador de listas
+     */
     public static void insertContadorListas(int n) {
         mDatabase.child("contadorLista").setValue(n);
     }
@@ -297,6 +315,16 @@ public class ReadAndWriteSnippets {
         return emailinsert2;
     }
 
+    /**
+     * Sirve para llevar al usuario al correspondiente activity según que "opción" del menú lateral alla seleccionado
+     * @param drawerLayout  representa el drawerLayout del menú con el que se ha interactuado
+     * @param navigationView representa el menú lateral con el que se ha interactuado
+     * @param toolbar representa el toolbar del activity a la cual pertenecen los 2 anteriores parámetros
+     * @param nick representa el nick del usuario que está logueado
+     * @param email representa el email del usuario que está logueado
+     * @param activity representa la actividad en la que se estaba cuando se ha interactuado con el menú lateral
+     * @param context representa el contexto de la actividad
+     */
     public static void setNavigationView(DrawerLayout drawerLayout, NavigationView navigationView, androidx.appcompat.widget.Toolbar toolbar, String nick, String email, Activity activity, Context context) {
 
         //NAVIGATION
