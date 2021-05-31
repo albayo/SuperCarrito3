@@ -12,13 +12,12 @@ import android.view.View;
 import ModeloDominio.Lista;
 
 /**
- * Esta clase define la actividad (llamada "activity_login") que servirá para el logueo del Usuario
+ * Esta clase define la actividad (llamada "activity_crear_lista") que servirá para que usuario cree una lista
  * en la aplicación
  *
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 02/05/2021
+ * @version: 31/05/2021
  */
-
 public class CrearLista extends AppCompatActivity {
     //Representa el CardView que implica la creación de una lista compartida
     private CardView cardViewgrupo;
@@ -61,19 +60,18 @@ public class CrearLista extends AppCompatActivity {
             }
         });
 
-        /**
-         * Método que sirve sacar un menú contextual para indicar el nombre de la lista que se
-         *  va a crear
-         * @param v Representa al objeto View sobre el cual se ha hecho click
-         */
         cardViewsola.setOnClickListener(new View.OnClickListener(){
 
+            /**
+             * Método que sirve sacar un menú contextual para indicar el nombre de la lista que se
+             *  va a crear
+             * @param v Representa al objeto View sobre el cual se ha hecho click
+             */
             @Override
             public void onClick(View v) {
                 abrirFragment("sola");
             }
         });
-
     }
 
     /**
@@ -103,6 +101,10 @@ public class CrearLista extends AppCompatActivity {
         */
     }
 
+    /**
+     * Método que sirve para obtener el nick del usuario
+     * @return nick
+     */
     public String getNick(){return nick;}
 
 

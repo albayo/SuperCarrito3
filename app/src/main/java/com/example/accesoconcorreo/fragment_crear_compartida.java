@@ -30,28 +30,45 @@ import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Usuario;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Esta clase define el DialogFragment (llamada "fragment_crear_compartida") que servirá para que el usuario pueda crear una lista compartida
+ * en la aplicación
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 02/05/2021
  */
 public class fragment_crear_compartida extends DialogFragment {
-
+    //Representa el EditText donde se introducirá el nick de un usuario para poder compartir con el la lista
     private EditText nickCompartir;
+    //Representa un TextView
     private TextView aniadidos;
+    //Representa el botón de aceptar
     private Button aceptar;
+    //Representa el botón de cancelar
     private Button cancelar;
     private Button seguir;
-
+    //Representa el nick y email del usuario y el nombre de la lista
     private String nick,email,nombreLista;
-
+    //Representa la lista de usuarios
     private List<String> usuarios=new ArrayList<>();
-
+    //Representa una referencia a la BD
     private static DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
 
+    /**
+     * Constructor de la clase
+     * @param email representa el email del usuario
+     * @param nick representa el nick del usuario
+     * @param nombreLista representa el nombre de la lista que se quiere crear
+     */
     public fragment_crear_compartida(String email, String nick,String nombreLista) {
         this.email=email;
         this.nick=nick;
         this.nombreLista=nombreLista;
     }
 
+    /**
+     * Método que inicializa las componentes del dialogfragment
+     * @param view reprenta la vista sobre la que se ejecutará el Fragment
+     * @param savedInstanceState
+     */
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -64,11 +81,20 @@ public class fragment_crear_compartida extends DialogFragment {
 
 
         aceptar.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método que sirve para comprobar que lo introducido en el corresponde a un usuario existente
+             * @param v Representa al objeto View sobre el cual se ha hecho click
+             */
             @Override
             public void onClick(View v) {
-                String usuario=nickCompartir.getText().toString();
+                String usuario = nickCompartir.getText().toString();
 
                 mDatabase.child("users").child(usuario).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+
+                    /**
+                     * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
+                     * @param task tarea que se ha completado
+                     */
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (task.isSuccessful()) {
@@ -101,13 +127,21 @@ public class fragment_crear_compartida extends DialogFragment {
                 });
                 }
         });
-
-
         seguir.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Método que sirve para comprobar que lo introducido en el corresponde a un usuario existente
+             * @param v Representa al objeto View sobre el cual se ha hecho click
+             */
             @Override
             public void onClick(View v) {
                 String usuario=nickCompartir.getText().toString();
                 mDatabase.child("users").child(usuario).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+
+                    /**
+                     * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
+                     * @param task tarea que se ha completado
+                     */
                     @Override
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (task.isSuccessful()) {
@@ -127,9 +161,12 @@ public class fragment_crear_compartida extends DialogFragment {
             }
         });
         cancelar.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método que sirve cerrar el fragment cuando se haga click en el botón
+             * @param v Representa al objeto View sobre el cual se ha hecho click
+             */
             @Override
             public void onClick(View v) {
-
                 cerrarFragment();
             }
         });
@@ -142,6 +179,9 @@ public class fragment_crear_compartida extends DialogFragment {
         return inflater.inflate(R.layout.fragment_crear_compartida, container, false);
     }
 
+    /**
+     * Método que sirve para cerrar el fragment actual
+     */
     private void cerrarFragment() {
         getFragmentManager().beginTransaction().remove(getFragmentManager().findFragmentById(R.id.nom_lista)).commit();
         getFragmentManager().beginTransaction().remove(fragment_crear_compartida.this).commit();

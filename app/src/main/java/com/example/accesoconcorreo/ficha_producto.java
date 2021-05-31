@@ -27,20 +27,25 @@ import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOption
  * Esta clase define la actividad (llamada "activity_ficha_producto") que servirá para el disponer la información de un producto
  *
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 02/05/2021
+ * @version: 31/05/2021
  */
 public class ficha_producto extends AppCompatActivity {
     //Representa el producto del cual se dispondrá por pantalla la información
     private Producto producto;
+    //Representa la foto que tiene el producto que se dispondrá en pantalla
     private ImageView fotoprod;
+    //Representa la foto de grado de nutrición que tiene el producto que se dispondrá en pantalla
     private ImageView fotonutri;
+    //Representa el nivel nutricional que tiene el producto que se dispondrá en pantalla
     private TextView nutricional;
+    //Representa el nombre del producto que se dispondrá por pantalla
     private TextView nombre;
+    //Representa la marca del producto que se dispondrá por pantalla
     private TextView brand;
 
     /**
      * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
-     * "activity_pantalla_listas"
+     * "activity_ficha_producto"
      *
      * @param savedInstanceState Representa el objeto donde se guarda la información
      */
@@ -54,10 +59,9 @@ public class ficha_producto extends AppCompatActivity {
         myToolbar.setTitle("SuperCarrito");
 
         producto=(Producto) getIntent().getSerializableExtra("producto");
-        if(producto==null){
+        /*if(producto==null){
             Log.d("marcos patan","jejejje");
-        }
-
+        }*/
 
         fotoprod= findViewById(R.id.imagen_ficha_producto);
         fotonutri= findViewById(R.id.image_grado_nutrition);
@@ -91,9 +95,5 @@ public class ficha_producto extends AppCompatActivity {
        nutricional.setText("ejemplo");
 
         brand.setText(producto.getBrand());
-
-
-
-
     }
 }

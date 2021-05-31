@@ -37,6 +37,7 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
 /**
  * Esta clase define métodos que serán usados para poder insertar, eliminar, ... elementos de la BD (entre otros)
+ *
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
  * @version: 31/05/2021
  */
@@ -63,8 +64,8 @@ public class ReadAndWriteSnippets {
     /**
      * Añade un usuario a una lista
      * @param nombreLista representa el nombre de la lista a la cual se quiere añadir el usuario
-     * @param nick representa el nick del usuario que quiere añadirse a la lista
-     * @param idLista representa el id de la lista a la cual se quiere añadir el usuario
+     * @param nick        representa el nick del usuario que quiere añadirse a la lista
+     * @param idLista     representa el id de la lista a la cual se quiere añadir el usuario
      */
     public static void aniadirUsuarioaList(String nombreLista, String nick, String idLista) {
         mDatabase.child("users").child(nick).child("listas").child(idLista).setValue(nombreLista);
@@ -72,15 +73,15 @@ public class ReadAndWriteSnippets {
 
     /**
      * Busca en la lista de productos "productos" todos los elementos cuyo nombre tiene similitud con la cadena pasada por parámetro y que pertenecen a la categoría pasada por parámetro
-     * @param productos representa la lista de productos que se quiere filtrar
-     * @param nombreProds representa el nombre de un producto o parte de este por el que se quiere filtrar la lista
+     * @param productos      representa la lista de productos que se quiere filtrar
+     * @param nombreProds    representa el nombre de un producto o parte de este por el que se quiere filtrar la lista
      * @param categoriaSelec representa una de las categorías posibles en las que se subdividen los productos
      * @return devuelve una lista que es un subconjunto de la lista pasada por parámetro
      */
     public static List<Producto> buscarConCategoría(List<Producto> productos, String nombreProds, String categoriaSelec) {
         List<Producto> productoList = new ArrayList<>();
-        for(Producto p : productos){
-            if(p.getNombre().toLowerCase().contains(nombreProds.toLowerCase()) && p.getCategoria().equals(categoriaSelec)){
+        for (Producto p : productos) {
+            if (p.getNombre().toLowerCase().contains(nombreProds.toLowerCase()) && p.getCategoria().equals(categoriaSelec)) {
                 productoList.add(p);
             }
         }
@@ -92,43 +93,41 @@ public class ReadAndWriteSnippets {
 
     /**
      * Inserta el usuario con el nombre "name" y el email "email" en la BD
-     * @param name representa el nombre que tendrá el usuario en la BD
-     * @param email representa el email con el que se ha logueado el usuario en la aplicación
+     * @param name    representa el nombre que tendrá el usuario en la BD
+     * @param email   representa el email con el que se ha logueado el usuario en la aplicación
      * @param context
      */
-    public void insertarUsuario(String name, String email,Context context) {
+    public void insertarUsuario(String name, String email, Context context) {
         Usuario user = new Usuario(name, email);
         mDatabase.child("users").child(name).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    if(task.getResult().getValue()==null){
-                        String [] emailnodo=email.split("@");
-                        String emailinsert1=""+emailnodo[0]+emailnodo[1];
-                        Log.d("email",emailinsert1);
-                        String [] emailnodo2=emailinsert1.split("\\.");
-                        String emailinsert2=""+emailnodo2[0]+emailnodo2[1];
-                        Log.d("email",emailinsert2);
+                if (task.isSuccessful()) {
+                    if (task.getResult().getValue() == null) {
+                        String[] emailnodo = email.split("@");
+                        String emailinsert1 = "" + emailnodo[0] + emailnodo[1];
+                        Log.d("email", emailinsert1);
+                        String[] emailnodo2 = emailinsert1.split("\\.");
+                        String emailinsert2 = "" + emailnodo2[0] + emailnodo2[1];
+                        Log.d("email", emailinsert2);
                         mDatabase.child("correousuario").child(emailinsert2).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task2) {
-                                if(task2.isSuccessful()) {
+                                if (task2.isSuccessful()) {
                                     if (task2.getResult().getValue() == null) {
                                         mDatabase.child("users").child(name).setValue(user.toMap());
                                         mDatabase.child("correousuario").child(emailinsert2).setValue(name);
                                     }
-                                }
-                                else {
-                                    Toast toast=new Toast(context);
-                                    toast.makeText(context,"Este correo ya tiene un usuario, pruebe con otro correo",Toast.LENGTH_LONG);
+                                } else {
+                                    Toast toast = new Toast(context);
+                                    toast.makeText(context, "Este correo ya tiene un usuario, pruebe con otro correo", Toast.LENGTH_LONG);
                                     toast.show();
                                 }
 
                             }
                         });
 
-                    }
-                    else{
+                    } else {
 
                     }
                 }
@@ -165,8 +164,8 @@ public class ReadAndWriteSnippets {
     /**
      * Inserta la lista pasada por parámetro
      * @param nombrelista representa el nombre de la lista
-     * @param nick representa el nick del usuario que ha creado la lista
-     * @param compartida representa que es una lista compartida en caso de que sea true, y que es una lista individual en caso de que sea false
+     * @param nick        representa el nick del usuario que ha creado la lista
+     * @param compartida  representa que es una lista compartida en caso de que sea true, y que es una lista individual en caso de que sea false
      */
     public static void insertarLista(String nombrelista, String nick, boolean compartida) {
 
@@ -182,15 +181,15 @@ public class ReadAndWriteSnippets {
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("productos").setValue("pr1");
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("propietario").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onComplete(@NonNull  Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    if(task.getResult().getValue()==null){
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.getResult().getValue() == null) {
                         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("propietario").setValue(nick);
                     }
                 }
             }
         });
-        if (compartida){
+        if (compartida) {
             mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("compartida").setValue("true");
         }
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("miembros").child(nick).setValue(nick);
@@ -202,9 +201,9 @@ public class ReadAndWriteSnippets {
     /**
      * Manda una solicitud para crear una lista compartida al usuario con nick "nick"
      * @param usuarioActual representa el nick del usuario actual
-     * @param nick representa el nick del usuario al que se quiere enviar la solicitud
-     * @param idLista representa el id de la lista que quiere convertirse en compartida
-     * @param nombreLista representa el nombre de la lista que quiere convertirse en compartida
+     * @param nick          representa el nick del usuario al que se quiere enviar la solicitud
+     * @param idLista       representa el id de la lista que quiere convertirse en compartida
+     * @param nombreLista   representa el nombre de la lista que quiere convertirse en compartida
      */
     public static void solicitudLista(String usuarioActual, String nick, String idLista, String nombreLista) {
         mDatabase.child("users").child(nick).child("solicitudes").child("listas").child(usuarioActual).child(idLista).setValue(nombreLista);
@@ -213,7 +212,7 @@ public class ReadAndWriteSnippets {
     /**
      * Manda una solicitud para añadir al usuario con nick "nick" como amigo
      * @param usuarioActual representa el nick del usuario actual
-     * @param nick representa el nick del usuario al que se quiere enviar la solicitud
+     * @param nick          representa el nick del usuario al que se quiere enviar la solicitud
      */
     public static void solicitudAmistad(String usuarioActual, String nick) {
         mDatabase.child("users").child(nick).child("solicitudes").child("amistad").child(usuarioActual).setValue("pendiente");
@@ -222,8 +221,8 @@ public class ReadAndWriteSnippets {
     /**
      * Elimina una solicitud para crear una lista compartida
      * @param usuarioActual representa el nick del usuario actual
-     * @param remitente representa el usuario al que se había mandado la solicitud
-     * @param idLista representa la lista sobre la cual se había enviado la solicitud
+     * @param remitente     representa el usuario al que se había mandado la solicitud
+     * @param idLista       representa la lista sobre la cual se había enviado la solicitud
      */
     public static void eliminarSolicitudLista(String usuarioActual, String remitente, String idLista) {
         mDatabase.child("users").child(usuarioActual).child("solicitudes").child("listas").child(remitente).child(idLista).removeValue();
@@ -232,7 +231,7 @@ public class ReadAndWriteSnippets {
     /**
      * Elimina una solicitud de amigo
      * @param usuarioActual representa el nick del usuario actual
-     * @param remitente representa el usuario al que se había mandado la solicitud
+     * @param remitente     representa el usuario al que se había mandado la solicitud
      */
     public static void eliminarSolicitudAmistad(String usuarioActual, String remitente) {
         mDatabase.child("users").child(usuarioActual).child("solicitudes").child("amistad").child(remitente).removeValue();
@@ -241,16 +240,16 @@ public class ReadAndWriteSnippets {
     /**
      * Añade como amigo al usuario con nick "amigo"
      * @param usuarioActual representa el nick del usuario actual
-     * @param amigo representa el usuario que se quiere añadir como amigo
+     * @param amigo         representa el usuario que se quiere añadir como amigo
      */
-    public static void aniadirAmigo(String usuarioActual, String amigo){
+    public static void aniadirAmigo(String usuarioActual, String amigo) {
 
         mDatabase.child("users").child(usuarioActual).child("email").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    if(task.getResult().getValue()!=null){
-                        String correo=task.getResult().getValue().toString();
+                if (task.isSuccessful()) {
+                    if (task.getResult().getValue() != null) {
+                        String correo = task.getResult().getValue().toString();
                         mDatabase.child("users").child(amigo).child("amigos").child(usuarioActual).setValue(correo);
                     }
                 }
@@ -261,18 +260,19 @@ public class ReadAndWriteSnippets {
 
     /**
      * Añade una lista a la BD
-     * @param nick representa el usuario que ha creado la lista
-     * @param idLista representa el id de la lista que se va a añadir
+     *
+     * @param nick        representa el usuario que ha creado la lista
+     * @param idLista     representa el id de la lista que se va a añadir
      * @param nombreLista representa el nombre que se le ha dado a la lista que se quiere añadir
      */
-    public static void aniadirLista(String nick, String idLista, String nombreLista){
+    public static void aniadirLista(String nick, String idLista, String nombreLista) {
         mDatabase.child("users").child(nick).child("listas").child(idLista).setValue(nombreLista);
         mDatabase.child("listas").child(idLista).child("miembros").child(nick).setValue(nick);
         mDatabase.child("listas").child(idLista).child("compartida").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
             @Override
-            public void onComplete(@NonNull  Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    if(task.getResult().getValue()==null){
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    if (task.getResult().getValue() == null) {
                         mDatabase.child("listas").child(idLista).child("compartida").setValue("true");
 
                     }
@@ -284,14 +284,15 @@ public class ReadAndWriteSnippets {
 
     /**
      * Busca en la lista de productos "productos" todos los elementos cuyo nombre tiene similitud con la cadena pasada por parámetro
-     * @param productos representa la lista de productos que se quiere filtrar
+     *
+     * @param productos   representa la lista de productos que se quiere filtrar
      * @param nombreProds representa el nombre de un producto o parte de este por el que se quiere filtrar la lista
      * @return devuelve una lista que es un subconjunto de la lista pasada por parámetro
      */
-    public static List<Producto> buscarProductos(List<Producto> productos, String nombreProds){
+    public static List<Producto> buscarProductos(List<Producto> productos, String nombreProds) {
         List<Producto> productoList = new ArrayList<>();
-        for(Producto p : productos){
-            if(p.getNombre().toLowerCase().contains(nombreProds.toLowerCase())){
+        for (Producto p : productos) {
+            if (p.getNombre().toLowerCase().contains(nombreProds.toLowerCase())) {
                 productoList.add(p);
             }
         }
@@ -301,29 +302,31 @@ public class ReadAndWriteSnippets {
 
     /**
      * Obtiene el nick de un usuario a partir de su email
+     *
      * @param email representa el email del usuario
      * @return nick del usuario
      */
-    public static String getNick(String email){
+    public static String getNick(String email) {
 
-        String [] emailnodo=email.split("@");
-        String emailinsert1=""+emailnodo[0]+emailnodo[1];
+        String[] emailnodo = email.split("@");
+        String emailinsert1 = "" + emailnodo[0] + emailnodo[1];
 
-        String [] emailnodo2=emailinsert1.split("\\.");
-        String emailinsert2=""+emailnodo2[0]+emailnodo2[1];
+        String[] emailnodo2 = emailinsert1.split("\\.");
+        String emailinsert2 = "" + emailnodo2[0] + emailnodo2[1];
 
         return emailinsert2;
     }
 
     /**
      * Sirve para llevar al usuario al correspondiente activity según que "opción" del menú lateral alla seleccionado
-     * @param drawerLayout  representa el drawerLayout del menú con el que se ha interactuado
+     *
+     * @param drawerLayout   representa el drawerLayout del menú con el que se ha interactuado
      * @param navigationView representa el menú lateral con el que se ha interactuado
-     * @param toolbar representa el toolbar del activity a la cual pertenecen los 2 anteriores parámetros
-     * @param nick representa el nick del usuario que está logueado
-     * @param email representa el email del usuario que está logueado
-     * @param activity representa la actividad en la que se estaba cuando se ha interactuado con el menú lateral
-     * @param context representa el contexto de la actividad
+     * @param toolbar        representa el toolbar del activity a la cual pertenecen los 2 anteriores parámetros
+     * @param nick           representa el nick del usuario que está logueado
+     * @param email          representa el email del usuario que está logueado
+     * @param activity       representa la actividad en la que se estaba cuando se ha interactuado con el menú lateral
+     * @param context        representa el contexto de la actividad
      */
     public static void setNavigationView(DrawerLayout drawerLayout, NavigationView navigationView, androidx.appcompat.widget.Toolbar toolbar, String nick, String email, Activity activity, Context context) {
 
