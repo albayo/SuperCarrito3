@@ -216,9 +216,11 @@ public class TodosProductos extends AppCompatActivity{
                         String nombre = ds.child("Nombre").getValue().toString();
                         String categoria= ds.child("Categoría").getValue().toString();
 
-                        for(DataSnapshot ds1 : ds.child("Ítems").getChildren()){
+
+                        if(ds.child("Ítems").child("0").exists()){
+                            DataSnapshot ds1= ds.child("Ítems").child("0");
+                        //for(DataSnapshot ds1 : ds.child("Ítems").getChildren()){
                             id+="_"+ds1.getKey();
-                            Log.d("IDPROD", id);
                             String brand = ds1.child("Marca").getValue().toString();
                             String image = ds1.child("RutaImagen").getValue().toString();
                             String gradoNutricion="";
@@ -226,6 +228,9 @@ public class TodosProductos extends AppCompatActivity{
                             String precio=ds1.child("ÍtemsTiendas").child("0").child("Precio").getValue().toString();
                             double pre=Double.parseDouble(precio)*0.00022;
                             precio=pre+"";
+                            if(nombre.length()>20){
+                                nombre=nombre.substring(0,20)+"...";
+                            }
                             Producto p = new Producto(id, nombre, brand, image, categoria, tienda, gradoNutricion,"1",precio);
                             productos.add(p);
                             id=ds.getKey();

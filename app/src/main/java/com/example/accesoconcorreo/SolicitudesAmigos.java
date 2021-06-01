@@ -92,7 +92,6 @@ public class SolicitudesAmigos extends AppCompatActivity {
                         Solicitud s=new Solicitud(remitente);
                         s.setSolicitudAmistad();
                         mSolicitudesAmigos.add(s);
-                        Log.d("SolicitudesAmigos", mSolicitudesAmigos.size()+"");
 
                     }
                     solicitudesAdapterAmigos = new SolicitudesAdapter(SolicitudesAmigos.this, R.layout.item_solicitud, mSolicitudesAmigos, nick);
