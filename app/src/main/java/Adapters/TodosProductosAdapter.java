@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -148,9 +149,8 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
                             });
                 }
             });
-
-
-
+            ProgressBar pb = (ProgressBar) a.findViewById(R.id.pBTodosProds);
+            pb.setVisibility(View.GONE);
         }  else  {
             // Covers the case of data not being ready yet.
             holder.nombreSuper.setText( "No Producto" );

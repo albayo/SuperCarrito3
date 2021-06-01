@@ -24,7 +24,7 @@
                 android:id="@+id/btnAniadirProd"
                 android:layout_width="wrap_content"
                 android:layout_height="45dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="12dp"
                 android:fontFamily="@font/baloo"
                 android:text="@string/aniadir"
                 android:textSize="12sp"
@@ -51,15 +51,13 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fotoproducto_super"
                 android:layout_gravity="center"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="32dp"
                 android:orientation="vertical"
                 android:padding="6dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/fotoproducto_super"
-                app:layout_constraintVertical_bias="0.821">
+
+                app:layout_constraintBottom_toTopOf="@+id/btnAniadirProd"
+                app:layout_constraintTop_toBottomOf="@+id/fotoproducto_super"
+                app:layout_constraintVertical_bias="0.673"
+                tools:layout_editor_absoluteX="0dp">
 
                 <TextView
 
