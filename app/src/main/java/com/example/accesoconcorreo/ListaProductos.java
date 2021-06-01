@@ -259,7 +259,6 @@ public class ListaProductos extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
                     String categoria=snapshot.child("Categoría").getValue().toString();
-                    Log.d("ADDDD",""+productos.size());
                     DataSnapshot ds=snapshot.child("Ítems").child(idProducto.split("_")[1]);
                     if(ds.exists()){
 
@@ -270,15 +269,21 @@ public class ListaProductos extends AppCompatActivity {
                         String tienda=ds.child("ÍtemsTiendas").child("0").child("Tienda").getValue().toString();
                         String precio=ds.child("ÍtemsTiendas").child("0").child("Precio").getValue().toString();
                         double pre=Double.parseDouble(precio)*0.00022;
+                        double preR=Math.round(pre*100.0)/100.0;
 
-                        precio=pre+"";
-                        Log.d("ADDDD",""+productos.size());
+                        precio=preR+"";
+                        if(nombre.length()>50){
+                            nombre=nombre.substring(0,50)+"...";
+                        }
+
+                        Log.d("Precio",precio);
+
                         Producto p = new Producto(idProducto, nombre, brand, image, categoria, tienda, gradoNutricion,cantidad,precio);
                         productos.add(p);
-                        //ESTO ES UNA MIERDA
 
-                        //productos.add(p);
-                        Log.d("ADDDD",""+productos.size());
+
+
+
                         productosAdapter.setProductos(productos);
 
                     }
