@@ -229,9 +229,7 @@ public class TodosProductos extends AppCompatActivity{
                             double pre=Double.parseDouble(precio)*0.00022;
                             double preR=Math.round(pre*100.0)/100.0;
                             precio=preR+"";
-                            if(nombre.length()>20){
-                                nombre=nombre.substring(0,20)+"...";
-                            }
+
                             Producto p = new Producto(id, nombre, brand, image, categoria, tienda, gradoNutricion,"1",precio);
                             productos.add(p);
                         }

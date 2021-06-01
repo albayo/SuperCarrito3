@@ -272,11 +272,6 @@ public class ListaProductos extends AppCompatActivity {
                         double preR=Math.round(pre*100.0)/100.0;
 
                         precio=preR+"";
-                        if(nombre.length()>50){
-                            nombre=nombre.substring(0,50)+"...";
-                        }
-
-                        Log.d("Precio",precio);
 
                         Producto p = new Producto(idProducto, nombre, brand, image, categoria, tienda, gradoNutricion,cantidad,precio);
                         productos.add(p);
