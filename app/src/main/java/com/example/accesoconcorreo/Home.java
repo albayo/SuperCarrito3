@@ -100,8 +100,7 @@ public class Home extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
-
-                if (id == R.id.carrito_productos) {
+                if (id == R.id.icono_usuario) {
                     showPerfil(nick,email);
 
                     return true;
@@ -155,9 +154,10 @@ public class Home extends AppCompatActivity {
     }
 
     private void showPerfil(String nick, String email) {
-        Intent homeIntent = new Intent(Home.this, Home.class); //debería ir la clase del Perfil
+        Intent homeIntent = new Intent(Home.this, Perfil.class); //debería ir la clase del Perfil
         homeIntent.putExtra("email", email);
         homeIntent.putExtra("nick", nick);
+        startActivity(homeIntent);
     }
 
     public void removeLista() {

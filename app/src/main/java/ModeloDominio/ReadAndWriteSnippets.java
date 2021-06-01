@@ -355,13 +355,11 @@ public class ReadAndWriteSnippets {
                             intentH.putExtra("nick", nick);
                             intentH.putExtra("menuitem", item.getItemId());
                             intentH.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                            Toast t = Toast.makeText(context, "A amigos", Toast.LENGTH_LONG);
-                            t.show();
                             context.startActivity(intentH);
                         }
                         break;
                     case R.id.nav_amigos:
-                        Log.d("NAVIGATOR", "A AMIGOS");
+
                         if (!(toolbar.getId() == R.id.amigos_toolbar)) {
                             Intent intent = new Intent(context, ListaAmigos.class);
                             intent.putExtra("email", email);
@@ -370,15 +368,6 @@ public class ReadAndWriteSnippets {
                             intent.addFlags(FLAG_ACTIVITY_NEW_TASK);
                             context.startActivity(intent);
                         }
-                        break;
-                    case R.id.nav_listas:
-                        Intent homeIntent = new Intent(context, Home.class);
-                        homeIntent.putExtra("email", email);
-                        homeIntent.putExtra("nick", nick);
-                        // homeIntent.putExtra("provider", provider.name());
-                        homeIntent.putExtra("menuitem", item.getItemId());
-                        homeIntent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                        context.startActivity(homeIntent);
                         break;
                     case R.id.nav_logout:
                         /*Intent intentlogout = new Intent(context, Login.class);
