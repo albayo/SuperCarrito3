@@ -105,9 +105,9 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="134dp"
+        android:layout_marginStart="147dp"
         android:layout_marginTop="13dp"
-        android:layout_marginEnd="176dp"
+        android:layout_marginEnd="147dp"
         android:layout_marginBottom="585dp" />
 
     <androidx.recyclerview.widget.RecyclerView
