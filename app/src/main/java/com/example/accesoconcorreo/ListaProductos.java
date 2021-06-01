@@ -169,6 +169,12 @@ public class ListaProductos extends AppCompatActivity {
         });
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(getBaseContext(), Home.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
+    }
+
     public void removeProds() {
         for (Producto p : productos) {
             if (p.getCheckbox()) {

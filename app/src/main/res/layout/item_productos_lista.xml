@@ -51,7 +51,7 @@
                     android:fontFamily="@font/baloo"
                     android:text="@string/nombreproducto"
                     android:textSize="14sp"
-                    android:textStyle="bold|italic" />
+                    android:textStyle="bold" />
 
                 <TextView
 
