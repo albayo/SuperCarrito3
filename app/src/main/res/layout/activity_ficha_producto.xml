@@ -27,8 +27,70 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/fichaProdToolbar"
-        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintVertical_bias="1.0"
         tools:context=".ficha_producto">
+
+        <TextView
+            android:id="@+id/tv_nombre_categoria"
+            android:layout_width="143dp"
+            android:layout_height="26dp"
+            android:layout_marginStart="42dp"
+            android:layout_marginTop="15dp"
+            android:text="TextView"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.407"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_nombre_super"
+            app:layout_constraintVertical_bias="0.029" />
+
+        <TextView
+            android:id="@+id/tv_categoria"
+            android:layout_width="87dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/baloo"
+            android:text="Categoría:"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_supermercado"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/tv_nombre_super"
+            android:layout_width="139dp"
+            android:layout_height="23dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="15dp"
+            android:text="TextView"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.502"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_brand_prod"
+            app:layout_constraintVertical_bias="0.01" />
+
+        <TextView
+            android:id="@+id/tv_supermercado"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/baloo"
+            android:text="Supermercado:"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_nombre_marca_nochange"
+            app:layout_constraintVertical_bias="0.0" />
 
         <ImageView
             android:id="@+id/imagen_ficha_producto"
@@ -45,71 +107,76 @@
 
         <TextView
             android:id="@+id/text_nombre_producto"
-            android:layout_width="wrap_content"
+            android:layout_width="350sp"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginEnd="100dp"
+            android:fontFamily="@font/baloo"
             android:text="Nombre"
-            android:textSize="18sp"
+            android:textSize="22sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.282" />
-
-        <TextView
-            android:id="@+id/textview_nutrientes"
-            android:layout_width="228dp"
-            android:layout_height="21dp"
-            android:layout_marginStart="24dp"
-            android:inputType="textMultiLine"
-            android:text="TextView"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.449" />
+            app:layout_constraintVertical_bias="0.287" />
 
         <TextView
             android:id="@+id/text_brand_prod"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="TextView"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.277"
+            app:layout_constraintHorizontal_bias="0.271"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.356" />
+            app:layout_constraintTop_toBottomOf="@+id/text_nombre_producto"
+            app:layout_constraintVertical_bias="0.0" />
 
         <TextView
             android:id="@+id/text_nombre_marca_nochange"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/baloo"
             android:text="Marca:"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.356" />
+            app:layout_constraintTop_toBottomOf="@+id/text_nombre_producto"
+            app:layout_constraintVertical_bias="0.0" />
 
-        <ImageView
-            android:id="@+id/image_grado_nutrition"
-            android:layout_width="125dp"
-            android:layout_height="54dp"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <TextView
+            android:id="@+id/tv_nombre_precio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:fontFamily="@font/baloo"
+            android:text="Precio"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.888"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.093"
-            tools:srcCompat="@mipmap/nutriscore_a" />
+            app:layout_constraintHorizontal_bias="0.432"
+            app:layout_constraintStart_toEndOf="@+id/imagen_ficha_producto"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_precio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:fontFamily="@font/baloo"
+            android:text="Precio:"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.417"
+            app:layout_constraintStart_toEndOf="@+id/imagen_ficha_producto"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
