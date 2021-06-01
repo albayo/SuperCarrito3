@@ -55,17 +55,13 @@ public class Login extends AppCompatActivity {
     private FirebaseAuth mAuth;
     //Representa el TAG que sirve para distinguir la actividad
     private static final String LOG_TAG = Login.class.getSimpleName();
-
     //Representa la clase de Lógica de Negocio la cuál será necesaria para comprobar información con la BD
     private ReadAndWriteSnippets persistencia;
-
     //Representa el cuadro de texto (EditText) en el cual se escribirá el nombre de Usuario
     private EditText usuarioET;
-
     //Representa el cuadro de texto (EditText) en el cual se escribirá la contraseña del Usuario
     private EditText contraseniaET;
-
-
+    //Representa una referencia a la BD
     private DatabaseReference mDatabase;
 
 
@@ -227,7 +223,7 @@ public class Login extends AppCompatActivity {
     private void showAlert() {
         AlertDialog.Builder b = new AlertDialog.Builder(this);
         b.setTitle("Error");
-        b.setMessage("Se ha producido un error autenticando el usuario");
+        b.setMessage("El usuario no está dado de alta o la contraseña/usuario es incorrecta/o");
         b.setPositiveButton("Aceptar", null);
         AlertDialog alert = b.create();
         alert.show();
