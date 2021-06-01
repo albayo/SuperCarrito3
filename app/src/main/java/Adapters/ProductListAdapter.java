@@ -88,8 +88,8 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
 
                 Producto current =  mProductos.get(position);
                 String nomProd=current.getNombre();
-                if(nomProd.length()>50){
-                    nomProd=nomProd.substring(0,50)+"...";
+                if(nomProd.length()>45){
+                    nomProd=nomProd.substring(0,44)+"...";
                 }
                 if(current.getNombre().contains(","))
                     nomProd = current.getNombre().split(",")[1];
