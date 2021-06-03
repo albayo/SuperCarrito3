@@ -30,8 +30,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -98,7 +100,7 @@ public class Perfil extends AppCompatActivity {
 
         toolbar.setTitle("Perfil");
         progressDialog=new ProgressDialog(this);
-        numeroAmigos(nick);
+        numeroAmigos(numAmigos);
         emailt.setText(email);
         nickt.setText(nick);
         numAmigos.setText(String.valueOf(numeroAmigos));
@@ -127,17 +129,19 @@ public class Perfil extends AppCompatActivity {
         });
         }
 
-    private void numeroAmigos(String name) {
-        mDatabaseReference.child("users").child(name).child("amigos").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+    private void numeroAmigos(TextView numAmigos) {
+        mDatabaseReference.child("users").child(nick).child("amigos").addValueEventListener(new ValueEventListener() {
             @Override
-            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    for (DataSnapshot child : task.getResult().getChildren()) {
-                        numeroAmigos++;
-                    }
-                }
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+               numAmigos.setText(String.valueOf(snapshot.getChildrenCount()) );
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
+
     }
 
     public void obtenerFoto(String name){

@@ -218,7 +218,7 @@ public class introducir_nick extends DialogFragment {
     private void showAlert() {
         AlertDialog.Builder b = new AlertDialog.Builder(getContext());
         b.setTitle("Error");
-        b.setMessage("Se ha producido un error al registrar el usuario");
+        b.setMessage("Se ha producido un error autenticando el usuario");
         b.setPositiveButton("Aceptar", null);
         AlertDialog alert = b.create();
         alert.show();

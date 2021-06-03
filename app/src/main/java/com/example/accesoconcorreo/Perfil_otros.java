@@ -75,7 +75,6 @@ public class Perfil_otros extends AppCompatActivity {
         database = FirebaseDatabase.getInstance();
         mDatabaseReference = database.getReference();
         nick = getIntent().getStringExtra("nick");
-        obtenerEmail(nick);
         mStorage = FirebaseStorage.getInstance().getReference();
         numeroAmigos = 0;
         Usuario u = new Usuario(nick, email);
@@ -88,39 +87,27 @@ public class Perfil_otros extends AppCompatActivity {
         ReadAndWriteSnippets.setNavigationView(drawerLayout, navigationView, toolbar, nick, email, activity, getApplicationContext());
 
         TextView nickt = findViewById(R.id.text_usernameot);
-        TextView numAmigos = findViewById(R.id.text_numeroamot);
         TextView emailt = findViewById(R.id.text_emailot);
         fotoperfil = findViewById(R.id.imageview_fotoperfilot);
 
 
         toolbar.setTitle("Perfil");
         progressDialog = new ProgressDialog(this);
-        numeroAmigos(nick);
-        emailt.setText(email);
+        obtenerEmail(emailt);
         nickt.setText(nick);
-        numAmigos.setText(String.valueOf(numeroAmigos));
+
         obtenerFoto(nick);
 
     }
 
-    private void obtenerEmail(String nick) {
+    private void obtenerEmail(TextView emailt) {
         mDatabaseReference.child("users").child(nick).child("email").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
-                String em = dataSnapshot.getValue().toString();
-                Perfil_otros.email=em;
+                emailt.setText(dataSnapshot.getValue().toString());
             }
         });
 
-    }
-
-    private void numeroAmigos(String name) {
-        mDatabaseReference.child("users").child(name).child("amigos").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
-            @Override
-            public void onSuccess(DataSnapshot dataSnapshot) {
-
-            }
-        });
     }
 
     public void obtenerFoto(String name) {
