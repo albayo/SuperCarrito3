@@ -25,23 +25,37 @@ import Adapters.SolicitudesAdapter;
 import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Solicitud;
 
+/**
+ * Esta clase define la actividad (llamada "activity_solicitudes") que dispondrá en pantalla las
+ *  listas que tiene un determinado usuario
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 03/06/2021
+ */
 public class SolicitudesAmigos extends AppCompatActivity {
+    //Representa todas las solicitudes de amigo de un usuario
     private List<Solicitud> mSolicitudesAmigos;
-
+    //Representa una referencia a la BD
     private DatabaseReference mDatabase;
+    //Representa el adpater con el cual se dispondrán los datos por pantalla
     private SolicitudesAdapter solicitudesAdapterAmigos;
-
-
-    private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán las solicitudes del usuario
+    //Representa la barra de la actividad
+    private Toolbar toolbar;
+    //Representa el RecyclerView en el cual se dispondrán las solicitudes del usuario
     private RecyclerView recyclerViewSolicitudesAmigos;
-
+    //Representa el DrawerLayout donde se encuentra el menú
     private DrawerLayout drawerLayout;
+    //Representa el menú de la aplicación
     private NavigationView navigationView;
-
-
+    //Representa el nick del usuario
     private String nick;
+    //Representa el email del usuario
     private String email;
 
+    /**
+     * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
+     *  "activity_solicitudes" y poder mostrar las listas de los usuarios
+     * @param savedInstanceState Representa el objeto donde se guarda la información
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //esta línea sirve para impedir que se pueda girar la pantalla
@@ -55,11 +69,8 @@ public class SolicitudesAmigos extends AppCompatActivity {
         drawerLayout=findViewById(R.id.drawer_layout_solicitudes);
         navigationView=findViewById(R.id.nav_view_solicitudes);
 
-
-
         recyclerViewSolicitudesAmigos=findViewById(R.id.solicitudes_recyclerAmigos);
         recyclerViewSolicitudesAmigos.setLayoutManager(new LinearLayoutManager(this));
-
 
         nick=getIntent().getStringExtra("nick");
         email=getIntent().getStringExtra("email");
@@ -71,16 +82,16 @@ public class SolicitudesAmigos extends AppCompatActivity {
         ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,toolbar,nick,email,SolicitudesAmigos.this,getApplicationContext());
 
         obtenerSolicitudes(nick);
-
-
-
     }
 
+    /**
+     * Método que obtiene todas las solicitudes de un usuario y las guarda en el atributo mSolicitudesAmigos
+     * @param nick
+     */
     public void obtenerSolicitudes(String nick){
         mDatabase.child("users").child(nick).child("solicitudes").child("amistad").addValueEventListener(new ValueEventListener() {
             /**
              * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.
-             *
              * @param snapshot Representa el nodo de la base de datos a actualizar.
              */
             @Override

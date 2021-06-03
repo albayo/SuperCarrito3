@@ -39,9 +39,13 @@ import ModeloDominio.Usuario;
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 import static com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.withCrossFade;
 
-
+/**
+ * Esta clase define la actividad (llamada "activity_perfil_otros") que dispondrá en pantalla el perfil
+ * de un usuario que no es el actual
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 03/06/2021
+ */
 public class Perfil_otros extends AppCompatActivity {
-
     //Representa una la base de datos
     private FirebaseDatabase database;
     //Representa una referencia a la base de datos
@@ -50,23 +54,34 @@ public class Perfil_otros extends AppCompatActivity {
     private ListaListAdapter mListaAdapter;
     //Representa el layout del menu
     private DrawerLayout drawerLayout;
-    //Representa un navigation
+    //Representa el menú de la aplicación
     private NavigationView navigationView;
+    //Representa la barra de la actvidad
     private Toolbar toolbar;
+    //Representa una referencia para poder subir imagenes
     private StorageReference mStorage;
-
+    //Representa el email del usuario
     private static String email;
+    //Representa el nick del usuario
     private String nick;
+    //Reprsenta la foto del perfil del usuario que se quiere ver
     private ImageView fotoperfil;
+    //Sirve para que te muestre la galeria del dispositivo para poder subir una foto
     private static final int GALLERY_INTENT = 1;
-
+    //Representa un dialogo
     private ProgressDialog progressDialog;
-
+    //Representa el numero de amigos
     private int numeroAmigos;
-
+    //Representa el botón para ver amigos
     private Button btnAmigos;
+    //Representa el botón que permite subir imagenes para ponerselas como foto de perfil
     private ImageButton btnSubir;
 
+    /**
+     * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
+     *  "activity_solicitudes" y poder mostrar las listas de los usuarios
+     * @param savedInstanceState Representa el objeto donde se guarda la información
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +115,17 @@ public class Perfil_otros extends AppCompatActivity {
 
     }
 
+    /**
+     * Método que obtiene el email
+     * @param emailt
+     */
     private void obtenerEmail(TextView emailt) {
         mDatabaseReference.child("users").child(nick).child("email").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+
+            /**
+             * Método que se lanza cuando una tarea tiene exitos
+             * @param dataSnapshot
+             */
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
                 emailt.setText(dataSnapshot.getValue().toString());
@@ -110,6 +134,10 @@ public class Perfil_otros extends AppCompatActivity {
 
     }
 
+    /**
+     * Método que obtiene la foto
+     * @param name
+     */
     public void obtenerFoto(String name) {
 
         mDatabaseReference.child("users").child(name).child("fotoperfil").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
@@ -117,20 +145,7 @@ public class Perfil_otros extends AppCompatActivity {
             public void onSuccess(DataSnapshot dataSnapshot) {
                 String url = dataSnapshot.getValue().toString();
                 Glide.with(com.example.accesoconcorreo.Perfil_otros.this).load(url).fitCenter().centerCrop().override(600, 600).transition(withCrossFade()).into(fotoperfil);
-
             }
-
         });
-
-
     }
-
-
-
-
-
-
-
-
-
 }

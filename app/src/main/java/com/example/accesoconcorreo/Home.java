@@ -52,7 +52,6 @@ import ModeloDominio.Usuario;
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
  * @version: 02/05/2021
  */
-
 public class Home extends AppCompatActivity {
     //Representa el objeto recycler view de las listas
     private RecyclerView recyclerView;
@@ -68,19 +67,18 @@ public class Home extends AppCompatActivity {
     private NavigationView navigationView;
     //Lista de listas del usuario
     private List<Lista> listas;
-
+    //Representa la barra de la actividad
     private Toolbar toolbar;
+    //Representa el email del usuario
     private String email;
+    //Representa el nick del usuario
     private String nick;
-
-
 
     /**
      * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
      *  "activity_home" y poder mostrar las listas de los usuarios
      * @param savedInstanceState Representa el objeto donde se guarda la información
      */
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,19 +94,21 @@ public class Home extends AppCompatActivity {
         myToolbar.setTitle("Mis Listas");
         myToolbar.inflateMenu(R.menu.menu_home_toolbar);
         myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
-
+            /**
+             * Método que se lanza cuando uno de los elementos de la barra es seleccionado
+             * @param item representa el elemento de la barra que se ha seleccionado
+             * @return
+             */
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
                 if (id == R.id.icono_usuario) {
                     showPerfil(nick,email);
-
                     return true;
                 }
 
                 if(id == R.id.borrar_lista){
                     removeLista();
-
                     return true;
                 }
                 return false;
@@ -123,6 +123,10 @@ public class Home extends AppCompatActivity {
          *  "activity_crear_lista" que sirve para que un usario añade una lista
          */
         fabAñadirLista.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método que se lanza cuando se hace click en el correspondiente View
+             * @param v representa el View en el cual se ha hecho click
+             */
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Home.this,

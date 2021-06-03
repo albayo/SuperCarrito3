@@ -25,20 +25,37 @@ import Adapters.SolicitudesAdapter;
 import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Solicitud;
 
+/**
+ * Esta clase define la actividad llamada "activity_solicitudes_lista" que sirve para mostrar todas las solcitudes para listas de un usuario.
+ *
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 03/06/2021
+ */
 public class SolicitudesLista extends AppCompatActivity {
+    //Representa las solicitudes de listas de un usuario
     private List<Solicitud> mSolicitudesListas;
+    //Representa la referencia a la BD
     private DatabaseReference mDatabase;
+    //Representa el adapter con el cual se representarán los datos de las correspondientes listas por pantalla
     private SolicitudesAdapter solicitudesAdapterListas;
-
-    private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán las solicitudes del usuario
+    //Representa el tollbar de la actividad
+    private Toolbar toolbar;
+    //Representa el RecyclerView en el cual se dispondrán las solicitudes del usuario
     private RecyclerView recyclerViewSolicitudesListas;
-
+    //Representa el nick del usuario
     private String nick;
+    //Representa el email del usuario
     private String email;
-
+    //Representa el DrawerLayout donde se encuentra el menú
     private DrawerLayout drawerLayout;
+    //Representa el menú de la aplicación
     private NavigationView navigationView;
 
+    /**
+     * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
+     *  "activity_solicitudes_lista" y poder mostrar las listas de los usuarios
+     * @param savedInstanceState Representa el objeto donde se guarda la información
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //esta línea sirve para impedir que se pueda girar la pantalla
@@ -65,6 +82,10 @@ public class SolicitudesLista extends AppCompatActivity {
         obtenerSolicitudes(nick);
     }
 
+    /**
+     * Método que obtiene todas las solicitudes de un usuario y las guarda en el atributo mSolicitudesListas
+     * @param nick representa el nick del usuario
+     */
     public void obtenerSolicitudes(String nick){
         mSolicitudesListas.clear();
         mDatabase.child("users").child(nick).child("solicitudes").child("listas").addValueEventListener(new ValueEventListener() {
