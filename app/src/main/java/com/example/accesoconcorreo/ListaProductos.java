@@ -49,7 +49,7 @@ import okhttp3.internal.cache.DiskLruCache;
  * productos que componen una lista determinada
  *
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 25/05/2021
+ * @version: 03/06/2021
  */
 public class ListaProductos extends AppCompatActivity {
     //Lista de productos de una lista
@@ -111,6 +111,11 @@ public class ListaProductos extends AppCompatActivity {
 
         myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
 
+            /**
+             * Método que da funcionalidad cuando haces click en el menú de la parte de arriba a la derecha. Puedes añadir amigos a la lista o mostrar los miembros de la misma
+             * @param item
+             * @return
+             */
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
@@ -166,21 +171,24 @@ public class ListaProductos extends AppCompatActivity {
                         TodosProductos.class);
                 intent.putExtra("idLista", idLista);
                 intent.putExtra("nombreLista", nombreLista);
-                //intent.putExtra("email", email);
                 startActivity(intent);
-                //Intent replyIntent = new Intent();
-                //Lista l = (Lista) intent.getSerializableExtra("lista");
-                //hacer insert en el usuario internamente
+
             }
         });
     }
 
+    /**
+     * Método que indica a que activity ir cuando le das al botón de ir hacia atrás en el dispositivo
+     */
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         startActivity(new Intent(getBaseContext(), Home.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP));
     }
 
+    /**
+     * Método que elimina los productos de una la lista productos
+     */
     public void removeProds() {
         for (Producto p : productos) {
             if (p.getCheckbox()) {
@@ -211,6 +219,10 @@ public class ListaProductos extends AppCompatActivity {
 
         //NECESARIO PARA BORRAR EL ÚLTIMO
         mDatabase.child("listas").child(listaid).child("productos").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            /**
+             * Método que muestra los productos de una lista
+             * @param task
+             */
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
@@ -278,22 +290,9 @@ public class ListaProductos extends AppCompatActivity {
                         double preR=Math.round(pre*100.0)/100.0;
 
                         precio=preR+"";
-                        /*
-                        Log.d("GETPRODUCTO", nombre.length()+"");
-                        if(nombre.length()>50){
-                            Log.d("asd", nombre.length()+"");
-                            nombre=nombre.substring(0,50)+"...";
-                            Log.d("asd", nombre);
-                        }
-
-                         */
 
                         Producto p = new Producto(idProducto, nombre, brand, image, categoria, tienda, gradoNutricion,cantidad,precio);
                         productos.add(p);
-
-
-
-
                         productosAdapter.setProductos(productos);
 
                     }
@@ -306,40 +305,7 @@ public class ListaProductos extends AppCompatActivity {
             }
         });
 
-        /*
-        Log.d("GETPRODUCTO", "INI");
 
-        mDatabase.child("json").child("results").child(idProducto.split("_")[0]).child("Ítems").child(idProducto.split("_")[1]).addValueEventListener(new ValueEventListener() {
-
-            /**
-             * Listener que actualiza los datos en la aplicación cuando se realiza un cambio en la base de datos.
-             * @param snapshot Representa el nodo de la base de datos a actualizar.
-             *sasasdasdasdadsasd/
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-
-
-                    String nombre = snapshot.child("Producto").getValue().toString();
-                    String categoria = snapshot.child("ingredients_text").getValue().toString();
-                    String image = snapshot.child("RutaImagen").getValue().toString();
-                    String brand = snapshot.child("Marca").getValue().toString();
-                    String gradoNutricion = "";
-
-
-                    Producto p = new Producto(idProducto, nombre, brand, image, categoria, "Eroski", gradoNutricion,"1");                    productos.add(p);
-                    //ESTO ES UNA MIERDA
-                    productosAdapter.setProductos(productos);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-*/
     }
 
 }

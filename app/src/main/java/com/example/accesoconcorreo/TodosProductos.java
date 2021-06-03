@@ -38,11 +38,12 @@ import ModeloDominio.ReadAndWriteSnippets;
  * Esta clase define la actividad llamada "activity_todos_productos" que sirve para mostrar todos los productos de la base de datos.
  *
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
- * @version: 20/05/2021
+ * @version: 03/06/2021
  */
 public class TodosProductos extends AppCompatActivity{
     //Representa el identificar de la lista a la que se quiere añadir el producto
     private String idLista;
+    //Representa todos los productos que hay en la BD
     private List<Producto> productos;
     //Representa todos los productos que hay en la BD para evitar acceder muchas veces
     private List<Producto> todosProds;
@@ -50,8 +51,11 @@ public class TodosProductos extends AppCompatActivity{
     //private ImageView ivBusqueda;
     //Representa el SearchView en el que se escribirá texto para poder realizar una búsqueda
     private SearchView svProductos;
+    //Representa una referencia a la BD
     private DatabaseReference mDatabase;
+    //Representa el recyclerView donde se dispondrán los datoss
     private RecyclerView recyclerViewproductos;
+    //Representa el adapter que sirve para disponer los datos correspondientes
     private TodosProductosAdapter todosProductosAdapter;
     //Representa el toolbar de la actividad
     private Toolbar toolbar;
@@ -97,6 +101,13 @@ public class TodosProductos extends AppCompatActivity{
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategorias.setAdapter(arrayAdapter);
         spinnerCategorias.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * Método que tiene lugar cuando alguno de los elementos del spinner es seleccionado
+             * @param parent representa el View padre en el que se encuentra el spinner
+             * @param view representa el View padre en el que se encuentra el spinner
+             * @param position representa la posición del elemento clickado en el spinner
+             * @param id representa el id del elemento clickado en el spinner
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 categoriaSelec = parent.getItemAtPosition(position).toString();
@@ -108,6 +119,10 @@ public class TodosProductos extends AppCompatActivity{
                 }
             }
 
+            /**
+             * Método que tiene lugar cuando ninguno de los elementos ha sido seleccionado
+             * @param parent representa el View padre en el que se encuentra el spinner
+             */
             @Override
             public void onNothingSelected(AdapterView <?> parent) {
             }
@@ -115,6 +130,12 @@ public class TodosProductos extends AppCompatActivity{
 
         svProductos = (android.widget.SearchView) findViewById(R.id.svProductos);
         svProductos.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+
+            /**
+             * Método que tiene lugar cuando el texto contenido en el correspondiente SearchView se submitea
+             * @param query representa el texto correspondiente del SearchView
+             * @return false
+             */
             @Override
             public boolean onQueryTextSubmit(String query) {
                 /*if(query.trim().length() == 0){
@@ -127,6 +148,11 @@ public class TodosProductos extends AppCompatActivity{
                 return false;
             }
 
+            /**
+             * Método que tiene lugar cuando el texto contenido en el correspondiente SearchView cambia
+             * @param newText representa el texto correspondiente del SearchView
+             * @return true
+             */
             @Override
             public boolean onQueryTextChange(String newText) {
                 //Toast.makeText(TodosProductos.this, "Tamaño todosProds = " + todosProds.size(), Toast.LENGTH_LONG).show();
@@ -254,6 +280,10 @@ public class TodosProductos extends AppCompatActivity{
 
     }
 
+    /**
+     * Método que muestra los productos pasados por parámetro
+     * @param productosMostrar representa los productos que se quieren mostrar
+     */
     private void mostrarProductos(List<Producto> productosMostrar) {
         todosProductosAdapter = new TodosProductosAdapter(TodosProductos.this, R.layout.item_productos_comprar, productosMostrar, idLista);
         recyclerViewproductos.setAdapter(todosProductosAdapter);

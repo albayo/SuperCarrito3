@@ -29,16 +29,38 @@ import Adapters.ListaAmigosAdapter;
 import Adapters.MiembrosListaAdapter;
 import ModeloDominio.ReadAndWriteSnippets;
 
+/**
+ * Esta clase define la actividad (llamada "activity_mostrar_miembros_lista") que dispondrá en pantalla los
+ * miembros de una lista
+ *
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 03/06/2021
+ */
 public class MostrarMiebrosLista extends AppCompatActivity {
+    //Lista de los usuarios que pertenecen a la lsita
     private List<String> mMiembros;
+    //Referencia a la base de datos
     private DatabaseReference mDatabase;
+    //Instancia del adapter que muestra cada usuario
     private MiembrosListaAdapter miembrosAdapter;
-    private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán las solicitudes del usuario
+    //REpresenta el toolbar de la pantalla
+    private Toolbar toolbar;
+    //Representa el RecyclerView en el cual se dispondrán los miembros de una lista
     private RecyclerView recyclerViewMiembros;
+    //Booleano que tendrá como valor true si el usuario de la lista
     private boolean propietario;
+    //Representa el DrawerLayout donde estará el menú de la aplicación
     private DrawerLayout drawerLayout;
+    //Representa el menú de la aplicación
     private NavigationView navigationView;
+    //Nick de la aplicación
     private String nick;
+
+    /**
+     * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
+     * "activity_mostrar_miembros_lista"
+     * @param savedInstanceState Representa el objeto donde se guarda la información
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +82,10 @@ public class MostrarMiebrosLista extends AppCompatActivity {
         nombreLista=getIntent().getStringExtra("nombreLista");
         FloatingActionButton fab=findViewById(R.id.fab_Aniadir_Miembro);
         fab.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método que lanza un fragment para añadir a un amigo a la lista compartida
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 introducir_amigo amigoDF = new introducir_amigo(nick);
@@ -68,16 +94,18 @@ public class MostrarMiebrosLista extends AppCompatActivity {
         });
         fab.setVisibility(View.INVISIBLE);
         mDatabase.child("listas").child(idLista).child("propietario").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            /**
+             * Método que mira en la base de datos si el usuario es el propietario de la lista y
+             * en función de ello muestra un fab o no para poder añadir  usuarios a la lsita
+             * @param task
+             */
             @Override
             public void onComplete(@NonNull  Task<DataSnapshot> task) {
                 if(task.isSuccessful()){
                     if(task.getResult().getValue()!=null){
                         String propie=task.getResult().getValue().toString();
-                        Log.d("Prop",propie);
-                        Log.d("Nick",nick);
                         if(propie.equals(nick)){
                            propietario=true;
-                           //miembrosAdapter.setPropietario(propietario);
                            fab.setVisibility(View.VISIBLE);
                         }
                     }
@@ -99,11 +127,16 @@ public class MostrarMiebrosLista extends AppCompatActivity {
 
     }
 
-
+    /**
+     * Método que lee de la base de datos los miembros de la lista
+     * @param nick
+     * @param idLista
+     * @param nombreLista
+     */
     public void obtenerMiembrosLista(String nick,String idLista,String nombreLista) {
         mDatabase.child("listas").child(idLista).child("miembros").addValueEventListener(new ValueEventListener() {
             /**
-             * Método que cuando cambia un objeto en la base de datos se ejecuta para mostrar las listas de manera actualizada
+             * Método que cuando cambia un objeto en la base de datos se ejecuta para mostrar los miembros de la lista de forma actualizada
              * @param snapshot
              */
             @Override

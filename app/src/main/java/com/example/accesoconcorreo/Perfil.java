@@ -42,6 +42,12 @@ import Adapters.ListaListAdapter;
 import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Usuario;
 
+/**
+ * Esta clase define la actividad (llamada "activity_mostrar_perfil") que dispondrá en pantalla la información de un usuario
+ *
+ * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
+ * @version: 03/06/2021
+ */
 public class Perfil extends AppCompatActivity {
     //Representa una la base de datos
     private FirebaseDatabase database;
@@ -53,7 +59,9 @@ public class Perfil extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     //Representa un navigation
     private NavigationView navigationView;
+    //Representa el toolbar de la pantalla
     private Toolbar toolbar;
+    //Referencai
     private StorageReference mStorage;
 
     private String email;
