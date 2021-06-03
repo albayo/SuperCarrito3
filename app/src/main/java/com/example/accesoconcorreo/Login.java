@@ -46,8 +46,6 @@ import ModeloDominio.ReadAndWriteSnippets;
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
  * @version: 02/05/2021
  */
-//      USUARIO: 16alvaro1bac@gmail.com
-//      Contraseña: alvarobayo
 
 public class Login extends AppCompatActivity {
     private static final int GOOGLE_SIGN_IN = 100;
@@ -198,9 +196,7 @@ public class Login extends AppCompatActivity {
                                         }
                                     }
                                 });
-                                //String nick = usuarioET.getText().toString().split("@")[0];//persistencia.getNick(usuarioET.getText().toString());
 
-                               // showHome(nick, usuarioET.getText().toString(), ProviderType.Basic); //MEJOR CON ?: ""
                             } else {
                                 showAlert();
                             }
@@ -249,18 +245,6 @@ public class Login extends AppCompatActivity {
         homeIntent.putExtra("provider", provider.name());
         startActivity(homeIntent);
     }
-
-    /*
-    private void session() {
-        SharedPreferences pref = getSharedPreferences(getString(R.string.prefs_file), Context.MODE_PRIVATE);
-        String email = pref.getString("email", null);
-        String provider = pref.getString("provider", null);
-        String nick = pref.getString("nick", null);
-        if (email != null && provider != null) {
-            //PUEDES PONER EL LAYOUT INVISIBLE
-            showHome(nick, email, ProviderType.valueOf(provider));
-        }
-    }*/
 
     /**
      *  Método que registra al usuario con Google
