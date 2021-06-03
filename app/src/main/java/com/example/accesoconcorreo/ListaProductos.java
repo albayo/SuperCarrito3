@@ -52,18 +52,27 @@ import okhttp3.internal.cache.DiskLruCache;
  * @version: 25/05/2021
  */
 public class ListaProductos extends AppCompatActivity {
+    //Lista de productos de una lista
     private List<Producto> productos;
+    //Referencia a la base de datos
     private DatabaseReference mDatabase;
+    //Instancia del adapter para mostrar cada producto de la lista
     private ProductListAdapter productosAdapter;
-    private Toolbar toolbar;        //Representa el RecyclerView en el cual se dispondrán los Productos de la Lista
+    //
+    private Toolbar toolbar;
+    //Representa el RecyclerView en el cual se dispondrán los Productos de la Lista
     private RecyclerView recyclerViewproductos;
-
+    //Email de usuario
     private String email;
+    //Nick del usuario
     private String nick;
-    private String nombreLista;
+    //Id de la lista del usuario
     private String idLista;
-
+    //Nombre de la lista del usuario
+    private String nombreLista;
+    //Representa el DrawerLayout donde se encuentra el menú de la aplicación
     private DrawerLayout drawerLayout;
+    //Representa el menú de la aplicación
     private NavigationView navigationView;
 
 
@@ -83,16 +92,13 @@ public class ListaProductos extends AppCompatActivity {
 
         idLista = getIntent().getStringExtra("idLista");
         nombreLista = getIntent().getStringExtra("nombreLista");
-        //idLista
-        //nombreLista
         email=getIntent().getStringExtra("email");
         nick=getIntent().getStringExtra("nick");
         mDatabase = FirebaseDatabase.getInstance().getReference();
         productos = new ArrayList<>();
         recyclerViewproductos = (RecyclerView) findViewById(R.id.lista_prod_recycler);
         recyclerViewproductos.setLayoutManager(new LinearLayoutManager(this));
-        //habría que cambiar el nombre del toolbar de la aplicación, el que aparece todo el rato
-        //ir cambiandolo cada pantalla
+
         String nombreLista = getIntent().getStringExtra("nombreLista");
 
         drawerLayout=findViewById(R.id.drawer_layout_listaProd);
