@@ -147,101 +147,112 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
          * @param adapter representa el adaptador que maneja los datos y views del RecyclerView
          */
         private  AmigosViewHolder(View itemView, ListaAmigosAdapter adapter) {
-            super (itemView);
-            this.view=itemView;
-            this.AmigoNombreView= (TextView) itemView.findViewById(R.id.text_lista_usuario);
-            this.btELiminarAmigo=(ImageButton)itemView.findViewById(R.id.btEliminarAmigo);
+            super(itemView);
+            this.view = itemView;
+            this.AmigoNombreView = (TextView) itemView.findViewById(R.id.text_lista_usuario);
+            this.btELiminarAmigo = (ImageButton) itemView.findViewById(R.id.btEliminarAmigo);
             this.adapter = adapter;
-            this.btSimboloAmigo=(ImageButton) itemView.findViewById(R.id.RecyclerImagenAmigo);
+            this.btSimboloAmigo = (ImageButton) itemView.findViewById(R.id.RecyclerImagenAmigo);
             //itemView.setOnClickListener(this);
-            DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
-            if(modo.equals("añadir")){
+            DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+            if (modo.equals("añadir")) {
                 btSimboloAmigo.setOnClickListener(new View.OnClickListener() {
                     /**
                      * Método que representa el clickado en un item de la view
+                     *
                      * @param v View en el cual se ha clickado
                      */
                     @Override
                     public void onClick(View v) {
-                        ReadAndWriteSnippets.solicitudLista(nick,AmigoNombreView.getText().toString(),idLista,nombreLista);
-                        Toast.makeText(view.getContext(),"Amigo Añadido a la lista "+nombreLista,Toast.LENGTH_LONG).show();
+                        ReadAndWriteSnippets.solicitudLista(nick, AmigoNombreView.getText().toString(), idLista, nombreLista);
+                        Toast.makeText(view.getContext(), "Amigo Añadido a la lista " + nombreLista, Toast.LENGTH_LONG).show();
+                    }
+                });
+                btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mDatabase.child("listas").child(idLista).child("miembros").child(AmigoNombreView.toString()).removeValue();
+                    }
+                });
+            } else {
+
+                btSimboloAmigo.setOnClickListener(new View.OnClickListener() {
+                    /**
+                     * Método que representa el clickado en un item de la view
+                     *
+                     * @param v View en el cual se ha clickado
+                     */
+                    @Override
+                    public void onClick(View v) {
+                        Intent profintent = new Intent(view.getContext(), Perfil_otros.class);
+                        profintent.putExtra("nick", AmigoNombreView.getText().toString());
+                        profintent.addFlags(FLAG_ACTIVITY_NEW_TASK);
+                        view.getContext().startActivity(profintent);
+                    }
+                });
+
+                btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
+                    /**
+                     * Método que representa el clickado en un item de la view
+                     *
+                     * @param v View en el cual se ha clickado
+                     */
+                    @Override
+                    public void onClick(View v) {
+
+                        androidx.appcompat.app.AlertDialog.Builder b = new androidx.appcompat.app.AlertDialog.Builder(activity);
+                        b.setTitle("Confirmación");
+                        b.setMessage("¿Está seguro/a de que desea eliminar el amigo?");
+
+                        b.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+
+                            /**
+                             * Método que representa el clickado en un item de la view
+                             * @param dialog
+                             * @param which
+                             */
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                String amigo = AmigoNombreView.getText().toString();
+
+                                mDatabase.child("users").child(nick).child("amigos").child(amigo).removeValue();
+                                mDatabase.child("users").child(amigo).child("amigos").child(nick).removeValue();
+
+                                mDatabase.child("users").child(nick).child("amigos").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                    /**
+                                     * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
+                                     * @param task tarea que se ha completado
+                                     */
+                                    @Override
+                                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                        if (task.isSuccessful()) {
+                                            if (task.getResult().getValue() == null) {
+
+                                                activity.recreate();
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        });
+
+                        b.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+
+                            /**
+                             * Método que representa el clickado en un item de la view
+                             * @param dialog
+                             * @param which
+                             */
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                        AlertDialog alert = b.create();
+                        alert.show();
                     }
                 });
             }
-            btSimboloAmigo.setOnClickListener(new View.OnClickListener() {
-                /**
-                 * Método que representa el clickado en un item de la view
-                 * @param v View en el cual se ha clickado
-                 */
-                @Override
-                public void onClick(View v) {
-                    Intent profintent = new Intent(view.getContext(), Perfil_otros.class);
-                    profintent.putExtra("nick", AmigoNombreView.getText().toString());
-                    profintent.addFlags(FLAG_ACTIVITY_NEW_TASK);
-                    view.getContext().startActivity(profintent);
-                }
-            });
-
-            btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
-                /**
-                 * Método que representa el clickado en un item de la view
-                 * @param v View en el cual se ha clickado
-                 */
-                @Override
-                public void onClick(View v) {
-
-                    androidx.appcompat.app.AlertDialog.Builder b= new androidx.appcompat.app.AlertDialog.Builder(activity);
-                    b.setTitle("Confirmación");
-                    b.setMessage("¿Está seguro/a de que desea eliminar el amigo?");
-
-                    b.setPositiveButton("Aceptar",new DialogInterface.OnClickListener() {
-
-                        /**
-                         * Método que representa el clickado en un item de la view
-                         * @param dialog
-                         * @param which
-                         */
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            String amigo=AmigoNombreView.getText().toString();
-
-                            mDatabase.child("users").child(nick).child("amigos").child(amigo).removeValue();
-                            mDatabase.child("users").child(amigo).child("amigos").child(nick).removeValue();
-
-                            mDatabase.child("users").child(nick).child("amigos").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                                /**
-                                 * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
-                                 * @param task tarea que se ha completado
-                                 */
-                                @Override
-                                public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                    if(task.isSuccessful()){
-                                        if(task.getResult().getValue()==null){
-
-                                            activity.recreate();
-                                        }
-                                    }
-                                }
-                            });
-                        }
-                    });
-
-                    b.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-
-                        /**
-                         * Método que representa el clickado en un item de la view
-                         * @param dialog
-                         * @param which
-                         */
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                        }
-                    });
-                    AlertDialog alert=b.create();
-                    alert.show();
-                }
-            });
         }
     }
 }
