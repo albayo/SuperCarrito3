@@ -61,21 +61,30 @@ public class Perfil extends AppCompatActivity {
     private NavigationView navigationView;
     //Representa el toolbar de la pantalla
     private Toolbar toolbar;
-    //Referencai
+    //Referencia al almacenamiento de imágenes de Firebase
     private StorageReference mStorage;
-
+    //Email del usuario
     private String email;
+    //Nick del usuario
     private String nick;
+    //Representación de la imágen de perfil del usuario
     private ImageView fotoperfil;
+
     private static final int GALLERY_INTENT=1;
-
+    //Imagen de carga mientras se muestra la imágen en el perfil
     private ProgressDialog progressDialog;
-
+    //Número de amigos que tiene el usuario
     private int numeroAmigos;
-
+    //Representa un botón que te llevara a la lista de amigos del usuario
     private Button btnAmigos;
+    //Representa un botón con imágen que te permite subir una imágen como foto de perfil
     private ImageButton btnSubir;
 
+    /**
+     * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
+     * "activity_mostrar_perfil"
+     * @param savedInstanceState Representa el objeto donde se guarda la información
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,7 +93,7 @@ public class Perfil extends AppCompatActivity {
         mDatabaseReference = database.getReference();
 
         email = getIntent().getExtras().get("email").toString();
-        //cambiar esto al user normal
+
         nick = getIntent().getStringExtra("nick");
         mStorage= FirebaseStorage.getInstance().getReference();
         numeroAmigos=0;
@@ -115,6 +124,10 @@ public class Perfil extends AppCompatActivity {
         obtenerFoto(nick);
 
         btnAmigos.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método que hace que al hacer click en el botón de amigos te lleve a la lista de amigos del usuario
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getApplicationContext(), ListaAmigos.class);
@@ -127,6 +140,10 @@ public class Perfil extends AppCompatActivity {
 
 
         btnSubir.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Método que hace que al hacer click en el botón de subir puedas subir una foto como foto de perfil
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent(Intent.ACTION_PICK);
@@ -137,7 +154,14 @@ public class Perfil extends AppCompatActivity {
         });
         }
 
+    /**
+     * Método que muestra el número de amigos de un usuario
+     * @param numAmigos
+     */
     private void numeroAmigos(TextView numAmigos) {
+        /**
+         * Método que mustra el número de amigos de forma actualizada
+         */
         mDatabaseReference.child("users").child(nick).child("amigos").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -152,53 +176,34 @@ public class Perfil extends AppCompatActivity {
 
     }
 
+    /**
+     * Método que obtiene la imágen de perfil del usuarioa de firebase
+     * @param name
+     */
     public void obtenerFoto(String name){
 
         mDatabaseReference.child("users").child(name).child("fotoperfil").get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+            /**
+             * Método que saca la url de la imágen de la base de datos
+             * @param dataSnapshot
+             */
             @Override
             public void onSuccess(DataSnapshot dataSnapshot) {
-                Log.d("entra","success");
                 String url = dataSnapshot.getValue().toString();
                 Glide.with(Perfil.this).load(url).fitCenter().centerCrop().override(600,600).transition(withCrossFade()).into(fotoperfil);
 
             }
 
         });
-        //Picasso.get().load(url).into(fotoperfil);
-        /*
-
-
-        StorageReference filePath=mStorage.child("fotos").child(name);
-        Task<Uri> uri=filePath.getDownloadUrl();
-        if(uri.isSuccessful()){
-            Uri foto=uri.getResult();
-            String download=foto.toString();
-            Glide.with(Perfil.this).load(download).fitCenter().centerCrop().into(fotoperfil);
-        }
-        else{
-            ponerfotoporfefecto(name);
-        }
-        */
 
     }
 
-
-/*
-    public void ponerfotoporfefecto(String nick) {
-        StorageReference filePath = mStorage.child(Constantes.URLFOTODEFECTO);
-        Task<Uri> uri = filePath.getDownloadUrl();
-        if (uri.isSuccessful()) {
-            Uri foto = uri.getResult();
-            String download = foto.toString();
-            Glide.with(Perfil.this).load(download).fitCenter().centerCrop().into(fotoperfil);
-        }
-        else{
-            Toast.makeText(Perfil.this,"Error al mostrar la foto",Toast.LENGTH_LONG).show();
-        }
-    }
-    */
-
-
+    /**
+     * Método que sirve para subir la foto de perfil a firebase
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -223,6 +228,10 @@ public class Perfil extends AppCompatActivity {
                     return filePath.getDownloadUrl();
                 }
             }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+                /**
+                 * Método que añade la imágen subida al árbol de a base de datos
+                 * @param task
+                 */
                 @Override
                 public void onComplete(@NonNull Task<Uri> task) {
                     if (task.isSuccessful()) {
@@ -237,18 +246,6 @@ public class Perfil extends AppCompatActivity {
                     }
                 }
             });
-
-            /*
-            filePath.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    progressDialog.dismiss();
-                    Toast.makeText(Perfil.this,"Foto subida exitosamente",Toast.LENGTH_LONG).show();
-                    String url=taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-                    mDatabaseReference.child("users").child(nick).child("fotoperfil").setValue(url);
-                }
-            });
-            */
         }
     }
 }
