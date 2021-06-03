@@ -172,6 +172,7 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
                     @Override
                     public void onClick(View v) {
                         mDatabase.child("listas").child(idLista).child("miembros").child(AmigoNombreView.toString()).removeValue();
+                        mDatabase.child("users").child(nick).child("listas").child(idLista).removeValue();
                     }
                 });
             } else {
