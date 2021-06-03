@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:backgroundTint="#FFFFFF"
+    android:backgroundTint="#9CFFFFFF"
     android:fitsSystemWindows="true"
     tools:context=".Perfil">
 
@@ -193,6 +193,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
+                    android:backgroundTint="#81FDAB31"
                     android:fontFamily="@font/baloo"
                     android:text="Ver amigos"
                     app:cornerRadius="20dp"

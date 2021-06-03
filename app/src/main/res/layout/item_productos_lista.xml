@@ -76,8 +76,7 @@
                 android:layout_toStartOf="@id/checkBox_seleccionar"
                 android:layout_toLeftOf="@id/checkBox_seleccionar"
                 app:srcCompat="@drawable/ic_add_black"
-                tools:ignore="VectorDrawableCompat"
-                />
+                tools:ignore="VectorDrawableCompat" />
 
             <CheckBox
                 android:id="@+id/checkBox_seleccionar"
@@ -102,8 +101,11 @@
                 android:layout_marginStart="16dp"
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="-5dp"
+                android:layout_marginRight="-5dp"
                 android:layout_toStartOf="@id/numero_producto_pedido"
                 android:layout_toLeftOf="@id/numero_producto_pedido"
+                android:paddingTop="10dp"
                 app:srcCompat="@drawable/ic_remove_black"
                 tools:ignore="VectorDrawableCompat" />
 

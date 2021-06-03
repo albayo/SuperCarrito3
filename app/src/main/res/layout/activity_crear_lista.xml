@@ -25,7 +25,7 @@
         app:titleTextColor="@color/white" />
 
     <RelativeLayout
-        android:id="@+id/ "
+        android:id="@+id/relative_constraint"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"

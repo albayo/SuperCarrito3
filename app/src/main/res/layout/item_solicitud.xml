@@ -17,12 +17,10 @@
         android:orientation="vertical"
         android:padding="6dp">
 
-        <RelativeLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/Relative_solicitud"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="6dp">
+            android:layout_height="65dp">
 
             <!--
             <ImageView
@@ -34,65 +32,67 @@
                 app:srcCompat="@mipmap/ic_producto" />
                 -->
 
-            <LinearLayout
-                android:id="@+id/linear_solicitud"
+
+            <TextView
+                android:id="@+id/tipo_solicitud"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_marginLeft="4dp"
-                android:layout_marginRight="4dp"
-                android:orientation="vertical"
-                android:padding="6dp">
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/baloo"
+                android:text="@string/tipo_sol"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.0" />
 
-                <TextView
-                    android:id="@+id/tipo_solicitud"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/baloo"
-                    android:text="@string/tipo_sol"
-                    android:textSize="14sp" />
-
-                <TextView
-                    android:id="@+id/remitente"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:fontFamily="@font/baloo"
-                    android:text="@string/remitente"
-                    android:textSize="14sp" />
-
-
-            </LinearLayout>
-
+            <TextView
+                android:id="@+id/remitente"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="145dp"
+                android:fontFamily="@font/baloo"
+                android:text="@string/remitente"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/aceptar_sol"
+                app:layout_constraintHorizontal_bias="0.6"
+                app:layout_constraintStart_toStartOf="@+id/tipo_solicitud"
+                app:layout_constraintTop_toBottomOf="@+id/tipo_solicitud" />
 
             <ImageButton
                 android:id="@+id/aceptar_sol"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
 
-                android:layout_marginEnd="18dp"
-                android:layout_toStartOf="@+id/declinar_sol"
+                android:layout_marginEnd="16dp"
+                android:backgroundTint="#A44CAF50"
+                app:layout_constraintBottom_toBottomOf="@+id/declinar_sol"
+                app:layout_constraintEnd_toStartOf="@+id/declinar_sol"
+                app:layout_constraintStart_toEndOf="@+id/remitente"
+                app:layout_constraintTop_toTopOf="@+id/declinar_sol"
+                app:layout_constraintVertical_bias="0.555"
                 app:srcCompat="@drawable/ic_aceptar"
                 tools:ignore="VectorDrawableCompat" />
 
             <ImageButton
                 android:id="@+id/declinar_sol"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="9dp"
-                app:srcCompat="@drawable/ic_declinar"
+                android:layout_width="31dp"
+                android:layout_height="31dp"
+                android:layout_marginEnd="24dp"
+                android:background="#000000"
+                android:backgroundTint="#9EF44336"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/aceptar_sol"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.911"
+                app:srcCompat="@android:drawable/ic_menu_close_clear_cancel"
                 tools:ignore="VectorDrawableCompat" />
 
 
-        </RelativeLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
