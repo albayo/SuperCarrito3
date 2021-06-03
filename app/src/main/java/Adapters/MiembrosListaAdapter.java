@@ -58,7 +58,6 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
      * @param prop representa si el usuario actual es el propietario de la lista
      */
     public MiembrosListaAdapter(Activity a, int resource, List<String> l, String nick, String idLista, String nombreLista,boolean prop) {
-        Log.d("Adapter", "constr");
         this.resource = resource;
         this.activity = a;
         this.mMiembros = l;
@@ -75,7 +74,6 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
      */
     @Override
     public MiembrosListaViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("Adapter", "onCreate");
         View itemView = LayoutInflater.from(parent.getContext()).inflate(resource, parent, false);
         return new MiembrosListaAdapter.MiembrosListaViewHolder(itemView, this);
     }
@@ -88,7 +86,6 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
     @Override
     public void onBindViewHolder(@NonNull MiembrosListaAdapter.MiembrosListaViewHolder holder, int position) {
         if (mMiembros != null || mMiembros.get(position) != null) {
-            Log.d("Adapter", "onBind");
             String current = mMiembros.get(position);
 
             holder.AmigoNombreView.setText(current);
@@ -163,7 +160,6 @@ public class MiembrosListaAdapter extends RecyclerView.Adapter<MiembrosListaAdap
             btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("CLick","cliiick");
                     androidx.appcompat.app.AlertDialog.Builder b = new androidx.appcompat.app.AlertDialog.Builder(activity);
                     b.setTitle("Confirmación");
                     b.setMessage("¿Está seguro/a de que desea eliminar el miembro de la lista?");

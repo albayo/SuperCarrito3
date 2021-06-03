@@ -43,11 +43,12 @@ public class introducir_nom_lista extends DialogFragment {
 
     //Representa una cadena que indica el tipo de lista que se tendrá que crear
     private String tipoLista;
+    //Representa una cadena que indica el email del usuario
     private String email;
+    //Representa una cadena que indica el nick del usuario
     private String nick;
+    //Representa una cadena que indica el nombre de la lista que introducirás
     private String nombreLista;
-
-
     //Representa el nombre del último botón en el cual se ha hecho click
     private String ultBoton="";
 
@@ -177,10 +178,6 @@ public class introducir_nom_lista extends DialogFragment {
      */
     private void cerrarFragment() {
 
-        //getActivity().onBackPressed();
-        //getFragmentManager().beginTransaction().remove(this).commit();
-            /*Intent intent = new Intent(CrearLista.class, ListaProductos.class);
-            startActivity(intent);*/
-        //getFragmentManager().beginTransaction().remove(this).commit(); //no funciona, mirar con logger
+
     }
 }

@@ -62,11 +62,11 @@ public class Home extends AppCompatActivity {
     private DatabaseReference mDatabaseReference;
     //Representa un adapter de tipo lista para poder mostrar las listas del usuario
     private ListaListAdapter mListaAdapter;
-    //
+    //Representa el DrawerLayout donde se encuentra el menú
     private DrawerLayout drawerLayout;
-
+    //Representa el menú de la aplicación
     private NavigationView navigationView;
-
+    //Lista de listas del usuario
     private List<Lista> listas;
 
     private Toolbar toolbar;

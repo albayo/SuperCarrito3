@@ -63,7 +63,6 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
      * @param idLista Representa la lisa a la que añadiremos productos.
      */
     public TodosProductosAdapter(Activity a, int resource, List<Producto> l, String idLista) {
-        Log.d("ADAPTERRR", "CONSTRUCTOR");
         this.resource=resource;
         this.a = a;
         this.mProductos = l;

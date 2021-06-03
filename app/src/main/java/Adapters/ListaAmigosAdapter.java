@@ -243,23 +243,5 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
                 }
             });
         }
-
-        /**
-         * Método que representa el clickado en un item de la view
-         * @param v View en el cual se ha clickado
-         */
-        /*@Override
-        public void onClick(View v) {
-            //Se obtiene la posicion del item que ha sido clickado
-            int mPosicion = getLayoutPosition();
-            String lista = mAmigos.get(mPosicion);
-            String id = mAmigosId.get(mPosicion);
-
-            Intent intent = new Intent(a, ListaProductos.class);
-            intent.putExtra("nombreLista", lista);
-            intent.putExtra("idLista", id);
-
-            a.startActivity(intent);
-        }*/
     }
 }

@@ -58,9 +58,6 @@ public class ficha_producto extends AppCompatActivity {
         myToolbar.setTitle("SuperCarrito");
 
         producto=(Producto) getIntent().getSerializableExtra("producto");
-        /*if(producto==null){
-            Log.d("marcos patan","jejejje");
-        }*/
 
         fotoprod= findViewById(R.id.imagen_ficha_producto);
         fotonutri= findViewById(R.id.image_grado_nutrition);
