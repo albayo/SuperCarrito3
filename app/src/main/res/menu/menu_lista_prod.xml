@@ -16,7 +16,8 @@
         android:icon="@drawable/ic_opciones_blanco"
         android:orderInCategory="20"
         android:title="@string/opciones_añadir_miembros"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+       />
     <item
         android:id="@+id/opciones_mostrar_miembros"
         android:icon="@drawable/ic_opciones_blanco"

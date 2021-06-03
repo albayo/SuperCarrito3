@@ -171,8 +171,20 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
                 btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        mDatabase.child("listas").child(idLista).child("miembros").child(AmigoNombreView.toString()).removeValue();
-                        mDatabase.child("users").child(nick).child("listas").child(idLista).removeValue();
+                        mDatabase.child("listas").child(idLista).child("miembros").child(AmigoNombreView.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull  Task<DataSnapshot> task) {
+                                if(task.isSuccessful() && task.getResult().getValue()!=null){
+                                    mDatabase.child("listas").child(idLista).child("miembros").child(AmigoNombreView.getText().toString()).removeValue();
+                                    mDatabase.child("users").child(AmigoNombreView.toString()).child("listas").child(idLista).removeValue();
+                                    Toast.makeText(view.getContext(), "Amigo Eliminado de la lista " + nombreLista, Toast.LENGTH_LONG).show();
+                                }
+                                else{
+                                    Toast.makeText(view.getContext(), "Este Amigo no está en la lista " + nombreLista, Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
                     }
                 });
             } else {

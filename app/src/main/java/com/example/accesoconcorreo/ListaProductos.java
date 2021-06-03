@@ -7,6 +7,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.media.Image;
@@ -75,7 +76,7 @@ public class ListaProductos extends AppCompatActivity {
     //Representa el menú de la aplicación
     private NavigationView navigationView;
 
-
+    private boolean propietario=false;
     /**
      * Método que sirve para inicializar y cargar todos los elementos visuales de la actividad
      * "activity_lista_productos"
@@ -107,6 +108,28 @@ public class ListaProductos extends AppCompatActivity {
 
         myToolbar.setTitle(nombreLista); // establece el titulo del appBar al nombre de la lista
         myToolbar.inflateMenu(R.menu.menu_lista_prod);
+        mDatabase.child("listas").child(idLista).child("propietario").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull  Task<DataSnapshot> task) {
+                if(task.isSuccessful()){
+                    if(task.getResult().getValue()!=null){
+                        String propie=task.getResult().getValue().toString();
+                        Log.d("Prop",propie);
+                        Log.d("Nick",nick);
+                        if(!propie.equals(nick)){
+                            Log.d("changee","change");
+                            propietario=true;
+                            //miembrosAdapter.setPropietario(propietario);
+                            MenuItem item=(MenuItem) myToolbar.getMenu().getItem(1);
+                            if(item!=null) item.setVisible(false);
+                        }else{
+                            propietario=false;
+                        }
+                    }
+                }
+            }
+        });
+
         ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,myToolbar,nick,email,ListaProductos.this,getApplicationContext());
 
         myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -158,7 +181,10 @@ public class ListaProductos extends AppCompatActivity {
 
         FloatingActionButton fabAñadirProductos = findViewById(R.id.fabAniadir_Productos);
 
-
+        /*if (!propietario) {
+            Log.d("holiii","hoohohohoh");
+            findViewById(R.id.opciones_añadir_amigos).setVisibility(View.INVISIBLE);
+        }*/
         fabAñadirProductos.setOnClickListener(new View.OnClickListener() {
 
             /**
