@@ -42,12 +42,12 @@ import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
  * @version: 31/05/2021
  */
 public class ReadAndWriteSnippets {
-    //represtenta la cadena que se usará para mandar mensajes al log y que así se puedan identificar
+    //representa la cadena que se usará para mandar mensajes al log y que así se puedan identificar
     private static final String TAG = "ReadAndWriteSnippets";
 
     // [START declare_database_ref]
     private static DatabaseReference mDatabase;
-
+    //representa el usuario
     private static String usuario;
 
     // [END declare_database_ref]
@@ -181,6 +181,11 @@ public class ReadAndWriteSnippets {
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("nombre").setValue(nombrelista);
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("productos").setValue("pr1");
         mDatabase.child("listas").child(String.valueOf(list.getIdLista())).child("propietario").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+
+            /**
+             * Método que se lanza cuando una tarea ha finalizado (tanto de forma exitosoma como no exitosa)
+             * @param task representa la tarea que ha finalizado
+             */
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -246,6 +251,10 @@ public class ReadAndWriteSnippets {
     public static void aniadirAmigo(String usuarioActual, String amigo) {
 
         mDatabase.child("users").child(usuarioActual).child("email").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            /**
+             * Método que se lanza cuando una tarea ha finalizado (tanto de forma exitosoma como no exitosa)
+             * @param task representa la tarea que ha finalizado
+             */
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {
@@ -270,6 +279,10 @@ public class ReadAndWriteSnippets {
         mDatabase.child("users").child(nick).child("listas").child(idLista).setValue(nombreLista);
         mDatabase.child("listas").child(idLista).child("miembros").child(nick).setValue(nick);
         mDatabase.child("listas").child(idLista).child("compartida").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            /**
+             * Método que se lanza cuando una tarea ha finalizado (tanto de forma exitosoma como no exitosa)
+             * @param task representa la tarea que ha finalizado
+             */
             @Override
             public void onComplete(@NonNull Task<DataSnapshot> task) {
                 if (task.isSuccessful()) {

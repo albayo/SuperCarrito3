@@ -6,7 +6,6 @@ package ModeloDominio;
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
  * @version: 13/04/2021
  */
-
 public class Supermercado{
     //Representa el nombre del supermercado
     private String nombreSuper;

@@ -1,7 +1,4 @@
 package ModeloDominio;
-//Falta arreglar la base de datos ESTA MAL
-
-
 import java.io.Serializable;
 
 /**
