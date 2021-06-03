@@ -23,6 +23,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -108,25 +109,40 @@ public class introducir_nick extends DialogFragment {
                 ultBoton = "Aceptar";
 
                 nick = etNick.getText().toString();
+
                 if (nick != null && nick.trim().length() > 0) {
+                    FirebaseDatabase.getInstance().getReference().child("users").child(nick).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull  Task<DataSnapshot> task) {
+                            if(task.isSuccessful()){
+                                if(task.getResult().getValue()==null){
+                                    Log.d("HOLA","CONtinuea");
+                                    FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<AuthResult> task) {
+                                            if (task.isSuccessful()) {
+                                                if(task.getResult()!=null) {
+                                                    persistencia.insertarUsuario(nick, email, contexto);
+                                                    cerrarFragment();
+                                                    showHome(nick, email, ProviderType.Basic); //MEJOR CON ?: ""
+                                                }
+                                            } else {
+                                                showAlert();
+                                            }
+                                        }
 
-                    Task<AuthResult> authResultTask = FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        persistencia.insertarUsuario(nick, email,contexto);
-                                        cerrarFragment();
-                                        showHome(nick, email, ProviderType.Basic); //MEJOR CON ?: ""
-                                    } else {
-                                        showAlert();
-                                    }
+                                    });
+
+                                } else {
+                                    Toast.makeText(getActivity(), "Error, el nick ya existe introduzca otro para registrarse", Toast.LENGTH_SHORT).show();
                                 }
+                                }else{
+                                    Toast.makeText(getActivity(), "Error, introduzca otro nick para poder registrarse correctamente", Toast.LENGTH_SHORT).show();
+                            }
+                            }
+                        });
+                    }
 
-                            });
-
-                } else {
-                    Toast.makeText(getActivity(), "Error, se debe introducir un nick para poder registrarse correctamente", Toast.LENGTH_SHORT).show();
-                }
             }
 
 
