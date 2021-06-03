@@ -82,23 +82,6 @@ public class CrearLista extends AppCompatActivity {
         introducir_nom_lista listaDialogFragment = new introducir_nom_lista(tipoLista,email,nick);
         listaDialogFragment.show(getSupportFragmentManager(),"tag");
 
-        /*
-        String ultB = listaDialogFragment.getUltBoton();
-        listaDialogFragment.getLifecycle().getCurrentState();
-        while(!listaDialogFragment.isCancelable()){
-
-        }
-        if(ultB.length() > 0){
-            if(ultB.equals("Aceptar")){
-                Intent intent = new Intent(this, ListaProductos.class);
-                intent.putExtra("nick",nick);
-                intent.putExtra("email",email);
-                intent.putExtra("nombreLista",listaDialogFragment.getNombreLista());
-                intent.putExtra("idLista",String.valueOf(Lista.getContLista()));
-                startActivity(intent);
-            }
-        }
-        */
     }
 
     /**

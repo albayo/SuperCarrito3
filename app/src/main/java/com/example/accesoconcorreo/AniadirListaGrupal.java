@@ -143,9 +143,6 @@ public class AniadirListaGrupal extends DialogFragment {
     private void cerrarFragment() {
 
         getActivity().onBackPressed();
-        //getFragmentManager().beginTransaction().remove(this).commit();
-            /*Intent intent = new Intent(CrearLista.class, ListaProductos.class);
-            startActivity(intent);*/
-        //getFragmentManager().beginTransaction().remove(this).commit(); //no funciona, mirar con logger
+
     }
 }
