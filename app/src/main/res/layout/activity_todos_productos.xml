@@ -99,16 +99,16 @@
     <ProgressBar
         android:id="@+id/pBTodosProds"
         style="?android:attr/progressBarStyle"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="135dp"
+        android:layout_height="59dp"
         android:layout_below="@+id/spinners_layout"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginStart="147dp"
+        android:layout_marginStart="138dp"
         android:layout_marginTop="13dp"
-        android:layout_marginEnd="147dp"
-        android:layout_marginBottom="585dp" />
+        android:layout_marginEnd="138dp"
+        android:layout_marginBottom="556dp" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/super_prod_list_recycler"

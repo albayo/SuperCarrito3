@@ -228,6 +228,7 @@ public class TodosProductosAdapter  extends RecyclerView.Adapter<TodosProductosA
 
             Intent intent = new Intent(a, ficha_producto.class);
             intent.putExtra("producto", current);
+            intent.putExtra("idLista", idLista);
 
             a.startActivity(intent);
         }

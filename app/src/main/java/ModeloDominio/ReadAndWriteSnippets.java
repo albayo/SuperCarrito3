@@ -119,9 +119,7 @@ public class ReadAndWriteSnippets {
                                         mDatabase.child("correousuario").child(emailinsert2).setValue(name);
                                     }
                                     else {
-                                        Toast toast = new Toast(context);
-                                        toast.makeText(context, "Este correo ya tiene un usuario, pruebe con otro correo", Toast.LENGTH_LONG);
-                                        toast.show();
+                                        Toast.makeText(context, "Este correo ya tiene un usuario, pruebe con otro correo", Toast.LENGTH_LONG).show();
                                     }
                                 }
 
