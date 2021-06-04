@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresPermission;
@@ -157,42 +158,16 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
                     if(current.getTipoSolicitud().equals("lista")){
                         ReadAndWriteSnippets.aniadirLista(nick,current.getIdLista(),current.getNombreLista());
                         ReadAndWriteSnippets.eliminarSolicitudLista(nick,current.getRemitente(),current.getIdLista());
-                        mDatabase.child("users").child(nick).child("listas").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                            /**
-                             * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
-                             * @param task tarea que se ha completado
-                             */
-                            @Override
-                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                if(task.isSuccessful()){
-                                    if(task.getResult().getValue()==null){
-                                        activity.recreate();
-                                    }
-                                }
-                            }
-                        });
+
                     }
                     else{
                         ReadAndWriteSnippets.aniadirAmigo(nick,current.getRemitente());
                         ReadAndWriteSnippets.aniadirAmigo(current.getRemitente(),nick);
-
                         ReadAndWriteSnippets.eliminarSolicitudAmistad(nick,current.getRemitente());
-                        mDatabase.child("users").child(nick).child("amistad").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                            /**
-                             * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
-                             * @param task tarea que se ha completado
-                             */
-                            @Override
-                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                if(task.isSuccessful()){
-                                    if(task.getResult().getValue()==null){
-                                        activity.recreate();
-                                    }
-                                }
-                            }
-                        });
-                    }
 
+                    }
+                    activity.recreate();
+                    Toast.makeText(activity.getBaseContext(),"Solicitud Aceptada",Toast.LENGTH_LONG).show();
 
                 }
             });
@@ -208,31 +183,15 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
                     Solicitud current=mSolicitudes.get(position);
                     if(current.getTipoSolicitud().equals("lista")){
                         ReadAndWriteSnippets.eliminarSolicitudLista(nick,current.getRemitente(),current.getIdLista());
-                        mDatabase.child("users").child(nick).child("listas").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                if(task.isSuccessful()){
-                                    if(task.getResult().getValue()==null){
-                                        activity.recreate();
-                                    }
-                                }
-                            }
-                        });
+
                     }
                     else{
                         ReadAndWriteSnippets.eliminarSolicitudAmistad(nick,current.getRemitente());
                         ReadAndWriteSnippets.eliminarSolicitudAmistad(nick,current.getRemitente());
-                        mDatabase.child("users").child(nick).child("amistad").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                            @Override
-                            public void onComplete(@NonNull Task<DataSnapshot> task) {
-                                if(task.isSuccessful()){
-                                    if(task.getResult().getValue()==null){
-                                        activity.recreate();
-                                    }
-                                }
-                            }
-                        });
+
                     }
+                    activity.recreate();
+                    Toast.makeText(activity.getBaseContext(),"Solicitud Rechazada",Toast.LENGTH_LONG).show();
                 }
             });
         }

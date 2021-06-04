@@ -45,6 +45,7 @@ import ModeloDominio.Lista;
 import ModeloDominio.Producto;
 import ModeloDominio.ReadAndWriteSnippets;
 import ModeloDominio.Usuario;
+import okhttp3.internal.cache.DiskLruCache;
 
 /**
  * Esta clase define la actividad (llamada "activity_home") que dispondrá en pantalla las
@@ -52,6 +53,7 @@ import ModeloDominio.Usuario;
  * @author: Pablo Ochoa, Javier Pérez, Marcos Moreno, Álvaro Bayo
  * @version: 02/05/2021
  */
+
 public class Home extends AppCompatActivity {
     //Representa el objeto recycler view de las listas
     private RecyclerView recyclerView;
@@ -167,9 +169,51 @@ public class Home extends AppCompatActivity {
     public void removeLista() {
         for(Lista l:listas){
             if(l.isCheckboxEliminar()){
-                mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).removeValue();
-                mDatabaseReference.child("users").child(nick).child("listas").child(String.valueOf(l.getIdLista())).removeValue();
 
+                mDatabaseReference.child("users").child(nick).child("listas").child(String.valueOf(l.getIdLista())).removeValue();
+                mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("miembros").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        if(snapshot.getChildrenCount()==0) {
+                            mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).removeValue();
+
+                        }else{
+                            if(snapshot.getChildrenCount()==1){
+                                mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("compartida").setValue("false");
+                            }
+                                mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("miembros").child(nick).removeValue();
+                            mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("propietario").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                    if(task.isSuccessful() && task.getResult().getValue()!=null){
+                                        String prop=task.getResult().getValue().toString();
+                                        if(prop.equals(nick)){
+                                            mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("miembros").addValueEventListener(new ValueEventListener() {
+                                                @Override
+                                                public void onDataChange(@NonNull  DataSnapshot snapshot) {
+                                                    Iterable<DataSnapshot> i=snapshot.getChildren();
+                                                    mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("propietario").setValue(i.iterator().next().getValue().toString());
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                                }
+                                            });
+                                        }
+                                    }
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull  DatabaseError error) {
+
+                    }
+                });
             }
         }
         obtenerListasUsuario(nick);

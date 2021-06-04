@@ -22,8 +22,10 @@ import com.example.accesoconcorreo.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.List;
@@ -99,20 +101,18 @@ public class ListaListAdapter extends RecyclerView.Adapter<ListaListAdapter.List
             holder.imgGrupal.setVisibility(View.INVISIBLE);
 
             DatabaseReference mDatabase= FirebaseDatabase.getInstance().getReference();
-            mDatabase.child("listas").child(String.valueOf(l.getIdLista())).child("compartida").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                /**
-                 * Método que tiene lugar cuando una tarea se ha acabado (tanto de forma satisfactoria como de forma errónea)
-                 * @param task tarea que se ha completado
-                 */
+            mDatabase.child("listas").child(String.valueOf(l.getIdLista())).child("miembros").addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onComplete(@NonNull  Task<DataSnapshot> task) {
-                    if(task.isSuccessful()){
-                        if(task.getResult().getValue()!=null){
-                            l.setGrupal(true);
-                            holder.imgGrupal.setVisibility(View.VISIBLE);
-                        }
-
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    if(snapshot.getChildrenCount()>1){
+                        l.setGrupal(true);
+                        holder.imgGrupal.setVisibility(View.VISIBLE);
                     }
+                }
+
+                @Override
+                public void onCancelled(@NonNull  DatabaseError error) {
+
                 }
             });
         }  else  {
