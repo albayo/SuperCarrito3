@@ -61,6 +61,8 @@ public class introducir_amigo extends DialogFragment {
              * Método que sirve para comprobar que se haya introducido algo en el campo de nick
              * @param v Representa al objeto View sobre el cual se ha hecho click
              */
+            /*
+            ANTES BACKUP
             @Override
             public void onClick(View v) {
                 mDatabase= FirebaseDatabase.getInstance().getReference();
@@ -72,6 +74,7 @@ public class introducir_amigo extends DialogFragment {
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
                                 if (task.isSuccessful()) {
                                     if(task.getResult().getValue()!=null){
+
                                         ReadAndWriteSnippets.solicitudAmistad(nickUser,nickAmigo);
                                         Toast.makeText(getActivity(), "La solicitud ha sido añadida con éxito", Toast.LENGTH_LONG).show();
 
@@ -92,6 +95,54 @@ public class introducir_amigo extends DialogFragment {
                     Toast.makeText(getActivity(),"Error, se debe introducir un nick para poder mandarle una solicitud",Toast.LENGTH_SHORT).show();
                 }
             }
+            */
+            @Override
+            public void onClick(View v) {
+                mDatabase= FirebaseDatabase.getInstance().getReference();
+                String nickAmigo = etNombre.getText().toString();
+                if(nickAmigo != null && nickAmigo.trim().length() > 0) {
+                    if(nickAmigo!=nickUser){
+                        mDatabase.child("users").child(nickAmigo).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    if(task.getResult().getValue()!=null){
+                                        mDatabase.child("users").child(nickUser).child("amigos").child(nickAmigo).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                                if (task.isSuccessful()) {
+                                                    if(task.getResult().getValue()==null) {
+                                                        ReadAndWriteSnippets.solicitudAmistad(nickUser,nickAmigo);
+                                                        Toast.makeText(getActivity(), "La solicitud ha sido añadida con éxito", Toast.LENGTH_LONG).show();
+
+                                                    }
+                                                    else{
+                                                        Toast toast = Toast.makeText(getContext(), "Usuario ya es tu amigo", Toast.LENGTH_LONG);
+                                                        toast.show();
+                                                    }
+                                                }
+                                            }
+                                        });
+
+
+                                    } else{
+                                        Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);
+                                        toast.show();
+                                    }
+                                }
+                            }
+                        });
+                    }
+                    else{
+                        Toast.makeText(getActivity(),"Error, no puedes enviarte una solicitud a ti mismo",Toast.LENGTH_SHORT).show();
+                    }
+
+
+                }else{
+                    Toast.makeText(getActivity(),"Error, se debe introducir un nick para poder mandarle una solicitud",Toast.LENGTH_SHORT).show();
+                }
+            }
+
 
 
         });

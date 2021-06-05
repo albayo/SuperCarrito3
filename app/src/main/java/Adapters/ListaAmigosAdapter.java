@@ -164,8 +164,19 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
                      */
                     @Override
                     public void onClick(View v) {
-                        ReadAndWriteSnippets.solicitudLista(nick, AmigoNombreView.getText().toString(), idLista, nombreLista);
-                        Toast.makeText(view.getContext(), "Amigo Añadido a la lista " + nombreLista, Toast.LENGTH_LONG).show();
+                        mDatabase.child("listas").child(idLista).child("miembros").child(AmigoNombreView.getText().toString()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if(task.isSuccessful() && task.getResult().getValue()==null){
+                                    ReadAndWriteSnippets.solicitudLista(nick, AmigoNombreView.getText().toString(), idLista, nombreLista);
+                                    Toast.makeText(view.getContext(), "Amigo Añadido a la lista " + nombreLista, Toast.LENGTH_LONG).show();
+                                }
+                                else{
+                                    Toast.makeText(view.getContext(), "Este usuario ya pertenece a la lista " + nombreLista, Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
+
                     }
                 });
                 btELiminarAmigo.setOnClickListener(new View.OnClickListener() {
