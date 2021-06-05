@@ -99,25 +99,32 @@ public class fragment_crear_compartida extends DialogFragment {
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (task.isSuccessful()) {
                             if(task.getResult().getValue()!=null){
-                                usuarios.add(usuario);
-                                nickCompartir.setText("");
-                                Toast toast = Toast.makeText(getContext(), "Usuario añadido", Toast.LENGTH_LONG);
-                                toast.show();
-
-                                ReadAndWriteSnippets.insertarLista(nombreLista,nick,true);
-                                String idLista=String.valueOf(Lista.getContLista());
-                                for(String s: usuarios){
-                                    //ReadAndWriteSnippets.aniadirUsuarioaList(nombreLista,s,String.valueOf(Lista.getContLista()));
-                                    ReadAndWriteSnippets.solicitudLista(nick,s,idLista,nombreLista);
+                                if(usuarios.contains(usuario)){
+                                    Toast toast = Toast.makeText(getContext(), "Usuario ya añadido previamente", Toast.LENGTH_LONG);
+                                    toast.show();
                                 }
-                                cerrarFragment();
+                                else{
+                                    usuarios.add(usuario);
+                                    nickCompartir.setText("");
+                                    Toast toast = Toast.makeText(getContext(), "Usuario añadido", Toast.LENGTH_LONG);
+                                    toast.show();
 
-                                Intent intent = new Intent(getContext(), ListaProductos.class);
-                                intent.putExtra("nick",nick);
-                                intent.putExtra("email",email);
-                                intent.putExtra("nombreLista",nombreLista);
-                                intent.putExtra("idLista",String.valueOf(Lista.getContLista()));
-                                startActivity(intent);
+                                    ReadAndWriteSnippets.insertarLista(nombreLista,nick,true);
+                                    String idLista=String.valueOf(Lista.getContLista());
+                                    for(String s: usuarios){
+                                        //ReadAndWriteSnippets.aniadirUsuarioaList(nombreLista,s,String.valueOf(Lista.getContLista()));
+                                        ReadAndWriteSnippets.solicitudLista(nick,s,idLista,nombreLista);
+                                    }
+                                    cerrarFragment();
+
+                                    Intent intent = new Intent(getContext(), ListaProductos.class);
+                                    intent.putExtra("nick",nick);
+                                    intent.putExtra("email",email);
+                                    intent.putExtra("nombreLista",nombreLista);
+                                    intent.putExtra("idLista",String.valueOf(Lista.getContLista()));
+                                    startActivity(intent);
+                                }
+
                             } else{
                                 Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);
                                 toast.show();
@@ -146,10 +153,17 @@ public class fragment_crear_compartida extends DialogFragment {
                     public void onComplete(@NonNull Task<DataSnapshot> task) {
                         if (task.isSuccessful()) {
                             if(task.getResult().getValue()!=null){
-                                usuarios.add(usuario);
-                                nickCompartir.setText("");
-                                Toast toast = Toast.makeText(getContext(), "Usuario añadido", Toast.LENGTH_LONG);
-                                toast.show();
+                                if(usuarios.contains(usuario)){
+                                    Toast toast = Toast.makeText(getContext(), "Usuario ya añadido previamente", Toast.LENGTH_LONG);
+                                    toast.show();
+                                }
+                                else{
+                                    usuarios.add(usuario);
+                                    nickCompartir.setText("");
+                                    Toast toast = Toast.makeText(getContext(), "Usuario añadido", Toast.LENGTH_LONG);
+                                    toast.show();
+
+                                }
 
                             } else{
                                 Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);

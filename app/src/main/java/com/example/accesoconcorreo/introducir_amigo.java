@@ -66,21 +66,27 @@ public class introducir_amigo extends DialogFragment {
                 mDatabase= FirebaseDatabase.getInstance().getReference();
                 String nickAmigo = etNombre.getText().toString();
                 if(nickAmigo != null && nickAmigo.trim().length() > 0) {
-                    mDatabase.child("users").child(nickAmigo).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-                        @Override
-                        public void onComplete(@NonNull Task<DataSnapshot> task) {
-                            if (task.isSuccessful()) {
-                                if(task.getResult().getValue()!=null){
-                                    ReadAndWriteSnippets.solicitudAmistad(nickUser,nickAmigo);
-                                    Toast.makeText(getActivity(), "La solicitud ha sido añadida con éxito", Toast.LENGTH_LONG).show();
+                    if(nickAmigo==nickUser){
+                        mDatabase.child("users").child(nickAmigo).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                                if (task.isSuccessful()) {
+                                    if(task.getResult().getValue()!=null){
+                                        ReadAndWriteSnippets.solicitudAmistad(nickUser,nickAmigo);
+                                        Toast.makeText(getActivity(), "La solicitud ha sido añadida con éxito", Toast.LENGTH_LONG).show();
 
-                                } else{
-                                    Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);
-                                    toast.show();
+                                    } else{
+                                        Toast toast = Toast.makeText(getContext(), "Usuario no existente", Toast.LENGTH_LONG);
+                                        toast.show();
+                                    }
                                 }
                             }
-                        }
-                    });
+                        });
+                    }
+                    else{
+                        Toast.makeText(getActivity(),"Error, no puedes enviarte una solicitud a ti mismo",Toast.LENGTH_SHORT).show();
+                    }
+
 
                 }else{
                     Toast.makeText(getActivity(),"Error, se debe introducir un nick para poder mandarle una solicitud",Toast.LENGTH_SHORT).show();
