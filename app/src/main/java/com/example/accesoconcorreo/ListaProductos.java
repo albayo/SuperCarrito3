@@ -114,14 +114,10 @@ public class ListaProductos extends AppCompatActivity {
                 if(task.isSuccessful()){
                     if(task.getResult().getValue()!=null){
                         String propie=task.getResult().getValue().toString();
-                        Log.d("Prop",propie);
-                        Log.d("Nick",nick);
-                        if(propie.equals(nick)){
-                            Log.d("changee","change");
-                            propietario=true;
-                            //miembrosAdapter.setPropietario(propietario);
-                            Log.d("fff","pr"+propietario);
 
+
+                        if(propie.equals(nick)){
+                            propietario=true;
                         }else{
                             MenuItem item=(MenuItem) myToolbar.getMenu().getItem(1);
                             if(item!=null) item.setVisible(false);
