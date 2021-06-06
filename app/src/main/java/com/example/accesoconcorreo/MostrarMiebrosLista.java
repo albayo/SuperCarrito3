@@ -93,34 +93,11 @@ public class MostrarMiebrosLista extends AppCompatActivity {
             }
         });
         fab.setVisibility(View.INVISIBLE);
-        mDatabase.child("listas").child(idLista).child("propietario").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-            /**
-             * Método que mira en la base de datos si el usuario es el propietario de la lista y
-             * en función de ello muestra un fab o no para poder añadir  usuarios a la lsita
-             * @param task
-             */
-            @Override
-            public void onComplete(@NonNull  Task<DataSnapshot> task) {
-                if(task.isSuccessful()){
-                    if(task.getResult().getValue()!=null){
-                        String propie=task.getResult().getValue().toString();
-                        if(propie.equals(nick)){
-                           propietario=true;
-                           fab.setVisibility(View.VISIBLE);
-                        }
-                    }
-                }
-            }
-        });
 
 
         drawerLayout= findViewById(R.id.drawer_layout_amigos);
         navigationView= findViewById(R.id.nav_View);
         Activity activity=this;
-
-
-
-
         ReadAndWriteSnippets.setNavigationView(drawerLayout,navigationView,toolbar,nick,getIntent().getStringExtra("email"),activity,getApplicationContext());
 
         obtenerMiembrosLista(nick,idLista,nombreLista);
@@ -147,10 +124,8 @@ public class MostrarMiebrosLista extends AppCompatActivity {
                     for (DataSnapshot ds : snapshot.getChildren()) {
                         String nombre=ds.getKey();
                         mMiembros.add(nombre);
-                        Log.d("ADDD",nombre);
-
                     }
-                    Log.d("PROP",""+propietario);
+
                     miembrosAdapter= new MiembrosListaAdapter(MostrarMiebrosLista.this,R.layout.item_miembros, mMiembros,nick,idLista,nombreLista,propietario);
                     recyclerViewMiembros.setAdapter(miembrosAdapter);
                 }
