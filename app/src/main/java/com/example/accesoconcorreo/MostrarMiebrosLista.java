@@ -72,7 +72,6 @@ public class MostrarMiebrosLista extends AppCompatActivity {
         String title="Miembros";
         toolbar.setTitle(title);
         propietario=getIntent().getBooleanExtra("propietario",false);
-        Log.d("prop",""+propietario);
         recyclerViewMiembros=findViewById(R.id.miembros_recycler);
         recyclerViewMiembros.setLayoutManager(new LinearLayoutManager(this));
 

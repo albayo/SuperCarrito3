@@ -114,10 +114,7 @@ public class ListaProductos extends AppCompatActivity {
                 if(task.isSuccessful()){
                     if(task.getResult().getValue()!=null){
                         String propie=task.getResult().getValue().toString();
-                        Log.d("Prop",propie);
-                        Log.d("Nick",nick);
                         if(!propie.equals(nick)){
-                            Log.d("changee","change");
                             propietario=true;
                             //miembrosAdapter.setPropietario(propietario);
                             MenuItem item=(MenuItem) myToolbar.getMenu().getItem(1);
@@ -181,10 +178,6 @@ public class ListaProductos extends AppCompatActivity {
 
         FloatingActionButton fabAñadirProductos = findViewById(R.id.fabAniadir_Productos);
 
-        /*if (!propietario) {
-            Log.d("holiii","hoohohohoh");
-            findViewById(R.id.opciones_añadir_amigos).setVisibility(View.INVISIBLE);
-        }*/
         fabAñadirProductos.setOnClickListener(new View.OnClickListener() {
 
             /**
