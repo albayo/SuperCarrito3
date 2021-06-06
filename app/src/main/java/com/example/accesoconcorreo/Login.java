@@ -157,9 +157,7 @@ public class Login extends AppCompatActivity {
              */
             @Override
             public void onClick(View v) {
-                Log.d("Mostrar contraseña", "Click");
                 if (contraseniaET.getTransformationMethod() == null) {
-                    Log.d("Mostrar contraseña", "Habilitar mostrar contraseña");
                     contraseniaET.setTransformationMethod(new PasswordTransformationMethod());
                     mostrarContrasena.setImageResource(R.drawable.ic_ojo_negro);
                 } else {

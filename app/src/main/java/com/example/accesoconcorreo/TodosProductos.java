@@ -234,7 +234,6 @@ public class TodosProductos extends AppCompatActivity{
                 if (snapshot.exists()) {
                     Iterable<DataSnapshot> dataSnapshots = snapshot.getChildren();
                     for (DataSnapshot ds : snapshot.getChildren()) {
-                        Log.d("SIZEE",""+productos.size());
                         /*if(productos.size()>100){
                             break;
                         }*/

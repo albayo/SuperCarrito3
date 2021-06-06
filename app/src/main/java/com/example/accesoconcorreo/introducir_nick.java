@@ -116,7 +116,6 @@ public class introducir_nick extends DialogFragment {
                         public void onComplete(@NonNull  Task<DataSnapshot> task) {
                             if(task.isSuccessful()){
                                 if(task.getResult().getValue()==null){
-                                    Log.d("HOLA","CONtinuea");
                                     FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, pwd).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                                         @Override
                                         public void onComplete(@NonNull Task<AuthResult> task) {

@@ -114,13 +114,15 @@ public class ListaProductos extends AppCompatActivity {
                 if(task.isSuccessful()){
                     if(task.getResult().getValue()!=null){
                         String propie=task.getResult().getValue().toString();
-
-
-                        if(propie.equals(nick)){
+                        Log.d("Prop",propie);
+                        Log.d("Nick",nick);
+                        if(!propie.equals(nick)){
+                            Log.d("changee","change");
                             propietario=true;
-                        }else{
+                            //miembrosAdapter.setPropietario(propietario);
                             MenuItem item=(MenuItem) myToolbar.getMenu().getItem(1);
                             if(item!=null) item.setVisible(false);
+                        }else{
                             propietario=false;
                         }
                     }
@@ -161,7 +163,7 @@ public class ListaProductos extends AppCompatActivity {
                         miembros.putExtra("email", email);
                         miembros.putExtra("nick", nick);
                         //miembros.putExtra("modo","añadir");
-                        miembros.putExtra("propietario",propietario);
+
                         miembros.putExtra("idLista",idLista);
                         miembros.putExtra("nombreLista",nombreLista);
                         startActivity(miembros);

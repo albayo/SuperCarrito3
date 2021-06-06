@@ -106,10 +106,10 @@ public class ReadAndWriteSnippets {
                     if (task.getResult().getValue() == null) {
                         String[] emailnodo = email.split("@");
                         String emailinsert1 = "" + emailnodo[0] + emailnodo[1];
-                        Log.d("email", emailinsert1);
+
                         String[] emailnodo2 = emailinsert1.split("\\.");
                         String emailinsert2 = "" + emailnodo2[0] + emailnodo2[1];
-                        Log.d("email", emailinsert2);
+
                         mDatabase.child("correousuario").child(emailinsert2).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task2) {
@@ -145,8 +145,6 @@ public class ReadAndWriteSnippets {
             public void onSuccess(DataSnapshot dataSnapshot) {
                 String n = dataSnapshot.getValue().toString();
                 Lista.setContLista(Integer.valueOf(n));
-                Log.d("CONTADOR", "Contador " + Lista.getContLista());
-                Log.d("Contador", "msgCont " + n);
             }
         });
 
@@ -172,7 +170,6 @@ public class ReadAndWriteSnippets {
 
         List<String> listusuarios = new ArrayList<>();
         listusuarios.add(nick);
-        Log.d("Contador", "INSERTAR:" + Lista.getContLista());
         Lista list = new Lista(nombrelista, listusuarios);
 
         Map<String, Object> postValues = list.toMap();

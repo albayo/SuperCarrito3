@@ -195,7 +195,6 @@ public class Home extends AppCompatActivity {
                                                     Iterable<DataSnapshot> i=snapshot.getChildren();
 
                                                     if(i.iterator().hasNext()){
-                                                        Log.d("mmm,","miembros");
                                                         mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("propietario").setValue(i.iterator().next().getValue().toString());
                                                     }
 
@@ -315,13 +314,11 @@ public class Home extends AppCompatActivity {
                     for (DataSnapshot ds : snapshot.getChildren()) {
 
                         String id=ds.getKey();
-                        Log.d("Obtener",id);
                         String nombre = ds.getValue().toString();
 
                         Lista l =new Lista(nombre,id);
                         listas.add(l);
                     }
-                    Log.d("Adapter","LISta");
 
                     mListaAdapter = new ListaListAdapter(Home.this,R.layout.pantalla_listas_list,listas,nick,email);
                     recyclerView.setAdapter(mListaAdapter);

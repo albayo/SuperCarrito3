@@ -93,7 +93,6 @@ public class introducir_nom_lista extends DialogFragment {
         etNombre = (EditText) view.findViewById(R.id.etNombre);
         btnAceptar = (Button) view.findViewById(R.id.btnAceptar);
         btnCancelar = (Button) view.findViewById(R.id.btnCancelar);
-        Log.d("FIREBASE","HOLAAA");
         btnAceptar.setOnClickListener(new View.OnClickListener() {
             /**
              * Método que sirve para comprobar que lo introducido en los campos de usuario y
@@ -104,7 +103,6 @@ public class introducir_nom_lista extends DialogFragment {
             public void onClick(View v) {
                 ultBoton = "Aceptar";
 
-                Log.d("Cont", "Onclick:" + Lista.getContLista());
                 String nombreLista = etNombre.getText().toString();
                 if(nombreLista != null && nombreLista.trim().length() > 0) {
                     if (tipoLista.equals("grupal")) {
@@ -122,7 +120,6 @@ public class introducir_nom_lista extends DialogFragment {
 
                     } else {
 
-                        Log.d("Cont", "CrearLista:" +Lista.getContLista());
                         List<Usuario> lista=new ArrayList<>();
                         ReadAndWriteSnippets.insertarLista(nombreLista,nick,false);
                         cerrarFragment();
