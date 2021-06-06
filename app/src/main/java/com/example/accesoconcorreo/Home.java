@@ -182,7 +182,7 @@ public class Home extends AppCompatActivity {
                             if(snapshot.getChildrenCount()==1){
                                 mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("compartida").setValue("false");
                             }
-                                mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("miembros").child(nick).removeValue();
+                            mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("miembros").child(nick).removeValue();
                             mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("propietario").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                                 @Override
                                 public void onComplete(@NonNull Task<DataSnapshot> task) {
@@ -193,7 +193,12 @@ public class Home extends AppCompatActivity {
                                                 @Override
                                                 public void onDataChange(@NonNull  DataSnapshot snapshot) {
                                                     Iterable<DataSnapshot> i=snapshot.getChildren();
-                                                    mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("propietario").setValue(i.iterator().next().getValue().toString());
+
+                                                    if(i.iterator().hasNext()){
+                                                        Log.d("mmm,","miembros");
+                                                        mDatabaseReference.child("listas").child(String.valueOf(l.getIdLista())).child("propietario").setValue(i.iterator().next().getValue().toString());
+                                                    }
+
 
                                                 }
 
