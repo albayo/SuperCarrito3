@@ -187,7 +187,7 @@ public class ListaAmigosAdapter extends RecyclerView.Adapter<ListaAmigosAdapter.
                             public void onComplete(@NonNull  Task<DataSnapshot> task) {
                                 if(task.isSuccessful() && task.getResult().getValue()!=null){
                                     mDatabase.child("listas").child(idLista).child("miembros").child(AmigoNombreView.getText().toString()).removeValue();
-                                    mDatabase.child("users").child(AmigoNombreView.toString()).child("listas").child(idLista).removeValue();
+                                    mDatabase.child("users").child(AmigoNombreView.getText().toString()).child("listas").child(idLista).removeValue();
                                     Toast.makeText(view.getContext(), "Amigo Eliminado de la lista " + nombreLista, Toast.LENGTH_LONG).show();
                                 }
                                 else{
