@@ -117,7 +117,7 @@ public class introducir_amigo extends DialogFragment {
 
                                                     }
                                                     else{
-                                                        Toast toast = Toast.makeText(getContext(), "Usuario ya es tu amigo", Toast.LENGTH_LONG);
+                                                        Toast toast = Toast.makeText(getContext(), "Este usuario ya es tu amigo", Toast.LENGTH_LONG);
                                                         toast.show();
                                                     }
                                                 }
