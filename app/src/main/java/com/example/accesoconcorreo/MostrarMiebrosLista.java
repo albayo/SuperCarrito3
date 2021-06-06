@@ -80,6 +80,7 @@ public class MostrarMiebrosLista extends AppCompatActivity {
         idLista=getIntent().getExtras().getString("idLista");
         nombreLista=getIntent().getStringExtra("nombreLista");
         FloatingActionButton fab=findViewById(R.id.fab_Aniadir_Miembro);
+
         fab.setOnClickListener(new View.OnClickListener() {
             /**
              * Método que lanza un fragment para añadir a un amigo a la lista compartida
