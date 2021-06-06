@@ -101,7 +101,7 @@ public class introducir_amigo extends DialogFragment {
                 mDatabase= FirebaseDatabase.getInstance().getReference();
                 String nickAmigo = etNombre.getText().toString();
                 if(nickAmigo != null && nickAmigo.trim().length() > 0) {
-                    if(nickAmigo!=nickUser){
+                    if(!nickAmigo.equals(nickUser)){
                         mDatabase.child("users").child(nickAmigo).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
                             @Override
                             public void onComplete(@NonNull Task<DataSnapshot> task) {
